@@ -1,12 +1,34 @@
 .mainContainer{
     width: 100%;
     height: 100%;
-    background-color:yellow;
+    background-color:rgb(255, 255, 255);
    
 }
 .Container{
     padding-left:20%;
     padding-right:20%;
-    background-color:red;
+    background-color:rgb(255, 255, 255);
     height:300px;
+}
+.topContainer{
+    background-image: url('/src/assets/image/young5.png');
+    background-size: 100% 640px;
+    background-repeat: no-repeat;
+    background-position: top center; 
+    background-color: white;
+    height: 800px;
+}
+.catagiesContainer{
+    background-color: #EFEFF7;
+    height: 480px;
+}
+.courseContainer{
+    background-color: #FFFFFF;
+
+}
+.testimonyContainer{
+    background-color: #33333D;
+}
+.aboutContainer{
+    background-color: white;
 }
