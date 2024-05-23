@@ -1,0 +1,154 @@
+/* src/Register.css */
+.register-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    background-color: #fff;
+  }
+  
+  .register-left, .register-right {
+    flex: 1;
+  }
+  
+  .register-left {
+    background-color: #ffc6c6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .register-left-content h1 {
+    font-size: 2.5rem;
+    color: #333;
+  }
+  
+  .register-left-content p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .register-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    gap:10px;
+
+  }
+  
+  .register-form h2 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .register-form p {
+    margin-bottom: 20px;
+    color: #777;
+  }
+  
+  .register-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff6f61;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 50px;
+  }
+  
+  .register-form .divider {
+    text-align: center;
+    margin: 20px 0;
+    color: #999;
+  }
+  
+  .register-form .google-signin {
+    width: 100%;
+    padding: 10px;
+    background-color: #4285f4;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .register-container {
+      flex-direction: column;
+    }
+  
+    .register-left, .register-right {
+      flex: none;
+      width: 100%;
+    }
+  
+    .register-left {
+      padding: 20px;
+    }
+  
+    .register-left-content h1 {
+      font-size: 2rem;
+    }
+  
+    .register-left-content p {
+      font-size: 1rem;
+    }
+  
+    .register-form {
+      padding: 10px;
+    }
+  
+    .register-form h2 {
+      font-size: 1.5rem;
+    }
+  
+    .register-form p {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .register-left-content h1 {
+      font-size: 1.5rem;
+    }
+  
+    .register-left-content p {
+      font-size: 0.9rem;
+    }
+  
+    .register-form h2 {
+      font-size: 1.2rem;
+    }
+  
+    .register-form p {
+      font-size: 0.9rem;
+    }
+  
+    .register-form input {
+      padding: 8px;
+    }
+  
+    .register-form button, .register-form .google-signin {
+      padding: 8px;
+    }
+  }
+  

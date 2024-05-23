@@ -1,0 +1,113 @@
+/* src/components/LoginPage.css */
+.login-container {
+  display: flex;
+  height: 100vh;
+  flex-direction: row;
+}
+
+/* Side Banner Styles */
+.side-banner {
+  flex: 1;
+  background-color: #ff6b6b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 20px;
+}
+
+.banner-content {
+  text-align: center;
+}
+
+.banner-content h1 {
+  font-size: 2.5rem;
+}
+
+.banner-content p {
+  font-size: 1.2rem;
+}
+
+/* Login Form Styles */
+.login-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-form h2 {
+  margin-bottom: 10px;
+}
+
+.login-form p {
+  margin-bottom: 20px;
+}
+
+.login-form form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 300px;
+}
+
+.login-form form label {
+  margin-bottom: 5px;
+}
+
+.login-form form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-form form button {
+  padding: 10px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.alternative-login {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.google-login {
+  padding: 10px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-form a {
+  color: #ff6b6b;
+  text-decoration: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .side-banner {
+    display: none;
+  }
+
+
+  .login-form {
+    padding: 20px;
+  }
+
+  .login-form form {
+    max-width: 100%;
+  }
+}

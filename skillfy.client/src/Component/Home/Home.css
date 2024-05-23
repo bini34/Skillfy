@@ -20,15 +20,52 @@
 }
 .catagiesContainer{
     background-color: #EFEFF7;
-    height: 480px;
+    height: 880px;
+    padding-top: 80px;
 }
 .courseContainer{
     background-color: #FFFFFF;
-
+    height: 1340px;
 }
 .testimonyContainer{
     background-color: #33333D;
+    height: 730px;
 }
 .aboutContainer{
     background-color: white;
+    height: 850px;
+}
+
+.catagoriesHeader{
+    display: flex;
+    justify-content: space-between;
+}
+.catagoriesHeader a{
+    display: inline-block;
+    background-color: red;
+    color: #EFEFF7;
+    padding: 10px;
+    text-decoration: none;
+}
+.categoriesBody{
+    display: flex;
+    padding-top: 80px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+card{
+    padding: 20px;
+    height: 300px;
+    width: 280px;
+    background-color: #FFFFFF;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 50px;
+    margin-bottom: 20px;
+    flex: 1 0 auto;
+}
+.card img{
+    width: 230px;
+    height: 180px;
+    
 }
