@@ -1,16 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Skillfy.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Skillfy.DataAccess.Data
 {
-    public class ApplicationDbContext:DbContext
+    internal class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
-        {
-            
-        }
-        public DbSet<User> users { get; set; }
-        public DbSet<Catagorie> Catagories { get; set; }
-
     }
 }
