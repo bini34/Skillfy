@@ -24,11 +24,7 @@
   font-size: small;
 }
 
-.course-rating, .course-stats {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+
 
 .course-title {
   font-size: 18px;
