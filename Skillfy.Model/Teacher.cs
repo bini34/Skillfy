@@ -29,8 +29,8 @@ namespace Skillfy.Model
         public string ContactInfo { get; set; }
         public double Rating { get; set; }
         public DateTime JoinDate { get; set; }
-        public bool IsActive { get; set; }
-        public virtual ICollection<course> CoursesTaught { get; set; }
+      
+        public virtual ICollection<Course> CoursesTaught { get; set; }
 
 
     }
