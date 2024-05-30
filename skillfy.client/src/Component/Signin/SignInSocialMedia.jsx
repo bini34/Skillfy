@@ -1,16 +1,16 @@
 import Button from '@mui/material/Button';
-import GoogleLogo from '../../assets/Image/google-logo.svg';
-import MicrosoftLogo from '../../assets/Image/microsoft-logo.svg';
-import AppleLogo from '../../assets/Image/apple-logo.svg';
+import GoogleLogo from '../../assets/logo/google-logo.svg';
+import MicrosoftLogo from '../../assets/logo/microsoft-logo.svg';
+import AppleLogo from '../../assets/logo/apple-logo.svg';
 
-import './SignInSocialMedia.css';
+import './SigninSocialMedia.css';
 
 
-function SignInSocialMedia(){
+function SigninSocialMedia(){
 
     return(
         <div className='SocialMedia' >
-            <Button className='SocialMedia-logo_button' variant="outlined" >
+            <Button className='SocialMedia-logo_button' variant="outlined" sx={{display:'flex', justifyContent: 'flex-start', color: 'rgba(0, 0, 0, 10)', borderColor: 'black'}} >
                 <span className='social-logo-wrapper'>
                     <img className='SocialMedia-Logo' src={GoogleLogo} alt="GoogleLogo" />
                 </span>
@@ -18,7 +18,7 @@ function SignInSocialMedia(){
                     Continue with Google
                 </span>
             </Button>
-            <Button className='SocialMedia-logo_button' variant="outlined" >
+            <Button className='SocialMedia-logo_button' variant="outlined" sx={{display:'flex', justifyContent: 'flex-start', color: 'rgba(0, 0, 0, 10)', borderColor: 'black'}} >
                 <span className='social-logo-wrapper'>
                     <img className='SocialMedia-Logo' src={MicrosoftLogo} alt="MicrosoftLogo" />
                 </span>
@@ -26,7 +26,7 @@ function SignInSocialMedia(){
                     Continue with Microsoft Account
                 </span>
             </Button>
-            <Button className='SocialMedia-logo_button' variant="outlined" >
+            <Button className='SocialMedia-logo_button' variant="outlined" sx={{display:'flex', justifyContent: 'flex-start', color: 'rgba(0, 0, 0, 10)', borderColor: 'black' }}>
                 <span className='social-logo-wrapper'>
                     <img className='SocialMedia-Logo' src={AppleLogo} alt="MicrosoftLogo" />
                 </span>
@@ -38,16 +38,4 @@ function SignInSocialMedia(){
     );
     
 }
-export default SignInSocialMedia;
-
-{
-/* <div class="social-section">
-    <button class="social-btn">
-        <span class="social-logo-wrapper">
-            <img class="social-logo" src="/assets/google-logo-NePEveMl.svg" alt="Google logo">
-        </span>
-        <span class="social-text">Continue with Google</span>
-        </button><button class="social-btn">
-            <span class="social-logo-wrapper">
-                <img class="social-logo" src="/assets/microsoft-logo-BUXxQnXH.svg" alt="Microsoft logo">
-                    </span><span class="social-text">Continue with Microsoft Account</span></button><button class="social-btn"><span class="social-logo-wrapper"><img class="social-logo" src="/assets/apple-logo-tAoxPOUx.svg" alt="Apple logo"></span><span class="social-text">Continue with Apple</span></button></div> */}
+export default SigninSocialMedia;

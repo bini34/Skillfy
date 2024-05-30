@@ -11,7 +11,7 @@
   }
   
   .register-left {
-    background-color: #ffc6c6;
+    background-color: #FD9697;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,8 +31,11 @@
   
   .register-right {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+
+
   }
   
   .register-form {
@@ -42,7 +45,7 @@
     max-width: 400px;
     padding: 20px;
     gap:10px;
-
+    text-align: center;
   }
   
   .register-form h2 {
@@ -54,16 +57,8 @@
     margin-bottom: 20px;
     color: #777;
   }
-  
-  .register-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .register-form button {
+
+  .submitBtn{
     width: 100%;
     padding: 10px;
     background-color: #ff6f61;
@@ -72,24 +67,14 @@
     border-radius: 5px;
     cursor: pointer;
     height: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    
   }
   
-  .register-form .divider {
-    text-align: center;
-    margin: 20px 0;
-    color: #999;
-  }
+
   
-  .register-form .google-signin {
-    width: 100%;
-    padding: 10px;
-    background-color: #4285f4;
-    border: none;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
+
   /* Media Queries */
   @media (max-width: 768px) {
     .register-container {
@@ -102,7 +87,7 @@
     }
   
     .register-left {
-      padding: 20px;
+      display: none;
     }
   
     .register-left-content h1 {

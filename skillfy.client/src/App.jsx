@@ -1,10 +1,36 @@
 import './App.css';
-//import Home from './Component/Home/Home';
 import Signup from './Component/Signup/Signup';
-import TeacherProfile from './Component/TeacherProfile/TeacherProfile';
+import InstructorProfileInfo from './Component/InstructorProfile/InstructorProfileInfo';
+import SignupPage from './Pages/SignupPage'
+import SigninPage from './Pages/SigninPage'
+import CourseCard from './Component/ui/CourseCard'
+import ShoppingCartCard from './Component/ShoppingCart/ShoppingCartCard';
+import CourseDetailsCard from './Component/CourseDetail/CourseDetailsCard';
+import CourseView from './Component/CourseView/CourseView';
+import CourseDetailHeader from './Component/CourseDetail/CourseDetailHeader';
+import CourseReviews from './Component/CourseDetail/CourseReviews';
+import InstructorPage from './Component/Instructor/InstructorPage';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Test from './Component/Testt/test';
+import HomePage from './Pages/HomePage'
+
  function App() {
-    return(
-    <Signup/>
-    );
+    const router = createBrowserRouter([
+        {
+            path: '/',
+            element: <HomePage/>
+        },
+        {
+            path: '/Signin',
+            element: <SigninPage/>
+        },
+        {
+            path: '/Signup',
+            element: <SignupPage/>
+        }
+    ])
+    
+    return <RouterProvider router={router}/>;
+
 }
 export default App;

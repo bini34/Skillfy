@@ -2,18 +2,21 @@
 .login-container {
   display: flex;
   height: 100vh;
+  width: 1450px;
+  margin: 0 auto 0 auto;
   flex-direction: row;
 }
 
 /* Side Banner Styles */
 .side-banner {
-  flex: 1;
-  background-color: #ff6b6b;
+  background-color: #FD9697;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   padding: 20px;
+  width: 725px;
+  padding-left: 100px;
 }
 
 .banner-content {
@@ -21,7 +24,9 @@
 }
 
 .banner-content h1 {
-  font-size: 2.5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 4rem;
 }
 
 .banner-content p {
@@ -30,14 +35,30 @@
 
 /* Login Form Styles */
 .login-form {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding-right: 100px;
+  width: 725px;
+  gap: 10px;
+}
+.registor{
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-content: center;
+  
 }
 
+.regstora{
+  color: white;
+  background-color: #ff6b6b;
+  padding: 10px;
+  width: 70px;
+  text-align: center;
+  text-decoration: none;
+}
 .login-form h2 {
   margin-bottom: 10px;
 }
@@ -49,20 +70,19 @@
 .login-form form {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 300px;
+  width: 500px;
+  gap: 10px;
+  
+}
+.login-form div{
+  width: 500px;
 }
 
-.login-form form label {
-  margin-bottom: 5px;
+form a {
+  text-align: end;
 }
 
-.login-form form input {
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+
 
 .login-form form button {
   padding: 10px;
@@ -73,21 +93,11 @@
   cursor: pointer;
 }
 
-.alternative-login {
-  text-align: center;
-  margin: 20px 0;
-}
 
-.google-login {
-  padding: 10px;
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-.login-form a {
+
+
+.login-form + a {
   color: #ff6b6b;
   text-decoration: none;
 }

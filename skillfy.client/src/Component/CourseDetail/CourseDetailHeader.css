@@ -1,0 +1,44 @@
+.course-detail-header {
+    background-color: #f7ecee;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #4f3c75;
+  }
+  
+  .course-detail-header h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  .course-detail-header p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
+  .course-stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .course-stats div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1em;
+  }
+  
+  .course-rating .star {
+    color: gold;
+  }
+  
+  .course-enrollment,
+  .course-duration,
+  .course-lessons {
+    background-color: #fffcf5;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  

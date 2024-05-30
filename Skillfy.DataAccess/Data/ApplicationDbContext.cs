@@ -5,10 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Skillfy.Model;
 
 namespace Skillfy.DataAccess.Data
 {
-    internal class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+          : base(options)
+        {
+        }
+        public DbSet<Course> Courses { get; set; }
+
     }
 }

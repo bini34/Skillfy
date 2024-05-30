@@ -1,0 +1,174 @@
+/* App.css */
+.app {
+    display: flex;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar {
+    width: 300px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .sidebar h2 {
+    font-size: 20px;
+    color: #ff6f61;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar p {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .sidebar nav h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar nav ul li {
+    font-size: 14px;
+    color: #555;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+  }
+  
+  .sidebar nav ul li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .video-section {
+    margin-bottom: 20px;
+  }
+  
+  .video-section h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .video-section p {
+    font-size: 14px;
+    color: #888;
+    margin: 5px 0 15px;
+  }
+  
+  .video-section video {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .course-details h2 {
+    font-size: 20px;
+    color: #333;
+    margin: 20px 0 10px;
+  }
+  
+  .course-details p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  .student-feedback {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  .student-feedback h3 {
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: #333;
+  }
+  
+  .student-feedback p {
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0;
+  }
+  
+  .students-also-bought {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  .course-item {
+    width: 200px;
+    margin: 10px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .course-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+  
+  .course-item p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .course-item .price {
+    font-size: 16px;
+    color: #e74c3c;
+    font-weight: bold;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .button-group button {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button-group button.secondary {
+    background-color: #3498db;
+  }
+  

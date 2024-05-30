@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
-import GoogleLogo from '../../assets/Image/google-logo.svg';
-import MicrosoftLogo from '../../assets/Image/microsoft-logo.svg';
-import AppleLogo from '../../assets/Image/apple-logo.svg';
+import GoogleLogo from '../../assets/logo/google-logo.svg';
+import MicrosoftLogo from '../../assets/logo/microsoft-logo.svg';
+import AppleLogo from '../../assets/logo/apple-logo.svg';
 
 import './SignupSocialMedia.css';
 
@@ -10,7 +10,7 @@ function SignUpSocialMedia(){
 
     return(
         <div className='SocialMedia' >
-            <Button className='SocialMedia-logo_button' variant="outlined" >
+            <Button className='SocialMedia-logo_button' variant="outlined" sx={{display:'flex', justifyContent: 'flex-start', color: 'rgba(0, 0, 0, 10)', borderColor: 'black'}} >
                 <span className='social-logo-wrapper'>
                     <img className='SocialMedia-Logo' src={GoogleLogo} alt="GoogleLogo" />
                 </span>
@@ -18,7 +18,7 @@ function SignUpSocialMedia(){
                     Continue with Google
                 </span>
             </Button>
-            <Button className='SocialMedia-logo_button' variant="outlined" >
+            <Button className='SocialMedia-logo_button' variant="outlined" sx={{display:'flex', justifyContent: 'flex-start', color: 'rgba(0, 0, 0, 10)', borderColor: 'black'}} >
                 <span className='social-logo-wrapper'>
                     <img className='SocialMedia-Logo' src={MicrosoftLogo} alt="MicrosoftLogo" />
                 </span>
@@ -26,7 +26,7 @@ function SignUpSocialMedia(){
                     Continue with Microsoft Account
                 </span>
             </Button>
-            <Button className='SocialMedia-logo_button' variant="outlined" >
+            <Button className='SocialMedia-logo_button' variant="outlined" sx={{display:'flex', justifyContent: 'flex-start', color: 'rgba(0, 0, 0, 10)', borderColor: 'black' }}>
                 <span className='social-logo-wrapper'>
                     <img className='SocialMedia-Logo' src={AppleLogo} alt="MicrosoftLogo" />
                 </span>
