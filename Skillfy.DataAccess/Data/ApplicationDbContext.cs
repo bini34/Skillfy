@@ -11,11 +11,22 @@ namespace Skillfy.DataAccess.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-          : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+
         }
-        public DbSet<Course> Courses { get; set; }
+
+        public DbSet<Course> courses { get; set; }
+        public DbSet<Review> Review { get; set; }
+        public DbSet<Catagory> Catagories { get; set; }
+        public DbSet<Enroll> Enroll { get; set; }
+        public DbSet<Teacher> Teacher { get; set; }
+        public DbSet<Chapter> chapter { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+
 
     }
+
 }

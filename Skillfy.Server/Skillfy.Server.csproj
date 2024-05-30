@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\skillfy.client\skillfy.client.esproj" />
     <ProjectReference Include="..\Skillfy.DataAccess\Skillfy.DataAccess.csproj" />
     <ProjectReference Include="..\Skillfy.Model\Skillfy.Model.csproj" />
   </ItemGroup>

@@ -14,13 +14,14 @@ namespace Skillfy.Model
         public int CourseID { get; set; }
         public string Title { get; set; }
         //public string Description { get; set; }
-        public int Duration { get; set; } // Assuming duration is in minutes
+      
         public string Url { get; set; }
         public int Order { get; set; }
         public string ThumbnailImage { get; set; }
         public DateTime PublishDate { get; set; }
 
 
-        public virtual Course Course { get; set; }
+        public Chapter chapter { get; set; }
+
     }
 }

@@ -24,7 +24,7 @@ namespace Skillfy.Model
 
 
         public virtual Teacher Teacher { get; set; }
-        public virtual Catagory GetCatagory { get; set; }
+        public virtual Catagory Catagory { get; set; }
 
         public virtual ICollection<Enroll> Enrolls { get; set; }
 
