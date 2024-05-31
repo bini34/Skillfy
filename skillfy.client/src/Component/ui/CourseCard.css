@@ -13,7 +13,7 @@
 .course-image {
   width: 255px;
   height: 199px;
-  object-fit: cover;
+  object-fit: cover; 
 }
 
 .course-info {
