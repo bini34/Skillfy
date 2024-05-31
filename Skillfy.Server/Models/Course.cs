@@ -28,7 +28,8 @@ namespace Skillfy.Server.Model
 
         public virtual ICollection<Enroll> Enrolls { get; set; }
 
-        public virtual ICollection<Review> Ratings { get; set; }
+        public virtual ICollection<Chapter> Chapters { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
     }
 }
