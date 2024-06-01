@@ -11,7 +11,7 @@ namespace Skillfy.Server.Model
     {
         [Key]
         public int LessonID { get; set; }
-        public int CourseID { get; set; }
+        public int ChapterId { get; set; }
         public string Title { get; set; }
         //public string Description { get; set; }
       
@@ -21,7 +21,7 @@ namespace Skillfy.Server.Model
         public DateTime PublishDate { get; set; }
 
 
-        public Chapter chapter { get; set; }
+        public Chapter Chapter { get; set; }
 
     }
 }
