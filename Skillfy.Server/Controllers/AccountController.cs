@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Skillfy.Server.Data;
 using Skillfy.Server.Model;
+using Skillfy.Server.Dto;
+using Skillfy.Server.ViewModel;
 
 namespace Skillfy.Server.Controllers
 {
-    [Route("api/SkillfyWebsite")]
+    [Route("api/Account")]
     [ApiController]
     public class AccountController : Controller
     {
@@ -19,40 +21,33 @@ namespace Skillfy.Server.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost("signin")]
-        public async Task<IActionResult> signin()
+        [HttpPost("SignIn")]
+        public async Task<IActionResult> SignIn([FromBody] SigninDto signinDto)
         {
-            var user = await _userManager.FindByEmailAsync(lm.Email);
-            if (user != null)
+            if (signinDto == null)
             {
-                var result = await _signInManager.PasswordSignInAsync(lm.Email, lm.Password, false, lockoutOnFailure: false);
-                var roles = await _userManager.GetRolesAsync(user);
-                if (result.Succeeded)
+                return BadRequest(new ResponsViewModel(false, "Sign-in data is null", null));
+            }
+            var user = await _userManager.FindByEmailAsync(signinDto.Email);
+            if (user == null)
+            {
+                return Unauthorized(new ResponsViewModel(false, "Invalid login attempt", null));
+            }
+
+            
+           var result = await _signInManager.PasswordSignInAsync(signinDto.Email, signinDto.Password, false, lockoutOnFailure: false);
+
+                if (!result.Succeeded)
                 {
-                    if (roles.Contains("Teacher"))
-                    {
-                        if (result.Succeeded)
-                        {
-                            //if (Request.Query.Keys.Contains("ReturnUrl"))
-                            //{
-                            //    return Redirect(Request.Query["ReturnUrl"].First());
-                            //}
-                            //else
-                            //{
-                            //    return RedirectToAction("Shop", "Main");
-                            //}
-                        }
-                    }
+
+                    return BadRequest(new ResponsViewModel(false, "Invalid login attempt", null));
+
+
                 }
-                if (result.IsLockedOut)
-                {
-                    return;
-                }
-                else
-                {
-                    return;
-                }
-                return View();
+
+                return Ok(new ResponsViewModel(true, "Sign in Sucessfully", new {user.UserName,user.Fname,user.Lname}));
+
+            
         }
     }
 }
