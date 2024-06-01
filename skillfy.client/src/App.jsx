@@ -13,6 +13,7 @@ import InstructorPage from './Component/Instructor/InstructorPage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Test from './Component/Testt/test';
 import HomePage from './Pages/HomePage'
+import CourseDetail from './Pages/CourseDetail';
 
  function App() {
     const router = createBrowserRouter([
@@ -27,7 +28,12 @@ import HomePage from './Pages/HomePage'
         {
             path: '/Signup',
             element: <SignupPage/>
+        },
+        {
+            path: '/CourseDetail',
+            element: <CourseDetail/>
         }
+
     ])
     
     return <RouterProvider router={router}/>;

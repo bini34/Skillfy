@@ -1,0 +1,14 @@
+.main-courseDetail-Container{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, #FFEFEF 30%, #FFEFEF 35%, #FFFFFF 35%);
+
+}
+.courseDetail-Container{
+    width: 880px;
+    height: 100%;
+    background-color: inherit;
+    padding-top: 30px;
+}
