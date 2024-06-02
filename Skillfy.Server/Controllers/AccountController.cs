@@ -14,14 +14,16 @@ namespace Skillfy.Server.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationUser _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public AccountController(SignInManager<ApplicationUser> signinmanger, ApplicationUser applicationdbcontext, UserManager<ApplicationUser> userManager)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public AccountController(SignInManager<ApplicationUser> signinmanger, ApplicationUser applicationdbcontext, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _signInManager = signinmanger;
             _context = applicationdbcontext;
             _userManager = userManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
-        [HttpPost("SignIn")]
+        [HttpPost("signin")]
         public async Task<IActionResult> SignIn([FromBody] SigninDto signinDto)
         {
             if (signinDto == null)
@@ -49,5 +51,54 @@ namespace Skillfy.Server.Controllers
 
             
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UserRegistrationDto userDto)
+        {
+            if (userDto == null)
+            {
+                return BadRequest(new ResponsViewModel(false, "User data is null", null));
+            }
+            string UniqueFileName = null;
+            if(userDto.Picture != null)
+            {
+                string UserProfileFolder = Path.Combine(_webHostEnvironment.WebRootPath, "UserProfile");
+                UniqueFileName = Guid.NewGuid().ToString() + "_" + userDto.Picture.FileName;
+                var filepath = Path.Combine(UserProfileFolder, UniqueFileName);
+                using(var filestream = new FileStream(filepath, FileMode.Create))
+                {
+                    await userDto.Picture.CopyToAsync(filestream);
+                }
+
+            }
+
+
+
+            var user = new ApplicationUser
+            {
+                Email = userDto.Email,
+                Fname = userDto.Fname,
+                Lname = userDto.Lname,
+                ProfileUrl = UniqueFileName!= null ? "/UserProfile/{UniqueFileName}" : null
+                
+
+
+            };  
+            var result = await _userManager.CreateAsync(user, userDto.Password);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(new ResponsViewModel(false, "Registration failed", result.Errors));
+            }
+            return Ok(new ResponsViewModel(true, "Registrated successfully", new { user.Fname,user.Lname, user.ProfileUrl, user.Email}));
+
+
+
+
+        }
+
+
+
+
     }
 }

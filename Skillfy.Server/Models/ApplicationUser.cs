@@ -16,6 +16,8 @@ namespace Skillfy.Server.Model
         public int userID {  get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
+
+        public string ProfileUrl { get; set; } = string.Empty;
         public virtual ICollection<Enroll> Enroll { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         
