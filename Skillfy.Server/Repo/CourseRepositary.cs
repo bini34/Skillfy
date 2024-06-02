@@ -53,7 +53,7 @@ namespace Skillfy.Server.Repo
             .ToListAsync();
         }
 
-        public async Task<int> uploadcourse(Course course)
+        public async Task<int> UploadCourse(Course course)
         {
             _context.courses.Add(course);
             await _context.SaveChangesAsync();
@@ -61,9 +61,6 @@ namespace Skillfy.Server.Repo
 
         }
 
-     /*   public Task<int> UploadCourse(Course course)
-        {
-            
-        }*/
+      
     }
 }
