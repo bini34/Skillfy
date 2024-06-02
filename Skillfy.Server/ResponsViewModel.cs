@@ -4,6 +4,5 @@
     {
         public string message {  get; set; }    
 
-        public 
     }
 }

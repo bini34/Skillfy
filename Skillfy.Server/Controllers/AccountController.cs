@@ -18,41 +18,42 @@ namespace Skillfy.Server.Controllers
             _context = applicationdbcontext;
             _userManager = userManager;
         }
-
-        [HttpPost("signin")]
-        public async Task<IActionResult> signin()
-        {
-            var user = await _userManager.FindByEmailAsync(lm.Email);
-            if (user != null)
+        /**
+            [HttpPost("signin")]
+            public async Task<IActionResult> signin()
             {
-                var result = await _signInManager.PasswordSignInAsync(lm.Email, lm.Password, false, lockoutOnFailure: false);
-                var roles = await _userManager.GetRolesAsync(user);
-                if (result.Succeeded)
+                var user = await _userManager.FindByEmailAsync(lm.Email);
+                if (user != null)
                 {
-                    if (roles.Contains("Teacher"))
+                    var result = await _signInManager.PasswordSignInAsync(lm.Email, lm.Password, false, lockoutOnFailure: false);
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (result.Succeeded)
                     {
-                        if (result.Succeeded)
+                        if (roles.Contains("Teacher"))
                         {
-                            //if (Request.Query.Keys.Contains("ReturnUrl"))
-                            //{
-                            //    return Redirect(Request.Query["ReturnUrl"].First());
-                            //}
-                            //else
-                            //{
-                            //    return RedirectToAction("Shop", "Main");
-                            //}
+                            if (result.Succeeded)
+                            {
+                                //if (Request.Query.Keys.Contains("ReturnUrl"))
+                                //{
+                                //    return Redirect(Request.Query["ReturnUrl"].First());
+                                //}
+                                //else
+                                //{
+                                //    return RedirectToAction("Shop", "Main");
+                                //}
+                            }
                         }
                     }
+                    if (result.IsLockedOut)
+                    {
+                      //  return;
+                    }
+                    else
+                    {
+                        //return;
+                    }
+                    return View();
                 }
-                if (result.IsLockedOut)
-                {
-                    return;
-                }
-                else
-                {
-                    return;
-                }
-                return View();
-        }
+            }*/
     }
 }

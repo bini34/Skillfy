@@ -1,6 +1,5 @@
 import React from 'react'
 import Badge  from '@mui/material/Badge';
-import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Link } from 'react-router-dom';
 import './NavBar.css'

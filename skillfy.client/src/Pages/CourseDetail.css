@@ -11,4 +11,19 @@
     height: 100%;
     background-color: inherit;
     padding-top: 30px;
+    border: black 1px solid;
+}
+.courseDetail-main{
+    width: 550px;
+}
+.courseDetail{
+    display: flex;
+    flex-direction:row;
+}
+.courseDetail-Video{
+    width: 550px;
+    height: 400px;
+}
+.courseDetail-card{
+    width: 300px;
 }
