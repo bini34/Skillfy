@@ -41,13 +41,13 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
     string[] roleNames = { "Admin", "User", "Instructor" };
-    foreach (var roleName in roleNames)
-    {
-        if (!await roleManager.RoleExistsAsync(roleName))
-        {
-            await roleManager.CreateAsync(new IdentityRole(roleName));
-        }
-    }
+    //foreach (var roleName in roleNames)
+    //{
+    //    if (!await roleManager.RoleExistsAsync(roleName))
+    //    {
+    //        await roleManager.CreateAsync(new IdentityRole(roleName));
+    //    }
+    //}
 
   
 }
