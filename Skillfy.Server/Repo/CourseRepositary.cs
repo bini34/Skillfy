@@ -4,7 +4,7 @@ using Skillfy.Server.Model;
 
 namespace Skillfy.Server.Repo
 {
-    public class CourseRepositary //: ICourseRepositary
+    public class CourseRepositary : ICourseRepositary
     {
 
         private readonly ApplicationDbContext _context;

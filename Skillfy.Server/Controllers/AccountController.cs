@@ -4,26 +4,30 @@ using Skillfy.Server.Data;
 using Skillfy.Server.Model;
 using Skillfy.Server.Dto;
 using Skillfy.Server.ViewModel;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Skillfy.Server.Controllers
 {
-    [Route("api/Account")]
+    [Route("api/account")]
     [ApiController]
     public class AccountController : Controller
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ApplicationUser _context;
+        private readonly SignInManager<ApplicationUser> _signInManager;      
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AccountController(SignInManager<ApplicationUser> signinmanger, ApplicationUser applicationdbcontext, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
+        private readonly RoleManager<IdentityRole> _rolemanager;
+        public AccountController(SignInManager<ApplicationUser> signinmanger, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> rolemanager)
         {
             _signInManager = signinmanger;
-            _context = applicationdbcontext;
+            
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
+            _rolemanager = rolemanager;
         }
-
-        [HttpPost("signin")]
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(ResponsViewModel), 200)]
+        [ProducesResponseType(typeof(ResponsViewModel), 400)]
+        [ProducesResponseType(typeof(ResponsViewModel), 401)]
         public async Task<IActionResult> SignIn([FromBody] SigninDto signinDto)
         {
             if (signinDto == null)
@@ -36,8 +40,9 @@ namespace Skillfy.Server.Controllers
                 return Unauthorized(new ResponsViewModel(false, "Invalid login attempt", null));
             }
 
+           
             
-           var result = await _signInManager.PasswordSignInAsync(signinDto.Email, signinDto.Password, false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(user, signinDto.Password, false, lockoutOnFailure: false);
 
                 if (!result.Succeeded)
                 {
@@ -46,8 +51,10 @@ namespace Skillfy.Server.Controllers
 
 
                 }
+            var role = await _userManager.GetRolesAsync(user);
+            return Ok(new ResponsViewModel(true, "Login Sucessfully", new { user.Id, user.UserName, user.Fname, user.Lname, user.ProfileUrl , role}));
+          
 
-                return Ok(new ResponsViewModel(true, "Sign in Sucessfully", new {user.Id,user.UserName,user.Fname,user.Lname,user.ProfileUrl}));
 
             
         }
