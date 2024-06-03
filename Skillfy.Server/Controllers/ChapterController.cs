@@ -19,26 +19,27 @@ namespace Skillfy.Server.Controllers
             _context = context;
         }
 
-        //public async Task<IActionResult> CreateChapter(List<CreateChapterDto> chapterDtos)
-        //{
-        //    if (chapterDtos == null)
-        //    {
-        //        return BadRequest(new ResponsViewModel(false, "Chapter is null", null));
-        //    }
-        //    foreach (var chapters in chapterDtos)
-        //    {
+        public async Task<IActionResult> CreateChapter(List<CreateChapterDto> chapterDtos)
+        {
+            if (chapterDtos == null)
+            {
+                return BadRequest(new ResponsViewModel(false, "Chapter is null", null));
+            }
+            foreach (var chapters in chapterDtos)
+            {
 
-        //        var chap = new Chapter
-        //        {
-                      
-        //        };
-
-                
-        //    }
+                var chap = new Chapter
+                {
+                    Chaptername = chapters.name,
+                    
+                };
 
 
+            }
 
-           
-        //}
+
+
+
+        }
     }
 }
