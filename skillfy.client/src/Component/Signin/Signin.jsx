@@ -6,7 +6,29 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import SigninSocialMedia from './SigninSocialMedia'
 import img from '../../assets/image/signinImg.png'
+import { useState } from 'react';
+import authService from '../../Services/authService'
 function Signin() {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+
+  
+  
+    const handleLogin = (e) => {
+      e.preventDefault();
+  
+      authService.login(email, password).then(
+        (data) => {
+          setMessage('User logged in successfully!');
+        },
+        (error) => {
+          setMessage('Error occurred during login.');
+        }
+      );
+    };
+
   return (
     <div className="login-container">
       <div className="side-banner">
@@ -27,12 +49,11 @@ function Signin() {
         <p>Log in with your data that you entered during your registration.</p>
         </div>
         
-        <form>
-          <TextField id="outlined-basic" label="Email" variant="outlined" type="email" sx={{  height: '64px',  '&:hover': {borderColor: 'black' }}} />
-          <TextField id="outlined-basic" label="Password" variant="outlined" type="password"/>
+        <form onSubmit={handleLogin}>
+          <TextField id="outlined-basic" label="Email" variant="outlined" type="email" onChange={(e) => setEmail(e.target.value)} sx={{  height: '64px',  '&:hover': {borderColor: 'black' }}} />
+          <TextField id="outlined-basic" label="Password" variant="outlined" type="password" onChange={(e) => setPassword(e.target.value)}/>
           <a href="#"> Forget Password</a>
-          <Button variant="contained">Start now!</Button>
-
+          <Button type="submit" variant="contained">Start now!</Button>
         </form>
         <Divider>OR</Divider> 
 

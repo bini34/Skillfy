@@ -13,11 +13,11 @@ import Cart from './Component/ShoppingCart/Cart/Cart';
             element: <HomePage/>
         },
         {
-            path: '/Signin',
+            path: 'api/Account/signin',
             element: <SigninPage/>
         },
         {
-            path: '/Signup',
+            path: 'api/account/registor',
             element: <SignupPage/>
         },
         {
