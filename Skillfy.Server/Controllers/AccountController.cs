@@ -47,7 +47,7 @@ namespace Skillfy.Server.Controllers
 
                 }
 
-                return Ok(new ResponsViewModel(true, "Sign in Sucessfully", new {user.UserName,user.Fname,user.Lname}));
+                return Ok(new ResponsViewModel(true, "Sign in Sucessfully", new {user.Id,user.UserName,user.Fname,user.Lname,user.ProfileUrl}));
 
             
         }
@@ -90,7 +90,7 @@ namespace Skillfy.Server.Controllers
             {
                 return BadRequest(new ResponsViewModel(false, "Registration failed", result.Errors));
             }
-            return Ok(new ResponsViewModel(true, "Registrated successfully", new { user.Fname,user.Lname, user.ProfileUrl, user.Email}));
+            return Ok(new ResponsViewModel(true, "Registrated successfully", new {user.Id, user.Fname,user.Lname, user.ProfileUrl, user.Email}));
 
 
 
