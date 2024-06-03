@@ -12,7 +12,7 @@ namespace Skillfy.Server.Model
         [Key]
         public int ChapterId { get; set; }
         [Required]
-        public string Title { get; set; }
+        public string Chaptername { get; set; }
         public int CourseId { get; set; }
 
         public Course Course { get; set; }

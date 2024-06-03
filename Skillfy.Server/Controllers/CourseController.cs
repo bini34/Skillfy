@@ -24,6 +24,7 @@ namespace Skillfy.Server.Controllers
 
         }
 
+
         [HttpPost("/uploadcourse")]
         public async Task<IActionResult> UploadCourse([FromBody] CourseCreateDto courseCreateDto)
         {
@@ -61,5 +62,7 @@ namespace Skillfy.Server.Controllers
 
 
         }
+
+
     }
 }
