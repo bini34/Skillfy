@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import { defineConfig } from 'vite';
 import plugin from '@vitejs/plugin-react';
 import fs from 'fs';
@@ -43,7 +42,7 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/weatherforecast': {
+            '^/swagger': {
                 target,
                 secure: false
             }
@@ -54,4 +53,4 @@ export default defineConfig({
             cert: fs.readFileSync(certFilePath),
         }
     }
-})
+});

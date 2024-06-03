@@ -20,9 +20,6 @@ namespace Skillfy.Server.Model
         public string ProfileUrl { get; set; } = string.Empty;
         public virtual ICollection<Enroll> Enroll { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
-        
-
-
-
+       
     }
 }
