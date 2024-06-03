@@ -1,29 +1,58 @@
-.main-courseDetail-Container{
+/* CourseDetail.css */
+
+.main-courseDetail-Container {
     display: flex;
     justify-content: center;
-    height: 100%;
-    width: 100%;
+    padding: 20px;
     background: linear-gradient(to bottom, #FFEFEF 30%, #FFEFEF 35%, #FFFFFF 35%);
-
-}
-.courseDetail-Container{
+  }
+  
+  .courseDetail-Container {
     width: 880px;
-    height: 100%;
     background-color: inherit;
-    padding-top: 30px;
-    border: black 1px solid;
-}
-.courseDetail-main{
-    width: 550px;
-}
-.courseDetail{
+    overflow:hidden;
+  }
+  
+  .courseDetail {
     display: flex;
-    flex-direction:row;
-}
-.courseDetail-Video{
-    width: 550px;
-    height: 400px;
-}
-.courseDetail-card{
-    width: 300px;
-}
+    flex-direction: row;
+    margin-top: 20px;
+  }
+  
+  .courseDetail-main {
+    flex: 2;
+    margin-right: 20px;
+  }
+  
+  .courseDetail-Video {
+    width: 100%;
+    height: auto;
+  }
+  
+  .courseDetail-main-header {
+    margin-top: 20px;
+  }
+  
+  .courseDetail-main-header nav ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .courseDetail-main-header nav ul li {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    background-color: #EFEFF7;
+  }
+  
+  .courseDetail-main-header nav ul li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .courseDetail-card {
+    flex: 1;
+  }
+  

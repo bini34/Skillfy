@@ -1,13 +1,11 @@
 import './App.css';
-
 import SignupPage from './Pages/SignupPage'
 import SigninPage from './Pages/SigninPage'
-
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-
 import HomePage from './Pages/HomePage'
 import CourseDetail from './Pages/CourseDetail';
-
+import ShoppingCart from './Pages/ShoppingCart';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Cart from './Component/ShoppingCart/Cart/Cart';
  function App() {
     const router = createBrowserRouter([
         {
@@ -25,8 +23,12 @@ import CourseDetail from './Pages/CourseDetail';
         {
             path: '/CourseDetail',
             element: <CourseDetail/>
+        },
+        {
+            path: '/Cart',
+            element: <Cart/>
+           // element: <ShoppingCart/>
         }
-
     ])
     
     return <RouterProvider router={router}/>;

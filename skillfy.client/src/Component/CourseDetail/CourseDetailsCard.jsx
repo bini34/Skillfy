@@ -7,10 +7,9 @@ const CourseDetailsCard = () => {
     <div className="course-details-card">
       <div className="price-section">
         <span className="current-price">$49.65</span>
-        <span className="discount">50% Off</span>
-        <div className="time-left">
-          <span role="img" aria-label="clock">⏰</span> 11 Hour left at this price
-        </div>
+    
+        <button className="AddtoCart-now-button">Add to Cart</button>
+
         <button className="buy-now-button">Buy Now</button>
       </div>
       <div className="course-includes">

@@ -1,0 +1,63 @@
+.cart-summary {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .total-price {
+    margin-bottom: 20px;
+  }
+  
+  .original-total {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 14px;
+  }
+  
+  .discounted-total {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .discount {
+    display: block;
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .checkout-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .coupon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .coupon input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .apply-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
