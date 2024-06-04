@@ -1,11 +1,11 @@
 // src/services/authService.js
 import axios from 'axios';
 
-const API_URL = 'https://localhost:5259/api/account'
+const API_URL = 'https://localhost:7182/api/account'
 
-const register = (username, email, password) => {
+const register = (fullName, email, password) => {
   return axios.post(`${API_URL}/register`, {
-    username,
+    fullName,
     email,
     password,
   });
@@ -23,7 +23,7 @@ const login = async (email, password) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      console.log(error.resp)
+      console.log(error.response.message)
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
       throw error.response.data;

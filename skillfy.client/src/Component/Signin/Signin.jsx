@@ -8,6 +8,7 @@ import SigninSocialMedia from './SigninSocialMedia'
 import img from '../../assets/image/signinImg.png'
 import { useState } from 'react';
 import authService from '../../Services/authService'
+import { Link } from 'react-router-dom';
 function Signin() {
 
     const [email, setEmail] = useState('');
@@ -42,7 +43,7 @@ function Signin() {
       <div className="login-form">
         <div className='registor'>
           <p>Already have an Account? </p>
-          <a href="" className='regstora'>Registor</a>
+          <Link to="/api/account/registor" className='regstora'>Registor</Link>
         </div>       
          <div>
         <h1>Hello! Welcome back.</h1>
