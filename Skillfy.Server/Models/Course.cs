@@ -17,8 +17,6 @@ namespace Skillfy.Server.Model
         public int CatagoryId { get; set; }
 
         public decimal Price { get; set; }
-
-        public string Language { get; set; }
         public string ThumbnailImage { get; set; }
         public int EnrollmentCount { get; set; }
 

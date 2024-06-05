@@ -30,12 +30,13 @@ namespace Skillfy.Server.Controllers
 
         //        var chap = new Chapter
         //        {
-        //            Chaptername = chapters.name,
+        //            Chaptername = chapters.name
                     
         //        };
+        //        await _chapterRepositary.AddChapterAsync(chap);
 
+        //    }
 
-           // }
 
 
 

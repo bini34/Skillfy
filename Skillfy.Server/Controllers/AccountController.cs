@@ -66,18 +66,18 @@ namespace Skillfy.Server.Controllers
             {
                 return BadRequest(new ResponsViewModel(false, "User data is null", null));
             }
-            string UniqueFileName = null;
-            if(userDto.Picture != null)
-            {
-                string UserProfileFolder = Path.Combine(_webHostEnvironment.WebRootPath, "UserProfile");
-                UniqueFileName = Guid.NewGuid().ToString() + "_" + userDto.Picture.FileName;
-                var filepath = Path.Combine(UserProfileFolder, UniqueFileName);
-                using(var filestream = new FileStream(filepath, FileMode.Create))
-                {
-                    await userDto.Picture.CopyToAsync(filestream);
-                }
+            //string UniqueFileName = null;
+            //if(userDto.Picture != null)
+            //{
+            //    string UserProfileFolder = Path.Combine(_webHostEnvironment.WebRootPath, "UserProfile");
+            //    UniqueFileName = Guid.NewGuid().ToString() + "_" + userDto.Picture.FileName;
+            //    var filepath = Path.Combine(UserProfileFolder, UniqueFileName);
+            //    using(var filestream = new FileStream(filepath, FileMode.Create))
+            //    {
+            //        await userDto.Picture.CopyToAsync(filestream);
+            //    }
 
-            }
+            //}
 
 
 
@@ -86,18 +86,34 @@ namespace Skillfy.Server.Controllers
                 Email = userDto.Email,
                 Fname = userDto.Fname,
                 Lname = userDto.Lname,
-                ProfileUrl = UniqueFileName!= null ? "/UserProfile/{UniqueFileName}" : null
+                UserName = userDto.Email
+               // ProfileUrl = UniqueFileName!= null ? "/UserProfile/{UniqueFileName}" : null
                 
 
 
             };  
+
             var result = await _userManager.CreateAsync(user, userDto.Password);
+            
 
             if (!result.Succeeded)
             {
                 return BadRequest(new ResponsViewModel(false, "Registration failed", result.Errors));
             }
-            return Ok(new ResponsViewModel(true, "Registrated successfully", new {user.Id, user.Fname,user.Lname, user.ProfileUrl, user.Email}));
+            if (!string.IsNullOrEmpty(userDto.role))
+            {
+                if (!await _rolemanager.RoleExistsAsync(userDto.role))
+                {
+                    await _rolemanager.CreateAsync(new IdentityRole(userDto.role));
+                }
+
+                var roleResult = await _userManager.AddToRoleAsync(user, userDto.role);
+                if (!roleResult.Succeeded)
+                {
+                    return BadRequest(new ResponsViewModel(false, "Failed to add role", roleResult.Errors));
+                }
+            }
+            return Ok(new ResponsViewModel(true, "Registrated successfully", new {user.Id, user.Fname,user.Lname, user.Email}));
 
 
 
