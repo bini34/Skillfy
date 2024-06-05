@@ -73,7 +73,7 @@ const Signup = () => {
 
  
   
-    authService({ firstName, lastName, email, role, password }).then(
+    authService.register( firstName, lastName, email, role, password ).then(
       (data) => {
         setMessage('User registered successfully!');
       },
@@ -154,9 +154,9 @@ const Signup = () => {
             helperText={passwordError || 'Re-enter your password'}
           />
           <FormControlLabel 
-            control={<Switch checked={role === 'instructor'} onChange={toggleRole} />} 
-            label={role === 'instructor' ? 'Become an instructor' : 'Become a student'} 
-            />
+            control={<Switch checked={role === 'instructor'} onChange={toggleRole} />} // Check if the role is 'instructor' to set the switch state
+            label={role === 'instructor' ? 'Become an instructor' : 'Become a student'} // Dynamically change label
+          />
           <p>{role === 'instructor' ? 'As an instructor, you can create and manage courses.' : 'As a student, you can enroll in courses.'}</p>
           <Button type="submit" variant="contained">Create your account</Button>
         </form>

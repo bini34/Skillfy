@@ -33,18 +33,24 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("AllowAll",
-            builder =>
-            {
-                builder.WithOrigins("https://localhost:5173")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials();
-            });
-    });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+/*   builder.Services.AddCors(options =>
+   {
+       options.AddPolicy("AllowAll",
+           builder =>
+           {
+               builder.WithOrigins("https://localhost:5173")
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials();
+           });
+   });*/
 
 builder.Services.AddScoped<IchapterRepositery, ChapterRepository>();
 builder.Services.AddScoped<ICourseRepositary, CourseRepositary>();
