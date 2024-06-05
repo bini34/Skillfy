@@ -1,139 +1,115 @@
-/* src/Register.css */
-.register-container {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    background-color: #fff;
-  }
-  
-  .register-left, .register-right {
-    flex: 1;
-  }
-  
-  .register-left {
-    background-color: #FD9697;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 50px;
-  }
-  
-  .register-left-content h1 {
-    font-size: 2.5rem;
-    color: #333;
-  }
-  
-  .register-left-content p {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .register-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.signup-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  flex-direction: row;
+}
 
+/* Side Banner Styles */
+.side-banner {
+  background-color: #FD9697;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 20px;
+  width: 725px;
+  height: 100%;
+  padding-left: 100px;
+}
 
-  }
-  
-  .register-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    gap:10px;
-    text-align: center;
-  }
-  
-  .register-form h2 {
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .register-form p {
-    margin-bottom: 20px;
-    color: #777;
+.banner-content {
+  text-align: center;
+}
+
+.banner-content h1 {
+  font-weight: 900;
+  font-size: 4rem;
+}
+
+.banner-content p {
+  font-size: 1.2rem;
+}
+
+/* Signup Form Styles */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-right: 100px;
+  width: 725px;
+  gap: 10px;
+}
+
+.signin {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-content: center;
+}
+
+.signin-link {
+  color: white;
+  background-color: #ff6b6b;
+  padding: 10px;
+  width: 70px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.signup-form h1 {
+  margin-bottom: 10px;
+}
+
+.signup-form p {
+  margin-bottom: 20px;
+}
+
+.signup-form form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  gap: 10px;
+}
+
+.signup-form div {
+  width: 500px;
+}
+
+form a {
+  text-align: end;
+}
+
+.signup-form form button {
+  padding: 10px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-form + a {
+  color: #ff6b6b;
+  text-decoration: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .signup-container {
+    padding: 0;
   }
 
-  .submitBtn{
-    width: 100%;
-    padding: 10px;
-    background-color: #ff6f61;
-    border: none;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    height: 50px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    
+  .side-banner {
+    display: none;
   }
-  
 
-  
+  .signup-form {
+    padding:0 ;
+  }
 
-  /* Media Queries */
-  @media (max-width: 768px) {
-    .register-container {
-      flex-direction: column;
-    }
-  
-    .register-left, .register-right {
-      flex: none;
-      width: 100%;
-    }
-  
-    .register-left {
-      display: none;
-    }
-  
-    .register-left-content h1 {
-      font-size: 2rem;
-    }
-  
-    .register-left-content p {
-      font-size: 1rem;
-    }
-  
-    .register-form {
-      padding: 10px;
-    }
-  
-    .register-form h2 {
-      font-size: 1.5rem;
-    }
-  
-    .register-form p {
-      font-size: 1rem;
-    }
+  .signup-form form {
+    max-width: 100%;
   }
-  
-  @media (max-width: 480px) {
-    .register-left-content h1 {
-      font-size: 1.5rem;
-    }
-  
-    .register-left-content p {
-      font-size: 0.9rem;
-    }
-  
-    .register-form h2 {
-      font-size: 1.2rem;
-    }
-  
-    .register-form p {
-      font-size: 0.9rem;
-    }
-  
-    .register-form input {
-      padding: 8px;
-    }
-  
-    .register-form button, .register-form .google-signin {
-      padding: 8px;
-    }
-  }
-  
+}

@@ -1,15 +1,13 @@
 import React from 'react';
 import './MainContent.css'
+import VideoPlayer from '../ui/VideoPlayer';
 const MainContent = () => {
   return (
     <div className="main-content">
       <div className="video-section">
         <h1>Introduction about xd</h1>
         <p>30 Min</p>
-        <video controls>
-          <source src="video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <VideoPlayer/>
       </div>
       <div className="course-details">
         <h2>Overview of the Unit</h2>

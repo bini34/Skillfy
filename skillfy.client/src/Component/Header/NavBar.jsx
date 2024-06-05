@@ -29,10 +29,10 @@ const NavBar = () => {
                 </Link>
             </li>
             <li className="nav-item">
-                <Link to="/Signin" className="nav-link">Login</Link>
+                <Link to="api/Account/signin" className="nav-link">Login</Link>
             </li>
             <li className="nav-item">
-                <Link to="/Signup" className="nav-link register">Register</Link>
+                <Link to="api/Account/registor" className="nav-link register">Register</Link>
             </li>
         </ul>
     </nav>

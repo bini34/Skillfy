@@ -6,6 +6,7 @@ import CourseDetail from './Pages/CourseDetail';
 import ShoppingCart from './Pages/ShoppingCart';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Cart from './Component/ShoppingCart/Cart/Cart';
+import CourseLearn from './Pages/CourseLearn';
  function App() {
     const router = createBrowserRouter([
         {
@@ -13,21 +14,24 @@ import Cart from './Component/ShoppingCart/Cart/Cart';
             element: <HomePage/>
         },
         {
-            path: '/Signin',
+            path: '/api/Account/signin',
             element: <SigninPage/>
         },
         {
-            path: '/Signup',
+            path: '/api/account/registor',
             element: <SignupPage/>
         },
         {
-            path: '/CourseDetail',
+            path: '/coursedetail',
             element: <CourseDetail/>
         },
         {
-            path: '/Cart',
+            path: '/cart',
             element: <Cart/>
-           // element: <ShoppingCart/>
+        },
+        {
+            path: '/course/learn',
+            element: <CourseLearn/>
         }
     ])
     
