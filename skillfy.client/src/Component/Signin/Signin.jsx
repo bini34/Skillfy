@@ -59,9 +59,6 @@ function Signin() {
         <Divider>OR</Divider> 
 
         <SigninSocialMedia/>
-        <p>
-          Don’t have an account? <a href="#">Sign up</a>
-        </p>
       </div>
     </div>
   );
