@@ -9,72 +9,40 @@ using Skillfy.Server.service;
 
 namespace Skillfy.Server.Controllers
 {
-    //[Route("api/course")]
-    //[ApiController]
+    [Route("api/course")]
+    [ApiController]
     public class CourseController : Controller
     {
         private readonly ICourseRepositary courseRepositary;
-        private readonly ICourseService courseService;  
+        private readonly ICourseService _courseService;  
 
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IWebHostEnvironment webHostEnvironment;
-        public CourseController(ICourseRepositary courseRepositary, ApplicationDbContext applicationDbContext, IWebHostEnvironment webHostEnvironment) {
+       public CourseController(ICourseRepositary courseRepositary, ApplicationDbContext applicationDbContext, IWebHostEnvironment webHostEnvironment, ICourseService courseService) {
 
             this.courseRepositary = courseRepositary;
             this.applicationDbContext = applicationDbContext;
             this.webHostEnvironment = webHostEnvironment;
-
+            _courseService = courseService;
         }
 
 
-       
-        //public async Task<IActionResult> UploadCourse([FromBody] CourseCreateDto courseCreateDto)
-        //{
-        //    //    if (courseCreateDto == null)
-        //    //    {
-        //    //        return BadRequest(new ResponsViewModel(false, "course is null", null));
+        [HttpPost("createcourse")]
+        public async Task<IActionResult> UploadCourse([FromBody] CompositCreateDto createDto)
+        {
+            
 
-        //    //    }
-        //    //    string uniqueFileName = null;
-        //    //    if (courseCreateDto.Thumbline != null)
-        //    //    {
-        //    //        string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "coursethumbline");
-        //    //        uniqueFileName = Guid.NewGuid().ToString() + "_" + courseCreateDto.Thumbline.FileName;
-        //    //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-        //    //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //    //        {
-        //    //            await courseCreateDto.Thumbline.CopyToAsync(fileStream);
-        //    //        }
-        //    //    }
+            var result = await _courseService.AddCourse(createDto.CourseCreateDto, createDto.ChapterDtos);
 
-        //    //    var course = new Course
-        //    //    {
-        //    //        Title = courseCreateDto.CourseName,
-        //    //        Description = courseCreateDto.Description,
-        //    //        ThumbnailImage = "/coursethumbline/{uniqueFileName}"
+            if (!result.Success)
+            {
+                return BadRequest(new ResponsViewModel(false, result.Message, null));
+            }
 
-        //    //    };
-
-        //    //    var result = await courseRepositary.UploadCourse(course);
-        //    //    if(result == null)
-        //    //    {
-        //    //        return BadRequest(new ResponsViewModel(false, "Course is not Created!!!", null));
-        //    //    }
-        //    //    return Ok(new ResponsViewModel(true, "Course is Created Succesfully", result));
+            return Ok(new ResponsViewModel(true, result.Message, result.Course));
 
 
-
-        //    //var result = await _courseService.AddCourseAsync(courseCreateDto, TeacherId, chapterDtos);
-
-        //    //if (!result.Success)
-        //    //{
-        //    //    return BadRequest(new ResponseViewModel(false, result.Message, null));
-        //    //}
-
-        //    //return Ok(new ResponseViewModel(true, result.Message, result.Course));
-
-
-        //}
+        }
 
 
     }

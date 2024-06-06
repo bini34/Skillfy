@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Skillfy.Server.Data;
 using Skillfy.Server.Model;
 using Skillfy.Server.Repo;
+using Skillfy.Server.service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
 
 // Configure Cookie settings
 builder.Services.ConfigureApplicationCookie(options =>
@@ -54,6 +56,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<IchapterRepositery, ChapterRepository>();
 builder.Services.AddScoped<ICourseRepositary, CourseRepositary>();
+builder.Services.AddScoped<IcatogryRepositary, CatagoryRepositary>();
+builder.Services.AddScoped<ICourseService, CourseSerivce>();
 
 // These services are already added by AddIdentity. Explicit addition might not be necessary.
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

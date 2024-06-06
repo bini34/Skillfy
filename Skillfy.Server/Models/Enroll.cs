@@ -12,13 +12,13 @@ namespace Skillfy.Server.Model
         [Key]
         public int EnrollmentID { get; set; }
         public int CourseID { get; set; }
-        public string userID { get; set; }
+        public string Id { get; set; }
         public DateTime EnrollmentDate { get; set; }
         public string PaymentStatus { get; set; }
         public string Grade { get; set; }
 
        
-        public virtual Course Course { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public  Course Course { get; set; }
+        public  ApplicationUser User { get; set; }
     }
 }

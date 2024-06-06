@@ -12,14 +12,15 @@ namespace Skillfy.Server.Controllers
     [ApiController]
     public class AccountController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;      
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly RoleManager<IdentityRole> _rolemanager;
-        public AccountController(SignInManager<ApplicationUser> signinmanger, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> rolemanager)
+        public AccountController( ApplicationDbContext context ,SignInManager<ApplicationUser> signinmanger, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> rolemanager)
         {
-            _signInManager = signinmanger;
-            
+            _context = context;
+            _signInManager = signinmanger;            
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
             _rolemanager = rolemanager;
@@ -66,20 +67,8 @@ namespace Skillfy.Server.Controllers
             {
                 return BadRequest(new ResponsViewModel(false, "User data is null", null));
             }
-            //string UniqueFileName = null;
-            //if(userDto.Picture != null)
-            //{
-            //    string UserProfileFolder = Path.Combine(_webHostEnvironment.WebRootPath, "UserProfile");
-            //    UniqueFileName = Guid.NewGuid().ToString() + "_" + userDto.Picture.FileName;
-            //    var filepath = Path.Combine(UserProfileFolder, UniqueFileName);
-            //    using(var filestream = new FileStream(filepath, FileMode.Create))
-            //    {
-            //        await userDto.Picture.CopyToAsync(filestream);
-            //    }
-
-            //}
-
-
+       
+            
 
             var user = new ApplicationUser
             {
@@ -106,6 +95,7 @@ namespace Skillfy.Server.Controllers
                 {
                     await _rolemanager.CreateAsync(new IdentityRole(userDto.role));
                 }
+               
 
                 var roleResult = await _userManager.AddToRoleAsync(user, userDto.role);
                 if (!roleResult.Succeeded)

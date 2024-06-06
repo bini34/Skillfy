@@ -10,7 +10,8 @@
 
         public IFormFile Thumbline {  get; set; }
         public int price {  get; set; }
+        public string userid { get; set; }
 
-        
+
     }
 }
