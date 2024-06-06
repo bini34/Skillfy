@@ -1,0 +1,89 @@
+.course-editor {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.left-panel, .right-panel {
+  flex: 1;
+  margin: 10px;
+}
+
+.course-details, .course-image, .course-chapters, .course-sell {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.course-title, .course-description, .course-price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.course-title h3, .course-description p, .course-price span {
+  margin: 0;
+}
+
+.course-title input, .course-description textarea, .course-price input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 8px;
+  font-size: 1em;
+}
+
+.course-chapters ul {
+  list-style: none;
+  padding: 0;
+}
+
+.chapter-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.chapter-item input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 8px;
+}
+
+.chapter-item span {
+  flex: 1;
+}
+
+.status {
+  background: #ffffff;
+  color: rgb(32, 30, 30);
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 10px;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-button {
+  color: #007bff;
+}
+
+.add-chapter-button, .course-price button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-chapter-button:hover, .course-price button:hover {
+  background: #0056b3;
+}

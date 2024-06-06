@@ -9,6 +9,7 @@ import Cart from './Component/ShoppingCart/Cart/Cart';
 import CourseLearn from './Pages/CourseLearn';
 import CreateCourse from './Component/InstructorAdmin/CourseForm'
 import TestDataGrid from './Component/ui/TestDataGrid';
+import CourseEditor from './Component/CourseEditor/CourseEditor';
  function App() {
     const router = createBrowserRouter([
         {
@@ -37,7 +38,8 @@ import TestDataGrid from './Component/ui/TestDataGrid';
         },
         {
             path:'/data',
-            element: <CreateCourse/>
+            element: <CourseEditor/>
+            //element: <CreateCourse/>
             //element: <TestDataGrid/>
         }
     ])
