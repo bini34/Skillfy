@@ -13,67 +13,37 @@ namespace Skillfy.Server.Data
         }
         public DbSet<ApplicationUser> users { get; set; }
         public DbSet<Lesson> lessons { get; set; }
-        public DbSet<Course> courses { get; set; }
-        public DbSet<Teacher> teachers { get; set; }
+        public DbSet<Course> courses { get; set; }      
         public DbSet<Catagory> catagories { get; set; }
         public DbSet<Review> ratings { get; set; }
         public DbSet<Enroll> enrolls { get; set; }
         public DbSet<Chapter> chapters { get; set; }
-        public DbSet<Catagory> catagory { get; set; }
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configure one-to-many relationship between ApplicationUser and Course
             modelBuilder.Entity<Course>()
-                .HasMany(c => c.Chapters)
-                .WithOne(ch => ch.Course)
-                .HasForeignKey(ch => ch.CourseId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(c => c.User)
+                .WithMany(u => u.Courses)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascading delete
 
-            modelBuilder.Entity<Course>()
-                .HasMany(c => c.Reviews)
-                .WithOne(r => r.Course)
-                .HasForeignKey(r => r.CourseId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Chapter>()
-                .HasMany(ch => ch.Lessons)
-                .WithOne(l => l.Chapter)
-                .HasForeignKey(l => l.ChapterId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(u => u.Reviews)
-                .WithOne(r => r.User)
-                .HasForeignKey(r => r.userID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Lesson>()
-                .HasOne(l => l.Chapter)
-                .WithMany(ch => ch.Lessons)
-                .HasForeignKey(l => l.ChapterId)
-                .OnDelete(DeleteBehavior.Cascade);
-
+            // Configure many-to-one relationship between Enroll and Course with NO ACTION delete behavior
             modelBuilder.Entity<Enroll>()
                 .HasOne(e => e.Course)
                 .WithMany(c => c.Enrolls)
-                .HasForeignKey(e => e.CourseID);
+                .HasForeignKey(e => e.CourseID)
+                .OnDelete(DeleteBehavior.NoAction); // No action on delete to avoid multiple cascade paths
 
+            // Configure many-to-one relationship between Enroll and ApplicationUser with NO ACTION delete behavior
             modelBuilder.Entity<Enroll>()
                 .HasOne(e => e.User)
-                .WithMany(u => u.Enroll)
-                .HasForeignKey(e => e.userID);
-            modelBuilder.Entity<Review>()
-            .HasOne(r => r.User)
-            .WithMany(u => u.Reviews)
-            .HasForeignKey(r => r.userID)
-            .OnDelete(DeleteBehavior.Cascade);
+                .WithMany()
+                .HasForeignKey(e => e.Id)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.Course)
-                .WithMany(c => c.Reviews)
-                .HasForeignKey(r => r.CourseId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Skillfy.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class intialcreate : Migration
+    public partial class initialcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,9 +30,9 @@ namespace Skillfy.Server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    userID = table.Column<int>(type: "int", nullable: false),
                     Fname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Lname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -54,7 +54,7 @@ namespace Skillfy.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Catagory",
+                name: "catagories",
                 columns: table => new
                 {
                     catagoryId = table.Column<int>(type: "int", nullable: false)
@@ -64,29 +64,7 @@ namespace Skillfy.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Catagory", x => x.catagoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "teachers",
-                columns: table => new
-                {
-                    TeacherId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Qualifications = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rating = table.Column<double>(type: "float", nullable: false),
-                    JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_teachers", x => x.TeacherId);
+                    table.PrimaryKey("PK_catagories", x => x.catagoryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,10 +181,9 @@ namespace Skillfy.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TeacherID = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CatagoryId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ThumbnailImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EnrollmentCount = table.Column<int>(type: "int", nullable: false)
                 },
@@ -214,16 +191,16 @@ namespace Skillfy.Server.Migrations
                 {
                     table.PrimaryKey("PK_courses", x => x.CourseID);
                     table.ForeignKey(
-                        name: "FK_courses_Catagory_CatagoryId",
-                        column: x => x.CatagoryId,
-                        principalTable: "Catagory",
-                        principalColumn: "catagoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_courses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_courses_teachers_TeacherID",
-                        column: x => x.TeacherID,
-                        principalTable: "teachers",
-                        principalColumn: "TeacherId",
+                        name: "FK_courses_catagories_CatagoryId",
+                        column: x => x.CatagoryId,
+                        principalTable: "catagories",
+                        principalColumn: "catagoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -233,7 +210,7 @@ namespace Skillfy.Server.Migrations
                 {
                     ChapterId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Chaptername = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -254,26 +231,30 @@ namespace Skillfy.Server.Migrations
                     EnrollmentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CourseID = table.Column<int>(type: "int", nullable: false),
-                    userID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     EnrollmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaymentStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Grade = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Grade = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_enrolls", x => x.EnrollmentID);
                     table.ForeignKey(
-                        name: "FK_enrolls_AspNetUsers_userID",
-                        column: x => x.userID,
+                        name: "FK_enrolls_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_enrolls_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_enrolls_courses_CourseID",
                         column: x => x.CourseID,
                         principalTable: "courses",
-                        principalColumn: "CourseID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CourseID");
                 });
 
             migrationBuilder.CreateTable(
@@ -377,9 +358,14 @@ namespace Skillfy.Server.Migrations
                 column: "CatagoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_courses_TeacherID",
+                name: "IX_courses_UserId",
                 table: "courses",
-                column: "TeacherID");
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_enrolls_ApplicationUserId",
+                table: "enrolls",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_enrolls_CourseID",
@@ -387,9 +373,9 @@ namespace Skillfy.Server.Migrations
                 column: "CourseID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_enrolls_userID",
+                name: "IX_enrolls_Id",
                 table: "enrolls",
-                column: "userID");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_lessons_ChapterId",
@@ -441,16 +427,13 @@ namespace Skillfy.Server.Migrations
                 name: "chapters");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "courses");
 
             migrationBuilder.DropTable(
-                name: "Catagory");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "teachers");
+                name: "catagories");
         }
     }
 }

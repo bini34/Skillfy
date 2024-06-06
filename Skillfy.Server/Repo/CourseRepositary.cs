@@ -48,7 +48,7 @@ namespace Skillfy.Server.Repo
         public async Task<List<Course>> GetEnrolledCourseByUserId(string userId)
         {
             return await _context.enrolls
-            .Where(uc => uc.userID == userId)
+            .Where(uc => uc.Id == userId)
             .Select(uc => uc.Course)
             .ToListAsync();
         }

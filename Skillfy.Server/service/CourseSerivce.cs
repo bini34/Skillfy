@@ -26,7 +26,7 @@ namespace Skillfy.Server.service
             _icatogry = icatogry;
         }
 
-        public async Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto, int TeacherId, List<CreateChapterDto> chapterDtos)
+        public async Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto,List<CreateChapterDto> chapterDtos)
         {
            
             string uniqueFileName = null;
@@ -45,7 +45,7 @@ namespace Skillfy.Server.service
             var course = new Course
             {
                 Title = courseCreateDto.CourseName,
-                TeacherID = TeacherId,
+                UserId = courseCreateDto.userid,
                 CatagoryId = catagory.Id,
                 Price = courseCreateDto.price,
                 Description = courseCreateDto.Description,
@@ -54,28 +54,29 @@ namespace Skillfy.Server.service
             };
 
             var CourseId = await _courseRepositary.UploadCourse(course);
-            if (CourseId > 0)
+            if (CourseId < 0)
             {
-                if (chapterDtos == null)
-                {
-                    return ( false, "Chapter is null", null);
-                }
-                foreach (var chapters in chapterDtos)
-                {
-
-                    var chap = new Chapter
-                    {
-                        Chaptername = chapters.Name,
-                        ChapterId = CourseId
-
-
-                    };
-                    await _chapterRepositery.AddChapterAsync(chap);
-
-                }
+                return (false, "Course Not created ", null);
 
             }
-            return (true, "Course and chapters created successfully", null);
+            if (chapterDtos == null)
+            {
+                return (false, "Chapter is null", null);
+            }
+            foreach (var chapters in chapterDtos)
+            {
+
+                var chap = new Chapter
+                {
+                    Chaptername = chapters.Name,
+                    ChapterId = CourseId
+
+
+                };
+                await _chapterRepositery.AddChapterAsync(chap);
+
+            }
+            return (true, "Course and chapters created successfully", course);
 
         }
     }

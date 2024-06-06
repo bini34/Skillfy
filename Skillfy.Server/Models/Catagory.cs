@@ -14,8 +14,8 @@ namespace Skillfy.Server.Model
         public int catagoryId { get; set; }
         [Required]
         public string CatagoryName { get; set; } = string.Empty;
-        [Required]
-        public string pictureurl {  get; set; } 
+       
+        
 
 
         public virtual ICollection<Course> Courses { get; set; }

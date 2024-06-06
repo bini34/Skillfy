@@ -13,7 +13,7 @@ namespace Skillfy.Server.Model
         public int CourseID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int TeacherID { get; set; }
+        public string UserId { get; set; }
         public int CatagoryId { get; set; }
 
         public decimal Price { get; set; }
@@ -21,8 +21,8 @@ namespace Skillfy.Server.Model
         public int EnrollmentCount { get; set; }
 
 
-        public virtual Teacher Teacher { get; set; }
-        public virtual Catagory Catagory { get; set; }
+       public  ApplicationUser User { get; set; }
+        public  Catagory Catagory { get; set; }
 
         public virtual ICollection<Enroll> Enrolls { get; set; }
 

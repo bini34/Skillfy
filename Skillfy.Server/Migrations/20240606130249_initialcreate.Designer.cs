@@ -12,8 +12,8 @@ using Skillfy.Server.Data;
 namespace Skillfy.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240531183154_intialcreate")]
-    partial class intialcreate
+    [Migration("20240606130249_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -208,6 +208,10 @@ namespace Skillfy.Server.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -217,9 +221,6 @@ namespace Skillfy.Server.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("userID")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -252,7 +253,7 @@ namespace Skillfy.Server.Migrations
 
                     b.HasKey("catagoryId");
 
-                    b.ToTable("Catagory");
+                    b.ToTable("catagories");
                 });
 
             modelBuilder.Entity("Skillfy.Server.Model.Chapter", b =>
@@ -263,12 +264,12 @@ namespace Skillfy.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChapterId"));
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("Chaptername")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
 
                     b.HasKey("ChapterId");
 
@@ -295,15 +296,8 @@ namespace Skillfy.Server.Migrations
                     b.Property<int>("EnrollmentCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TeacherID")
-                        .HasColumnType("int");
 
                     b.Property<string>("ThumbnailImage")
                         .IsRequired()
@@ -313,11 +307,15 @@ namespace Skillfy.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("CourseID");
 
                     b.HasIndex("CatagoryId");
 
-                    b.HasIndex("TeacherID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("courses");
                 });
@@ -330,6 +328,9 @@ namespace Skillfy.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnrollmentID"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("CourseID")
                         .HasColumnType("int");
 
@@ -340,19 +341,21 @@ namespace Skillfy.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("userID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("EnrollmentID");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CourseID");
 
-                    b.HasIndex("userID");
+                    b.HasIndex("Id");
 
                     b.ToTable("enrolls");
                 });
@@ -418,57 +421,6 @@ namespace Skillfy.Server.Migrations
                     b.HasIndex("userID");
 
                     b.ToTable("ratings");
-                });
-
-            modelBuilder.Entity("Skillfy.Server.Model.Teacher", b =>
-                {
-                    b.Property<int>("TeacherId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"));
-
-                    b.Property<string>("Bio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactInfo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfilePicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Qualifications")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.HasKey("TeacherId");
-
-                    b.ToTable("teachers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -541,29 +493,33 @@ namespace Skillfy.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Skillfy.Server.Model.Teacher", "Teacher")
-                        .WithMany("CoursesTaught")
-                        .HasForeignKey("TeacherID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Skillfy.Server.Model.ApplicationUser", "User")
+                        .WithMany("Courses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Catagory");
 
-                    b.Navigation("Teacher");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Skillfy.Server.Model.Enroll", b =>
                 {
+                    b.HasOne("Skillfy.Server.Model.ApplicationUser", null)
+                        .WithMany("Enroll")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("Skillfy.Server.Model.Course", "Course")
                         .WithMany("Enrolls")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Skillfy.Server.Model.ApplicationUser", "User")
-                        .WithMany("Enroll")
-                        .HasForeignKey("userID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -603,6 +559,8 @@ namespace Skillfy.Server.Migrations
 
             modelBuilder.Entity("Skillfy.Server.Model.ApplicationUser", b =>
                 {
+                    b.Navigation("Courses");
+
                     b.Navigation("Enroll");
 
                     b.Navigation("Reviews");
@@ -625,11 +583,6 @@ namespace Skillfy.Server.Migrations
                     b.Navigation("Enrolls");
 
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("Skillfy.Server.Model.Teacher", b =>
-                {
-                    b.Navigation("CoursesTaught");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Skillfy.Server.Data;
 using Skillfy.Server.Model;
 using Skillfy.Server.Repo;
+using Skillfy.Server.service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+
 // Configure Cookie settings
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -33,21 +35,29 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("AllowAll",
-            builder =>
-            {
-                builder.WithOrigins("https://localhost:5173")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials();
-            });
-    });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+/*   builder.Services.AddCors(options =>
+   {
+       options.AddPolicy("AllowAll",
+           builder =>
+           {
+               builder.WithOrigins("https://localhost:5173")
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials();
+           });
+   });*/
 
 builder.Services.AddScoped<IchapterRepositery, ChapterRepository>();
 builder.Services.AddScoped<ICourseRepositary, CourseRepositary>();
+builder.Services.AddScoped<IcatogryRepositary, CatagoryRepositary>();
+builder.Services.AddScoped<ICourseService, CourseSerivce>();
 
 // These services are already added by AddIdentity. Explicit addition might not be necessary.
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

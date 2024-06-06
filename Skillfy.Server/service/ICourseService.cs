@@ -6,7 +6,7 @@ namespace Skillfy.Server.service
 {
     public interface ICourseService
     {
-        public Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto, int TeacherId, List<CreateChapterDto> chapterDtos);
+        public Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto, List<CreateChapterDto> chapterDtos);
 
 
     }
