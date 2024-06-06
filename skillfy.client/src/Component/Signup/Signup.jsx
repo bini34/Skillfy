@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import SignupSocialMedia from './SignupSocialMedia';
 import img from '../../assets/image/signinImg.png';
 import authService from '../../Services/authService'
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import { Link } from 'react-router-dom';
 import './Signup.css';
 
@@ -17,6 +19,7 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState('');
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [role, setRole] = useState('student'); // State for role (instructor/student)
 
   const validatePassword = (password) => {
     const minLength = /.{8,}/;
@@ -37,6 +40,9 @@ const Signup = () => {
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+  const toggleRole = () => {
+    setRole(role === 'student' ? 'instructor' : 'student');
   };
 
   const handleRegister = (e) => {
@@ -65,8 +71,9 @@ const Signup = () => {
       return;
     }
 
+ 
   
-    authService({ firstName, lastName, email, password }).then(
+    authService.register( firstName, lastName, email, role, password ).then(
       (data) => {
         setMessage('User registered successfully!');
       },
@@ -146,6 +153,11 @@ const Signup = () => {
             error={!!passwordError}
             helperText={passwordError || 'Re-enter your password'}
           />
+          <FormControlLabel 
+            control={<Switch checked={role === 'instructor'} onChange={toggleRole} />} // Check if the role is 'instructor' to set the switch state
+            label={role === 'instructor' ? 'Become an instructor' : 'Become a student'} // Dynamically change label
+          />
+          <p>{role === 'instructor' ? 'As an instructor, you can create and manage courses.' : 'As a student, you can enroll in courses.'}</p>
           <Button type="submit" variant="contained">Create your account</Button>
         </form>
         <Divider>OR</Divider>

@@ -7,6 +7,8 @@ import ShoppingCart from './Pages/ShoppingCart';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Cart from './Component/ShoppingCart/Cart/Cart';
 import CourseLearn from './Pages/CourseLearn';
+import CreateCourse from './Component/InstructorAdmin/CourseForm'
+import TestDataGrid from './Component/ui/TestDataGrid';
  function App() {
     const router = createBrowserRouter([
         {
@@ -32,6 +34,11 @@ import CourseLearn from './Pages/CourseLearn';
         {
             path: '/course/learn',
             element: <CourseLearn/>
+        },
+        {
+            path:'/data',
+            element: <CreateCourse/>
+            //element: <TestDataGrid/>
         }
     ])
     
