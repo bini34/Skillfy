@@ -6,6 +6,7 @@ using Skillfy.Server.ViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Skillfy.Server.Model;
 using Skillfy.Server.service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Skillfy.Server.Controllers
 {
@@ -28,9 +29,20 @@ namespace Skillfy.Server.Controllers
 
 
         [HttpPost("createcourse")]
+        [Authorize("Instructor")]
         public async Task<IActionResult> UploadCourse([FromBody] CompositCreateDto createDto)
         {
-            
+            string uniqueFileName = null;
+            if (createDto.CourseCreateDto.Thumbline != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "coursethumbline");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + createDto.CourseCreateDto.Thumbline.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await createDto.CourseCreateDto.Thumbline.CopyToAsync(fileStream);
+                }
+            }
 
             var result = await _courseService.AddCourse(createDto.CourseCreateDto, createDto.ChapterDtos);
 
