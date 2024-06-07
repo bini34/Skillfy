@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const CourseSell = () => {
+const CourseSell = ({ setCoursePrice }) => {
   const [isEditingPrice, setIsEditingPrice] = useState(false);
   const [price, setPrice] = useState('93.00');
   const [tempPrice, setTempPrice] = useState(price);
+
+  useEffect(() => {
+    setCoursePrice(price);
+  }, [price, setCoursePrice]);
 
   const handlePriceEdit = () => {
     if (isEditingPrice) {

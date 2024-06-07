@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './CourseChapters.css';
 
-const CourseChapters = () => {
+export default function CourseChapter({ setCourseChapters }) {
   const [chapters, setChapters] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newChapterTitle, setNewChapterTitle] = useState('');
+
+  useEffect(() => {
+    console.log('Chapters updated:', chapters); // Log the current chapters
+    setCourseChapters(chapters.map(chapter => chapter.title));
+  }, [chapters, setCourseChapters]);
 
   const handleAddChapter = () => {
     if (newChapterTitle.trim() !== '') {
@@ -15,6 +21,7 @@ const CourseChapters = () => {
       setIsAdding(false);
       setNewChapterTitle('');
     }
+    console.log(newChapters)
   };
 
   const handleEditChapter = (index) => {
@@ -40,56 +47,68 @@ const CourseChapters = () => {
   };
 
   return (
-    <div className="course-chapters">
-      <h2>Course chapters</h2>
-        {chapters.length === 0 && !isAdding && (
-        <>
-          <p>No chapters</p>
-          <button onClick={() => setIsAdding(true)}>+ Add a chapter</button>
-        </>
-      )}
-      {isAdding && (
-        <div>
-          <input
-            type="text"
-            value={newChapterTitle}
-            onChange={(e) => setNewChapterTitle(e.target.value)}
-            placeholder="Chapter title"
-          />
-          <button onClick={handleAddChapter}>Create</button>
-          <button onClick={() => setIsAdding(false)}>Cancel</button>
+    <div className='course-chapters'>
+      <div className="course-chapter_header">
+        <h2>Course chapters</h2>
+        <div className="buttons">
+          {chapters.length === 0 && !isAdding && (
+            <button onClick={() => setIsAdding(true)}>+ Add a chapter</button>
+          )}
+          {isAdding && (
+            <button onClick={() => setIsAdding(false)}>Cancel</button>
+          )}
+          {chapters.length > 0 && (
+            <>
+              {!isAdding && <button onClick={() => setIsAdding(true)}>+ Add a chapter</button>}
+            </>
+          )}
         </div>
-      )}
-      {chapters.length > 0 && (
-        <>
-          {!isAdding && <button onClick={() => setIsAdding(true)}>+ Add a chapter</button>}
-          <ul>
-            {chapters.map((chapter, index) => (
-              <li key={index} className="chapter-item">
-                {chapter.isEditing ? (
-                  <>
-                    <input
-                      type="text"
-                      value={chapter.tempTitle}
-                      onChange={(e) => handleChangeChapterTitle(index, e.target.value)}
-                    />
-                    <button onClick={() => handleEditChapter(index)}>Save</button>
-                    <button onClick={() => cancelChapterEdit(index)}>Cancel</button>
-                  </>
-                ) : (
-                  <>
-                    <span>{chapter.title}</span>
-                    {chapter.status && <span className="status">{chapter.status}</span>}
-                    <button onClick={() => handleEditChapter(index)}>Edit</button>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+      </div>
+      <div className="course-chapter_main">
+        {chapters.length === 0 && !isAdding && (
+          <p>No chapters</p>
+        )}
+        {isAdding && (
+          <div>
+            <input
+              type="text"
+              value={newChapterTitle}
+              onChange={(e) => setNewChapterTitle(e.target.value)}
+              placeholder="Chapter title"
+            />
+            <button onClick={handleAddChapter}>Create</button>
+            <button onClick={() => setIsAdding(false)}>Cancel</button>
+          </div>
+        )}
+        {chapters.length > 0 && (
+          <>
+            {!isAdding && <button onClick={() => setIsAdding(true)}>+ Add a chapter</button>}
+            <ul>
+              {chapters.map((chapter, index) => (
+                <li key={index} className="chapter-item">
+                  {chapter.isEditing ? (
+                    <>
+                      <input
+                        type="text"
+                        value={chapter.tempTitle}
+                        onChange={(e) => handleChangeChapterTitle(index, e.target.value)}
+                      />
+                      <button onClick={() => handleEditChapter(index)}>Save</button>
+                      <button onClick={() => cancelChapterEdit(index)}>Cancel</button>
+                    </>
+                  ) : (
+                    <>
+                      <span>{chapter.title}</span>
+                      {chapter.status && <span className="status">{chapter.status}</span>}
+                      <button onClick={() => handleEditChapter(index)}>Edit</button>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
     </div>
   );
-};
-
-export default CourseChapters;
+}

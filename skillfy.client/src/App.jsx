@@ -37,10 +37,14 @@ import CourseEditor from './Component/CourseEditor/CourseEditor';
             element: <CourseLearn/>
         },
         {
-            path:'/data',
-            element: <CourseEditor/>
-            //element: <CreateCourse/>
-            //element: <TestDataGrid/>
+            // path:'/data',
+            // element: <CourseEditor/>
+            // //element: <CreateCourse/>
+            // //element: <TestDataGrid/>
+        },
+        {
+            path:'/instructor/dashboard',
+            element:<CourseEditor/>
         }
     ])
     
