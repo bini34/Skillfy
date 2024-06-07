@@ -30,21 +30,21 @@ namespace Skillfy.Server.Controllers
 
         [HttpPost("createcourse")]
         [Authorize("Instructor")]
-        public async Task<IActionResult> UploadCourse([FromBody] CompositCreateDto createDto)
+        public async Task<IActionResult> UploadCourse([FromForm] CourseCreateDto courseCreateDto, [FromForm] List<CreateChapterDto> chapterDtos)
         {
             string uniqueFileName = null;
-            if (createDto.CourseCreateDto.Thumbline != null)
+            if (courseCreateDto.Thumbline != null)
             {
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "coursethumbline");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + createDto.CourseCreateDto.Thumbline.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + courseCreateDto.Thumbline.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    await createDto.CourseCreateDto.Thumbline.CopyToAsync(fileStream);
+                    await courseCreateDto.Thumbline.CopyToAsync(fileStream);
                 }
             }
 
-            var result = await _courseService.AddCourse(createDto.CourseCreateDto, createDto.ChapterDtos);
+            var result = await _courseService.AddCourse(courseCreateDto, chapterDtos);
 
             if (!result.Success)
             {
