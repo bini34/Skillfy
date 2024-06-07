@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CourseDetails.css';
 import EditIcon from '@mui/icons-material/Edit';
 
-
-const CourseDetails = () => {
+const CourseDetails = ({ setCourseDetails }) => {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [title, setTitle] = useState('Advanced Web Development');
   const [description, setDescription] = useState('This is a course about development');
   const [tempTitle, setTempTitle] = useState(title);
   const [tempDescription, setTempDescription] = useState(description);
+
+  useEffect(() => {
+    setCourseDetails({ title, description });
+  }, [title, description, setCourseDetails]);
 
   const handleTitleEdit = () => {
     if (isEditingTitle) {
@@ -38,7 +41,7 @@ const CourseDetails = () => {
   return (
     <div className="course-details">
       <div className="edit-section">
-        <h3> Course title</h3>
+        <h3>Course title</h3>
         {isEditingTitle ? (
           <>
             <input

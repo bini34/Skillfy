@@ -27,6 +27,7 @@ const login = async (email, password) => {
     });
     if (response.data.accessToken) {
       localStorage.setItem('user', JSON.stringify(response.data));
+      console.log(response.data)
     }
     return response.data;
   } catch (error) {
@@ -54,7 +55,7 @@ const logout = () => {
 };
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem('user'));
+  return JSON.parse(localStorage.getItem('userid'));
 };
 
 const authService = {

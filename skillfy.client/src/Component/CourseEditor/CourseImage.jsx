@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlusCircle, FaEdit } from 'react-icons/fa';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -6,9 +6,13 @@ import { styled } from '@mui/material/styles';
 
 import './CourseImage.css';
 
-const CourseImage = () => {
+const CourseImage = ({ setCourseImage }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    setCourseImage(image);
+  }, [image, setCourseImage]);
 
   const handleButtonClick = () => {
     setIsUploading(true);
