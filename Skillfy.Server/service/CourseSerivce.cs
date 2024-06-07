@@ -29,17 +29,7 @@ namespace Skillfy.Server.service
         public async Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto,List<CreateChapterDto> chapterDtos)
         {
            
-            string uniqueFileName = null;
-            if (courseCreateDto.Thumbline != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "coursethumbline");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + courseCreateDto.Thumbline.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await courseCreateDto.Thumbline.CopyToAsync(fileStream);
-                }
-            }
+           
             var catagory = _icatogry.ReturnCatagory(courseCreateDto.catagory);
 
             var course = new Course
