@@ -27,5 +27,14 @@ namespace Skillfy.Server.Repo
             return await _context.catagories.FirstOrDefaultAsync(c => c.CatagoryName == catagory);
             
         }
+        public async Task<int> GetCatagoryIdByNameAsync(string catagoryName)
+        {
+            var catagory = await _context.catagories
+                .Where(c => c.CatagoryName == catagoryName)
+                .Select(c => c.catagoryId)
+                .FirstOrDefaultAsync();
+
+            return catagory;
+        }
     }
 }
