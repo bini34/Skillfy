@@ -29,7 +29,7 @@ namespace Skillfy.Server.Controllers
 
 
         [HttpPost("createcourse")]
-        [Authorize("Instructor")]
+        //[Authorize("Instructor")]
         public async Task<IActionResult> UploadCourse([FromForm] CourseCreateDto courseCreateDto, [FromForm] List<CreateChapterDto> chapterDtos)
         {
             string uniqueFileName = null;
