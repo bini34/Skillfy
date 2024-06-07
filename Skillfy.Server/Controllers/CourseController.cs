@@ -18,24 +18,28 @@ namespace Skillfy.Server.Controllers
         private readonly ICourseService _courseService;  
 
         private readonly ApplicationDbContext applicationDbContext;
-        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
        public CourseController(ICourseRepositary courseRepositary, ApplicationDbContext applicationDbContext, IWebHostEnvironment webHostEnvironment, ICourseService courseService) {
 
             this.courseRepositary = courseRepositary;
             this.applicationDbContext = applicationDbContext;
-            this.webHostEnvironment = webHostEnvironment;
+            _webHostEnvironment = webHostEnvironment;
             _courseService = courseService;
         }
 
 
         [HttpPost("createcourse")]
-        [Authorize("Instructor")]
+       // [Authorize("Instructor")]
         public async Task<IActionResult> UploadCourse([FromForm] CourseCreateDto courseCreateDto, [FromForm] List<CreateChapterDto> chapterDtos)
         {
             string uniqueFileName = null;
             if (courseCreateDto.Thumbline != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "coursethumbline");
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "coursethumbline");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + courseCreateDto.Thumbline.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -44,7 +48,7 @@ namespace Skillfy.Server.Controllers
                 }
             }
 
-            var result = await _courseService.AddCourse(courseCreateDto, chapterDtos);
+            var result = await _courseService.AddCourse(courseCreateDto, chapterDtos, uniqueFileName);
 
             if (!result.Success)
             {

@@ -26,20 +26,20 @@ namespace Skillfy.Server.service
             _icatogry = icatogry;
         }
 
-        public async Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto,List<CreateChapterDto> chapterDtos)
+        public async Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto,List<CreateChapterDto> chapterDtos, string uniqueFileName)
         {
-           
-           
-            var catagory = _icatogry.ReturnCatagory(courseCreateDto.catagory);
 
+
+            var catagoryid = await _icatogry.GetCatagoryIdByNameAsync(courseCreateDto.catagory);
+            var imgpath = uniqueFileName;
             var course = new Course
             {
                 Title = courseCreateDto.CourseName,
                 UserId = courseCreateDto.userid,
-                CatagoryId = catagory.Id,
+                CatagoryId =  catagoryid,
                 Price = courseCreateDto.price,
                 Description = courseCreateDto.Description,
-                ThumbnailImage = "/coursethumbline/{uniqueFileName}"
+                ThumbnailImage = "/coursethumbline/{imgpath}"
 
             };
 
