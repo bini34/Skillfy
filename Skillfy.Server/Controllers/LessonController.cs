@@ -14,12 +14,12 @@ namespace Skillfy.Server.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly MuxApiClient _muxApiClient;
-        private readonly LessonService _lessonService;
+      //  private readonly ILessonService _lessonService;
 
         public LessonController(IConfiguration configuration, LessonService lessonService)
         {
             _configuration = configuration;
-            _lessonService = lessonService;
+          //  _lessonService = lessonService;
             var muxApiKey = _configuration["445ce76c-876e-420e-9213-3b7977797b88"];
             var muxApiSecret = _configuration["t4vN+ASUU7mT+YYqWUqexinUev/aXSbrVquvDKTq+iePD3cL/pfAWHdy4gQuscai3bOdH3Yyg3T"];
             _muxApiClient = new MuxApiClient(muxApiKey, muxApiSecret);
