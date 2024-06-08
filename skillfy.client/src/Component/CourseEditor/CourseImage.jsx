@@ -25,12 +25,8 @@ const CourseImage = ({ setCourseImage }) => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target.result);
-        setIsUploading(false);
-      };
-      reader.readAsDataURL(file);
+      setImage(file);
+      setIsUploading(false);
     }
   };
 
@@ -75,9 +71,9 @@ const CourseImage = ({ setCourseImage }) => {
           </Button>
         </div>
       ) : (
-        <div className="course-image-box" style={{ backgroundImage: `url(${image})` }}>
+        <div className="course-image-box">
           {image ? (
-            <img src={image} alt="Course" className="course-image" />
+            <img src={URL.createObjectURL(image)} alt="Course" className="course-image" />
           ) : (
             <div className="course-image-placeholder">
               <FaPlusCircle />

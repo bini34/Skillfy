@@ -37,35 +37,22 @@ namespace Skillfy.Server.service
                 Title = courseCreateDto.CourseName,
                 UserId = courseCreateDto.userid,
                 CatagoryId =  catagoryid,
-                Price =courseCreateDto.price,
+                Price = courseCreateDto.price,
                 Description = courseCreateDto.Description,
                 ThumbnailImage = $"/coursethumbline/{imgpath}"
 
             };
 
             var CourseId = await _courseRepositary.UploadCourse(course);
-            await _context.SaveChangesAsync();
-
             if (CourseId < 0)
             {
                 return (false, "Course Not created ", null);
 
             }
-            if (courseCreateDto.Chapters == null)
+            if (chapterDtos == null)
             {
                 return (false, "Chapter is null", null);
-
             }
-            if (courseCreateDto.Chapters == null || courseCreateDto.Chapters.Count == 0)
-            {
-                return (false, "Chapters are null or empty", null);
-            }
-
-            //var chapters = chapterDtos.Select(chapterDto => new Chapter
-            //{
-            //    Chaptername = chapterDto.Name,
-            //    CourseId = course.CourseID
-            //}).ToList();
             var chapterEntities = courseCreateDto.Chapters.Select(chapter => new Chapter
             {
                 Chaptername = chapter,
