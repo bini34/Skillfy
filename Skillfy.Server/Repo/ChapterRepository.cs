@@ -23,12 +23,11 @@ namespace Skillfy.Server.Repo
             return await _context.chapters.FindAsync(id);
         }
 
-        public async Task AddChapterAsync(Chapter chapter)
+        public async Task AddChaptersAsync(IEnumerable<Chapter> chapters)
         {
-            await _context.chapters.AddAsync(chapter);
+            await _context.chapters.AddRangeAsync(chapters);
             await _context.SaveChangesAsync();
         }
-
         public async Task UpdateChapterAsync(Chapter chapter)
         {
             _context.chapters.Update(chapter);

@@ -7,7 +7,9 @@ namespace Skillfy.Server.Repo
         
          public Task<IEnumerable<Chapter>> GetAllChaptersAsync();
          public Task<Chapter> GetChapterByIdAsync(int id);
-         public Task AddChapterAsync(Chapter chapter);
+        public Task AddChaptersAsync(IEnumerable<Chapter> chapters);
+
+
          public Task UpdateChapterAsync(Chapter chapter);
          public Task DeleteChapterAsync(int id);
         

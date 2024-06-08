@@ -25,10 +25,10 @@ namespace Skillfy.Server.Controllers
             _muxApiClient = new MuxApiClient(muxApiKey, muxApiSecret);
         }
 
-       // [HttpPost("uploadlesson")]
+        //[HttpPost("uploadlesson")]
         //public async Task<IActionResult> UploadLesson(LessonCreateDto lessondto)
         //{
-        //    if (video == null || video.Length == 0)
+        //    if (lessondto.Video == null || lessondto.Video.Length == 0)
         //    {
         //        return BadRequest("No video file provided.");
         //    }
@@ -37,7 +37,7 @@ namespace Skillfy.Server.Controllers
         //    var tempFilePath = Path.GetTempFileName();
         //    using (var stream = new FileStream(tempFilePath, FileMode.Create))
         //    {
-        //        await video.CopyToAsync(stream);
+        //        await lessondto.Video.CopyToAsync(stream);
         //    }
 
         //    // Upload video to Mux
@@ -48,7 +48,7 @@ namespace Skillfy.Server.Controllers
         //    System.IO.File.Delete(tempFilePath);
 
         //    // Save lesson details to the database
-        //    var lesson = await _lessonService.SaveLessonAsync(chapterId, videoUrl);
+        //    var lesson = await _lessonService.SaveLessonAsync(abe, videoUrl);
 
         //    return Ok(new ResponsViewModel(true, "Succesfully create", lesson));
         //}

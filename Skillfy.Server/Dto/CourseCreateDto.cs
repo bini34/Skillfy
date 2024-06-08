@@ -7,6 +7,7 @@
         public string Description { get; set; }
 
         public string catagory { get; set; }
+        public List<string> Chapters { get; set; }
 
         public IFormFile Thumbline { get; set; }
         public int price {  get; set; }

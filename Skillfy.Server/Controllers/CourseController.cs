@@ -30,7 +30,7 @@ namespace Skillfy.Server.Controllers
 
         [HttpPost("createcourse")]
        // [Authorize("Instructor")]
-        public async Task<IActionResult> UploadCourse([FromForm] CourseCreateDto courseCreateDto, [FromForm] List<CreateChapterDto> chapterDtos)
+        public async Task<IActionResult> UploadCourse([FromForm] CourseCreateDto courseCreateDto)
         {
             string uniqueFileName = null;
             if (courseCreateDto.Thumbline != null)
@@ -48,7 +48,7 @@ namespace Skillfy.Server.Controllers
                 }
             }
 
-            var result = await _courseService.AddCourse(courseCreateDto, chapterDtos, uniqueFileName);
+            var result = await _courseService.AddCourse(courseCreateDto, uniqueFileName);
 
             if (!result.Success)
             {

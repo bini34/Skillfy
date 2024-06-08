@@ -26,7 +26,7 @@ namespace Skillfy.Server.service
             _icatogry = icatogry;
         }
 
-        public async Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto,List<CreateChapterDto> chapterDtos, string uniqueFileName)
+        public async Task<(bool Success, string Message, Course Course)> AddCourse(CourseCreateDto courseCreateDto, string uniqueFileName)
         {
 
 
@@ -37,35 +37,43 @@ namespace Skillfy.Server.service
                 Title = courseCreateDto.CourseName,
                 UserId = courseCreateDto.userid,
                 CatagoryId =  catagoryid,
-                Price = courseCreateDto.price,
+                Price =courseCreateDto.price,
                 Description = courseCreateDto.Description,
-                ThumbnailImage = "/coursethumbline/{imgpath}"
+                ThumbnailImage = $"/coursethumbline/{imgpath}"
 
             };
 
             var CourseId = await _courseRepositary.UploadCourse(course);
+            await _context.SaveChangesAsync();
+
             if (CourseId < 0)
             {
                 return (false, "Course Not created ", null);
 
             }
-            if (chapterDtos == null)
+            if (courseCreateDto.Chapters == null)
             {
                 return (false, "Chapter is null", null);
+
             }
-            foreach (var chapters in chapterDtos)
+            if (courseCreateDto.Chapters == null || courseCreateDto.Chapters.Count == 0)
             {
-
-                var chap = new Chapter
-                {
-                    Chaptername = chapters.Name,
-                    ChapterId = CourseId
-
-
-                };
-                await _chapterRepositery.AddChapterAsync(chap);
-
+                return (false, "Chapters are null or empty", null);
             }
+
+            //var chapters = chapterDtos.Select(chapterDto => new Chapter
+            //{
+            //    Chaptername = chapterDto.Name,
+            //    CourseId = course.CourseID
+            //}).ToList();
+            var chapterEntities = courseCreateDto.Chapters.Select(chapter => new Chapter
+            {
+                Chaptername = chapter,
+                CourseId = course.CourseID
+            }).ToList();
+
+
+            await _chapterRepositery.AddChaptersAsync(chapterEntities);
             return (true, "Course and chapters created successfully", course);
 
         }
