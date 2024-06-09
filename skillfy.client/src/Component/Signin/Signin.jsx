@@ -28,8 +28,7 @@ function Signin() {
 
                 // Extract the first role from the roles array
               
-                const role = roles && roles.length > 0 ? roles[0] : null;
-                console.log(roles[values])
+                const role = roles.$values[0];
                 if (role === 'admin') {
                     navigate(`/admin/dashboard/`);
                 } else if (role === 'Instructor') {
