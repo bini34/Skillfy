@@ -19,12 +19,12 @@ const CourseEditor = () => {
   const [courseCategory, setCourseCategory] = useState('');
   const [courseChapters, setCourseChapters] = useState([]);
   const [coursePrice, setCoursePrice] = useState('');
-  const [userid, setUserid] = useState(null);
+  const [userid, setUserid] = useState('7c8db928-040b-4f2b-bc2e-d95deddef30a');
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
     if (currentUser) {
-      setUserid(currentUser);
+      setUserid(currentUser.id);
     }
   }, []);
 
@@ -33,11 +33,12 @@ const CourseEditor = () => {
   }, [courseChapters]);
 
   const handleSave = async (event) => {
+    event.preventDefault();
     if (!userid) {
       console.error('User ID is missing');
       return;
     }
-    event.preventDefault();
+  
     const formData = new FormData();
     formData.append('courseCreateDto.CourseName', courseName);
     formData.append('courseCreateDto.Description', courseDescription);
@@ -45,12 +46,18 @@ const CourseEditor = () => {
     formData.append('courseCreateDto.Thumbline', courseImage);
     formData.append('courseCreateDto.price', coursePrice);
     formData.append('courseCreateDto.userid', userid);
+  
+    if (courseChapters.length === 0) {
+      console.error('At least one chapter is required');
+      return;
+    }
+    else{
+      console.log(courseChapters)
+      formData.append(`courseCreateDto.Chapters`, courseChapters);
+    }
+  
 
-    courseChapters.forEach((courseChapter, index) => {
-      formData.append(`chapterDtos[${index}].name`, courseChapter);
-      console.log(courseChapter)
-    });
-
+  
     try {
       const response = await axios.post('https://localhost:7182/api/course/createcourse', formData, {
         headers: {
@@ -62,6 +69,7 @@ const CourseEditor = () => {
       console.error('There was an error uploading the course!', error);
     }
   };
+  
 
   const setCourseDetails = ({ title, description }) => {
     setCourseName(title);

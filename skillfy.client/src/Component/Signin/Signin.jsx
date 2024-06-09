@@ -29,7 +29,6 @@ function Signin() {
                 // Extract the first role from the roles array
               
                 const role = roles && roles.length > 0 ? roles[0] : null;
-                // Navigate to the respective dashboard based on the user role and include user ID in the URL
                 if (role === 'admin') {
                     navigate(`/admin/dashboard/`);
                 } else if (role === 'Instructor') {

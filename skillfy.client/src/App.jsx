@@ -10,6 +10,7 @@ import CourseLearn from './Pages/CourseLearn';
 import CreateCourse from './Component/InstructorAdmin/CourseForm'
 import TestDataGrid from './Component/ui/TestDataGrid';
 import CourseEditor from './Component/CourseEditor/CourseEditor';
+import CourseLessons from './Pages/CourseLessons';
  function App() {
     const router = createBrowserRouter([
         {
@@ -45,6 +46,10 @@ import CourseEditor from './Component/CourseEditor/CourseEditor';
         {
             path:'/instructor/dashboard',
             element:<CourseEditor/>
+        },
+        {
+            path:'/course/chapter/lessons',
+            element:<CourseLessons/>
         }
     ])
     

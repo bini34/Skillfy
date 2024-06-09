@@ -49,10 +49,16 @@ namespace Skillfy.Server.service
                 return (false, "Course Not created ", null);
 
             }
-            if (chapterDtos == null)
+            if (courseCreateDto.Chapters == null)
             {
                 return (false, "Chapter is null", null);
+
             }
+            if (courseCreateDto.Chapters == null || courseCreateDto.Chapters.Count == 0)
+            {
+                return (false, "Chapters are null or empty", null);
+            }
+
             var chapterEntities = courseCreateDto.Chapters.Select(chapter => new Chapter
             {
                 Chaptername = chapter,

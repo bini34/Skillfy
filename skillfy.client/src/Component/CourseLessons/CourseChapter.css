@@ -1,0 +1,15 @@
+.courseChapter{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.chapter-title, .chapter-discription{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 70%;
+
+}
+.chapter-title, .chapter-discription label{
+    font-size: large;
+}

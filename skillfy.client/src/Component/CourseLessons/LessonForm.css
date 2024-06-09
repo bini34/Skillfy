@@ -1,0 +1,26 @@
+.LessonForm{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.LessonForm div label{
+    font-weight: bold;
+
+}
+.LessonForm div div{
+    font-weight: bold;
+
+}
+.LessonForm button{
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.LessonForm button:hover{
+    background-color: #45a049;
+
+}
