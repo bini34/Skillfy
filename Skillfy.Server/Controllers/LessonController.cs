@@ -4,6 +4,8 @@ using Skillfy.Server.Api;
 using Skillfy.Server.Dto;
 using Skillfy.Server.service;
 using Skillfy.Server.ViewModel;
+using Skillfy.Server.Repo;
+
 
 
 namespace Skillfy.Server.Controllers
@@ -12,45 +14,48 @@ namespace Skillfy.Server.Controllers
     [ApiController]
     public class LessonController : Controller
     {
-        private readonly IConfiguration _configuration;
         private readonly MuxApiClient _muxApiClient;
-      //  private readonly ILessonService _lessonService;
 
-        public LessonController(IConfiguration configuration, LessonService lessonService)
+        public LessonController(MuxApiClient muxApiClient)
         {
-            _configuration = configuration;
-          //  _lessonService = lessonService;
-            var muxApiKey = _configuration["445ce76c-876e-420e-9213-3b7977797b88"];
-            var muxApiSecret = _configuration["t4vN+ASUU7mT+YYqWUqexinUev/aXSbrVquvDKTq+iePD3cL/pfAWHdy4gQuscai3bOdH3Yyg3T"];
-            _muxApiClient = new MuxApiClient(muxApiKey, muxApiSecret);
+            _muxApiClient = muxApiClient;
         }
 
-        //[HttpPost("uploadlesson")]
-        //public async Task<IActionResult> UploadLesson(LessonCreateDto lessondto)
-        //{
-        //    if (lessondto.Video == null || lessondto.Video.Length == 0)
-        //    {
-        //        return BadRequest("No video file provided.");
-        //    }
+        [HttpPost("uploadLesson")]
+        public async Task<IActionResult> UploadLesson([FromForm] LessonCreateDto lessonDto)
+        {
+            if (lessonDto == null || lessonDto.Video == null)
+            {
+                return BadRequest(new { message = "Invalid lesson data" });
+            }
 
-        //    // Save video to a temporary location
-        //    var tempFilePath = Path.GetTempFileName();
-        //    using (var stream = new FileStream(tempFilePath, FileMode.Create))
-        //    {
-        //        await lessondto.Video.CopyToAsync(stream);
-        //    }
+            try
+            {
+                // Save the video to a temporary location
+                var tempFilePath = Path.GetTempFileName();
+                using (var stream = new FileStream(tempFilePath, FileMode.Create))
+                {
+                    await lessonDto.Video.CopyToAsync(stream);
+                }
 
-        //    // Upload video to Mux
-        //    var playbackId = await _muxApiClient.UploadVideoAsync(tempFilePath);
-        //    var videoUrl = $"https://stream.mux.com/{playbackId}.m3u8";
+                // Upload the video to Mux
+                await _muxApiClient.UploadVideoAsync(tempFilePath);
 
-        //    // Delete the temporary file
-        //    System.IO.File.Delete(tempFilePath);
+                // Delete the temporary file
+                System.IO.File.Delete(tempFilePath);
 
-        //    // Save lesson details to the database
-        //    var lesson = await _lessonService.SaveLessonAsync(abe, videoUrl);
-
-        //    return Ok(new ResponsViewModel(true, "Succesfully create", lesson));
-        //}
+                return Ok(new { message = "Video uploaded successfully to Mux." });
+            }
+            catch (HttpRequestException ex)
+            {
+                // Handle the HTTP request exception
+                return StatusCode(500, new { message = "Error uploading video to Mux.", details = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                // Handle any other exceptions
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
+            }
+        }
     }
 }

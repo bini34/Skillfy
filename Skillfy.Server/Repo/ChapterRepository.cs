@@ -28,6 +28,17 @@ namespace Skillfy.Server.Repo
             await _context.chapters.AddRangeAsync(chapters);
             await _context.SaveChangesAsync();
         }
+        public async Task AddChapterAsync(string chaptername, int courseId)
+        {
+            var chapter = new Chapter
+            {
+                Chaptername = chaptername,
+                CourseId = courseId
+                
+            };
+            await _context.chapters.AddAsync(chapter);
+            await _context.SaveChangesAsync();
+        }
         public async Task UpdateChapterAsync(Chapter chapter)
         {
             _context.chapters.Update(chapter);
