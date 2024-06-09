@@ -1,15 +1,56 @@
-.courseChapter{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.courseChapter {
+    margin: 20px;
 }
-.chapter-title, .chapter-discription{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 70%;
 
+.chapter-title,
+.chapter-discription {
+    background: #f9f9f9;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 4px;
 }
-.chapter-title, .chapter-discription label{
-    font-size: large;
+
+.chapter-title h3,
+.chapter-discription h3 {
+    margin-bottom: 10px;
+}
+
+.chapter-title .MuiTextField-root,
+.chapter-discription .ql-container {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    color: #4f4d4d;
+    background-color: white;
+    border: black 3px solid;
+    border-radius: 4px;
+}
+
+.chapter-title button,
+.chapter-discription button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    background: inherit;
+    color: #4f4d4d;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.chapter-title .view-section,
+.chapter-discription .view-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chapter-title p,
+.chapter-discription p {
+    margin: 5px 0;
+}
+
+.chapter-title .edit-btn,
+.chapter-discription .edit-btn {
+    margin-left: 10px;
+    align-self: flex-end;
 }
