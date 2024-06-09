@@ -53,7 +53,7 @@ namespace Skillfy.Server.Controllers
 
                 }
             var role = await _userManager.GetRolesAsync(user);
-            return Ok(new ResponsViewModel(true, "Login Sucessfully", new { user.Id, user.UserName, user.Fname, user.Lname, user.ProfileUrl , role}));
+            return Ok(new ResponsViewModel(true, "Login Sucessfully", new { user.Id, user.Email,user.UserName, user.Fname, user.Lname, user.ProfileUrl , role}));
           
 
 

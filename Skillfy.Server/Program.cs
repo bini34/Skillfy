@@ -54,10 +54,11 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddHttpClient<MuxApiClient>(client =>
-{
-    client.Timeout = TimeSpan.FromMinutes(10); // Set timeout to 10 minutes or as needed
-});
+//builder.Services.AddHttpClient<MuxApiClient>(client =>
+//{
+//    client.Timeout = TimeSpan.FromMinutes(10); // Set timeout to 10 minutes or as needed
+//});
+builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<IchapterRepositery, ChapterRepository>();
 builder.Services.AddScoped<ICourseRepositary, CourseRepositary>();
