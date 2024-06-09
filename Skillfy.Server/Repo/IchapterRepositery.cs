@@ -4,7 +4,7 @@ namespace Skillfy.Server.Repo
 {
     public interface IchapterRepositery
     {
-        
+        public Task AddChapterAsync(string chapter, int x);
          public Task<IEnumerable<Chapter>> GetAllChaptersAsync();
          public Task<Chapter> GetChapterByIdAsync(int id);
         public Task AddChaptersAsync(IEnumerable<Chapter> chapters);

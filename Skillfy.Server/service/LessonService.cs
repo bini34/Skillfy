@@ -1,10 +1,12 @@
 ﻿using Skillfy.Server.Data;
 using Skillfy.Server.Model;
+using Skillfy.Server.Repo;
 
 namespace Skillfy.Server.service
 {
-    public class LessonService
+    public class LessonService : Ilessonrepo
     {
+
         private readonly ApplicationDbContext _context;
         public LessonService(ApplicationDbContext context) {
             _context = context;

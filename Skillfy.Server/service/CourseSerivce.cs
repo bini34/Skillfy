@@ -66,14 +66,20 @@ namespace Skillfy.Server.service
             //    Chaptername = chapterDto.Name,
             //    CourseId = course.CourseID
             //}).ToList();
-            var chapterEntities = courseCreateDto.Chapters.Select(chapter => new Chapter
+            //var chapterEntities = courseCreateDto.Chapters.Select(chapter => new Chapter
+            //{
+            //    Chaptername = chapter,
+            //    CourseId = course.CourseID
+            //}).ToList();
+
+            foreach (var chapter in courseCreateDto.Chapters)
             {
-                Chaptername = chapter,
-                CourseId = course.CourseID
-            }).ToList();
+                await _chapterRepositery.AddChapterAsync(chapter, course.CourseID);
+
+            }
 
 
-            await _chapterRepositery.AddChaptersAsync(chapterEntities);
+          //  await _chapterRepositery.AddChaptersAsync(chapterEntities);
             return (true, "Course and chapters created successfully", course);
 
         }

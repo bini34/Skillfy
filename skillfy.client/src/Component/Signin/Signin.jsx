@@ -1,19 +1,19 @@
-import React from 'react';
+//import React from 'react';
 import './Signin.css';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import SigninSocialMedia from './SigninSocialMedia';
+//import SigninSocialMedia from './SigninSocialMedia';
 import img from '../../assets/image/signinImg.png';
 import { useState } from 'react';
 import authService from '../../Services/authService';
 import { Link, useNavigate } from 'react-router-dom';
-import { RollerShadesClosedSharp } from '@mui/icons-material';
+//import { RollerShadesClosedSharp } from '@mui/icons-material';
 
 function Signin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
+    //const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
@@ -21,7 +21,7 @@ function Signin() {
 
         authService.login(email, password).then(
             (Response) => {
-                setMessage('User logged in successfully!');
+                //setMessage('User logged in successfully!');
                 const roles = Response.data.role;
                 const userId = Response.data.id;
                 localStorage.setItem('userid', JSON.stringify(userId));
@@ -40,9 +40,9 @@ function Signin() {
                     navigate('/'); // Default redirect if no role matches
                 }
             },
-            (error) => {
-                setMessage('Error occurred during login.');
-            }
+            //(error) => {
+            //    //setMessage('Error occurred during login.');
+            //}
         );
     };
 
@@ -73,7 +73,7 @@ function Signin() {
                 </form>
                 <Divider>OR</Divider>
 
-                <SigninSocialMedia />
+               {/*<SigninSocialMedia />*/}
             </div>
         </div>
     );

@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Skillfy.Server;
+using Skillfy.Server.Api;
 using Skillfy.Server.Data;
 using Skillfy.Server.Model;
 using Skillfy.Server.Repo;
@@ -10,13 +12,14 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
     });
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                     .AddEnvironmentVariables();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -49,30 +52,32 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
-/*   builder.Services.AddCors(options =>
-   {
-       options.AddPolicy("AllowAll",
-           builder =>
-           {
-               builder.WithOrigins("https://localhost:5173")
-                      .AllowAnyMethod()
-                      .AllowAnyHeader()
-                      .AllowCredentials();
-           });
-   });*/
+
+
+builder.Services.AddHttpClient<MuxApiClient>(client =>
+{
+    client.Timeout = TimeSpan.FromMinutes(10); // Set timeout to 10 minutes or as needed
+});
 
 builder.Services.AddScoped<IchapterRepositery, ChapterRepository>();
 builder.Services.AddScoped<ICourseRepositary, CourseRepositary>();
 builder.Services.AddScoped<IcatogryRepositary, CatagoryRepositary>();
 builder.Services.AddScoped<ICourseService, CourseSerivce>();
+builder.Services.AddScoped<Ilessonrepo, LessonService>();
 
-// These services are already added by AddIdentity. Explicit addition might not be necessary.
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
-// These are usually added by AddIdentity
-// builder.Services.AddScoped<RoleManager<IdentityRole>>();
-// builder.Services.AddScoped<UserManager<ApplicationUser>>();
-// builder.Services.AddScoped<SignInManager<ApplicationUser>>();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 524288000; // 500 MB
+});
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Limits.MaxRequestBodySize = 524288000; // 500 MB
+});
+
 
 var app = builder.Build();
 

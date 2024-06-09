@@ -19,7 +19,7 @@ namespace Skillfy.Server.Model
       
         public string Url { get; set; }
         public int Order { get; set; }
-        public string ThumbnailImage { get; set; }
+       // public string ThumbnailImage { get; set; }
         public DateTime PublishDate { get; set; }
 
 
