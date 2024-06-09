@@ -51,8 +51,12 @@ namespace Skillfy.Server.Api
             {
                 var responseData = await response.Content.ReadAsStringAsync();
                 var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
-                return Ok(jsonResponse);
-             
+
+                var uploadUrl = jsonResponse.GetProperty("data").GetProperty("url").GetString();
+                var videoId = jsonResponse.GetProperty("data").GetProperty("id").GetString();
+
+                return Ok(new { uploadUrl, videoId });
+
             }
 
             return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync());
