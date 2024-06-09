@@ -15,26 +15,9 @@ function LessonForm({ addLesson }) {
 
   const getUploadUrl = async () => {
     try {
-      const response = await axios.post(
-        'https://api.mux.com/video/v1/uploads',
-        {
-          cors_origin: "*",
-          new_asset_settings: {
-            playback_policy: ["public"],
-            encoding_tier: "baseline"
-          }
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          },
-          auth: {
-            username: 'bd98d4b0-5ecf-4872-816b-cebaadfe0026',
-            password: 'XLb24WYLW6KC2ummrWP26EBnYjdu4TIa4jqIyFEBLJ+lQ5bEFup8mBJQlqeh0IOUxK6L7CDWrF2'
-          }
-        }
-      );
-      setUploadUrl(response.data.data.url);
+      const response = await axios.post('https://localhost:7182/api/mux/upload-url');
+      const data = JSON.parse(response.data);
+      setUploadUrl(data.data.url); // Adjust this path as per the actual response
     } catch (error) {
       console.error('Error fetching upload URL', error);
     }
