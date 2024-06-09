@@ -15,16 +15,16 @@ import './CourseEditor.css';
 const CourseEditor = () => {
   const [courseName, setCourseName] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
-  const [courseImage, setCourseImage] = useState('');
+  const [courseImage, setCourseImage] = useState(null);
   const [courseCategory, setCourseCategory] = useState('');
   const [courseChapters, setCourseChapters] = useState([]);
   const [coursePrice, setCoursePrice] = useState('');
-  const [userid, setUserid] = useState(null);
+  const [userid, setUserid] = useState('7c8db928-040b-4f2b-bc2e-d95deddef30a');
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
     if (currentUser) {
-      setUserid(currentUser);
+      setUserid(currentUser.id);
     }
   }, []);
 
@@ -32,52 +32,44 @@ const CourseEditor = () => {
     console.log('Course Chapters in CourseEditor:', courseChapters);
   }, [courseChapters]);
 
-  const handleSave = async () => {
+  const handleSave = async (event) => {
+    event.preventDefault();
     if (!userid) {
       console.error('User ID is missing');
       return;
     }
+  
+    const formData = new FormData();
+    formData.append('courseCreateDto.CourseName', courseName);
+    formData.append('courseCreateDto.Description', courseDescription);
+    formData.append('courseCreateDto.catagory', courseCategory);
+    formData.append('courseCreateDto.Thumbline', courseImage);
+    formData.append('courseCreateDto.price', coursePrice);
+    formData.append('courseCreateDto.userid', userid);
+  
+    if (courseChapters.length === 0) {
+      console.error('At least one chapter is required');
+      return;
+    }
+    else{
+      console.log(courseChapters)
+      formData.append(`courseCreateDto.Chapters`, courseChapters);
+    }
+  
 
-    const courseData = {
-      createDto: {
-        courseName,
-        description: courseDescription,
-        catagory: courseCategory, // Ensure this matches exactly with the API expectation
-        thumbline: courseImage,
-        price: parseInt(coursePrice),
-        userid: userid, // Adjusted to use user.id
-      },
-      chapterDtos: courseChapters.map(chapter => ({ name: chapter })),
-    };
-
-    console.log('Sending course data:', courseData);
-
+  
     try {
-      const response = await axios.post('https://localhost:7182/api/course/createcourse', {
-        courseCreateDto: {
-          courseName,
-          description: courseDescription,
-          catagory: courseCategory, // Ensure this matches exactly with the API expectation
-          thumbline: courseImage,
-          price: parseInt(coursePrice),
-          userid: userid, // Adjusted to use user.id
-        },
-        chapterDtos: courseChapters.map(chapter => ({ name: chapter })),
-      }, {
+      const response = await axios.post('https://localhost:7182/api/course/createcourse', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-        }
+        },
       });
-      console.log('Course saved successfully:', response.data);
+      console.log(response.data);
     } catch (error) {
-      console.error('Error saving course:', error);
-      if (error.response) {
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
-        console.error('Response headers:', error.response.headers);
-      }
+      console.error('There was an error uploading the course!', error);
     }
   };
+  
 
   const setCourseDetails = ({ title, description }) => {
     setCourseName(title);

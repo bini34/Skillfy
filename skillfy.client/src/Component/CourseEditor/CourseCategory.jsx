@@ -10,7 +10,12 @@ export default function CourseCategory({ setCourseCategory }) {
   useEffect(() => {
     axios.get("https://localhost:7182/api/catagory/allnames")
       .then(response => {
-        setCategories(response.data.map(category => ({ label: category })));
+        if (response.data && Array.isArray(response.data.$values)) {
+          setCategories(response.data.$values.map(category => ({ label: category })));
+        } else {
+          console.error('Response data does not contain an array in $values:', response.data);
+          throw new Error('Expected an array in $values but got a different type');
+        }
       })
       .catch(error => {
         console.error('Error fetching categories:', error);

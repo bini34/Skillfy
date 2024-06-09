@@ -37,15 +37,13 @@ namespace Skillfy.Server.service
                 Title = courseCreateDto.CourseName,
                 UserId = courseCreateDto.userid,
                 CatagoryId =  catagoryid,
-                Price =courseCreateDto.price,
+                Price = courseCreateDto.price,
                 Description = courseCreateDto.Description,
                 ThumbnailImage = $"/coursethumbline/{imgpath}"
 
             };
 
             var CourseId = await _courseRepositary.UploadCourse(course);
-            await _context.SaveChangesAsync();
-
             if (CourseId < 0)
             {
                 return (false, "Course Not created ", null);

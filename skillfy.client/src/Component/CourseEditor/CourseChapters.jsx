@@ -7,8 +7,8 @@ export default function CourseChapter({ setCourseChapters }) {
   const [newChapterTitle, setNewChapterTitle] = useState('');
 
   useEffect(() => {
-    console.log('Chapters updated:', chapters); // Log the current chapters
-    setCourseChapters(chapters.map(chapter => chapter.title));
+    console.log('Chapters updated:', chapters);
+    setCourseChapters(chapters);
   }, [chapters, setCourseChapters]);
 
   const handleAddChapter = () => {
@@ -21,7 +21,6 @@ export default function CourseChapter({ setCourseChapters }) {
       setIsAdding(false);
       setNewChapterTitle('');
     }
-    console.log(newChapters)
   };
 
   const handleEditChapter = (index) => {
