@@ -16,8 +16,7 @@ function LessonForm({ addLesson }) {
   const getUploadUrl = async () => {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/upload-url');
-      const data = JSON.parse(response.data);
-      setUploadUrl(data.data.url); // Adjust this path as per the actual response
+      setUploadUrl(response.data.data.url); // Adjust this path as per the actual response
     } catch (error) {
       console.error('Error fetching upload URL', error);
     }
@@ -27,6 +26,7 @@ function LessonForm({ addLesson }) {
     const videoId = event.detail.asset_id;
     setVideoId(videoId);
     sendVideoIdToBackend(videoId);
+    console.log(videoId)
   };
 
   const sendVideoIdToBackend = async (videoId) => {
