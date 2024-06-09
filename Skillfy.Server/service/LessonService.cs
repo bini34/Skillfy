@@ -13,7 +13,7 @@ namespace Skillfy.Server.service
         
         }
 
-        public async Task SaveLessonAsync(int chapterid, string videourl )
+        public async Task<int> SaveLessonAsync(int chapterid, string videourl )
         {
             var lesson = new Lesson
             {
@@ -23,6 +23,7 @@ namespace Skillfy.Server.service
                     
             };
             await _context.lessons.AddAsync(lesson);
+            return lesson.LessonID;
         }
     }
 }

@@ -4,7 +4,7 @@
     {
        
         public string Lessonname {  get; set; }
-        public IFormFile Video {  get; set; }
+        public string Video {  get; set; }
         public int chapterId {  get; set; }
 
 
