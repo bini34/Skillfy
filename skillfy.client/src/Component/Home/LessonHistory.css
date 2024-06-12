@@ -1,0 +1,44 @@
+.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .view-history {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .lesson-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+    margin: auto;
+  }
+  
+  .nav-button {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  

@@ -11,6 +11,7 @@ import CreateCourse from './Component/InstructorAdmin/CourseForm'
 import TestDataGrid from './Component/ui/TestDataGrid';
 import CourseEditor from './Component/CourseEditor/CourseEditor';
 import CourseLessons from './Pages/CourseLessons';
+import InstructorAdminDashBoardPage from './Pages/InstructorAdminDashBoardPage';
  function App() {
     const router = createBrowserRouter([
         {
@@ -18,7 +19,7 @@ import CourseLessons from './Pages/CourseLessons';
             element: <HomePage/>
         },
         {
-            path: '/api/Account/signin',
+            path: '/auth/account/signin',
             element: <SigninPage/>
         },
         {
@@ -45,7 +46,7 @@ import CourseLessons from './Pages/CourseLessons';
         },
         {
             path:'/instructor/dashboard',
-            element:<CourseEditor/>
+            element:<InstructorAdminDashBoardPage/>
         },
         {
             path:'/course/chapter/lessons',

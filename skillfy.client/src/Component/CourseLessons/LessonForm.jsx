@@ -16,13 +16,16 @@ function LessonForm({ addLesson }) {
   const getUploadUrl = async () => {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/upload-url');
-      setUploadUrl(response.data.data.url); // Adjust this path as per the actual response
+      setUploadUrl(response.data.uploadUrl);
+      setVideoId(response.data.videoId);
+     /*setUploadUrl(response.data.data.url); */
     } catch (error) {
       console.error('Error fetching upload URL', error);
     }
   };
 
   const handleSuccess = (event) => {
+    console.log()
     const videoId = event.detail.asset_id;
     setVideoId(videoId);
     sendVideoIdToBackend(videoId);
@@ -31,7 +34,7 @@ function LessonForm({ addLesson }) {
 
   const sendVideoIdToBackend = async (videoId) => {
     try {
-      await axios.post('https://your-backend.com/api/videos', { videoId, title: lessonTitle });
+      await axios.post('https://localhost:7182/api/lesson/uploadLesson', { videoId, title: lessonTitle });
       console.log('Video ID sent to backend successfully');
     } catch (error) {
       console.error('Error sending video ID to backend', error);

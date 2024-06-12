@@ -1,0 +1,50 @@
+.lesson-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 500px;
+    padding: 10px;
+    display: flex;
+  }
+  
+  .lesson-image {
+    border-radius: 10px;
+    width: 50%;
+    height: auto;
+  }
+  
+  .lesson-info {
+    padding-left: 10px;
+    text-align: left;
+  }
+  
+  .lesson-number {
+    color: #666;
+    font-size: 12px;
+  }
+  
+  .lesson-title {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .lesson-instructor {
+    display: flex;
+    align-items: center;
+  }
+  
+  .instructor-image {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  .progress-bar {
+    background-color: #ff6f61;
+    height: 5px;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  

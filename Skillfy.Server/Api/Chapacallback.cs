@@ -25,11 +25,11 @@ namespace Skillfy.Server.Api
             var userId = parts[1];
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId && u.Email == customerEmail);
-            var course = await _context.courses.FirstOrDefaultAsync(c => c.CourseID == courseId);
+/*           var course = await _context.courses.FirstOrDefaultAsync(c => c.CourseID == courseId);
 
             if (user != null && course != null)
             {
-                var enrollment = new Enroll
+                /*var enrollment = new Enroll
                 {
                     CourseID = course.Id,
                     user = user.Id,
@@ -40,6 +40,7 @@ namespace Skillfy.Server.Api
                 _context.Enrollments.Add(enrollment);
                 await _context.SaveChangesAsync();
             }
+     */
         }
 
 

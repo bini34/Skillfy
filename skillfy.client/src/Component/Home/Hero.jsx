@@ -11,7 +11,7 @@ export default function Hero() {
   return (
     <div className="hero-section">
 
-        <div className="container">
+        <div className="hero-container">
             <Header/>
             <div className="hero-content">
                 <h1>Distant learning for further expansion</h1>
