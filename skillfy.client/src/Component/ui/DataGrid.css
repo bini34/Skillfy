@@ -1,0 +1,35 @@
+.data-grid-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: solid 1px  rgba(128, 128, 128, 0.203);
+}
+  
+  .data-grid-header {
+    border-bottom: solid 1px  rgba(128, 128, 128, 0.203);
+    color: black;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-align: left;
+  }
+  
+  .data-grid-action-header {
+    width: 50px; /* Adjust width as needed */
+   border-bottom: solid 1px rgba(128, 128, 128, 0.203);
+    text-align: left;
+  }
+  
+  .data-grid-cell {
+    padding: 20px;
+    border-bottom: solid 1px  rgba(128, 128, 128, 0.203);
+  }
+  
+  .data-grid-action-cell {
+    border-bottom: solid 1px rgba(128, 128, 128, 0.203);
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: flex-start;
+  }

@@ -4,7 +4,9 @@ import InstractorAdminHeader from '../Component/InstructorAdmin/InstractorAdminH
 import { Link } from 'react-router-dom';
 import './InstructorAdminDashBoardPage.css'
 import TestDataGrid from '../Component/ui/TestDataGrid'
-export default function InstructorAdminDashBoardPage() {
+import CourseEditor from '../Component/CourseEditor/CourseEditor';
+
+export default function InstructorCreateCourse() {
   return (
     <div className="instructorAdminContainer">
       <header className="instractorAdminHeader">
@@ -14,14 +16,7 @@ export default function InstructorAdminDashBoardPage() {
         <InstractorSideBar/>
       </div>
       <div className='InstractorAdminMain'>
-        <div className="InstractorAdminMain-header">
-          <Link to="/instructor/courses/create">
-          New Course
-          </Link>
-        </div>
-        <div className="InstractorAdminMain-datagrid">
-          <TestDataGrid/>
-        </div>
+      <CourseEditor/>
       </div>
     </div>
   )

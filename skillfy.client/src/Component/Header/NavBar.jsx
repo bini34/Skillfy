@@ -22,6 +22,7 @@ const NavBar = ({ color }) => {
 
   const handleLogout = () => {
     authService.logout();
+    window.location.reload();
     setIsAuthenticated(false);
     setUser(null);
   };

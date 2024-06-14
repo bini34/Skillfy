@@ -12,6 +12,9 @@ import TestDataGrid from './Component/ui/TestDataGrid';
 import CourseEditor from './Component/CourseEditor/CourseEditor';
 import CourseLessons from './Pages/CourseLessons';
 import InstructorAdminDashBoardPage from './Pages/InstructorAdminDashBoardPage';
+import Sidebar from './Component/Testt/test';
+import InstructorCreateCourse from './Pages/InstructorCreateCourse'
+
  function App() {
     const router = createBrowserRouter([
         {
@@ -23,7 +26,7 @@ import InstructorAdminDashBoardPage from './Pages/InstructorAdminDashBoardPage';
             element: <SigninPage/>
         },
         {
-            path: '/api/account/registor',
+            path: '/auth/account/registor',
             element: <SignupPage/>
         },
         {
@@ -45,12 +48,20 @@ import InstructorAdminDashBoardPage from './Pages/InstructorAdminDashBoardPage';
             // //element: <TestDataGrid/>
         },
         {
-            path:'/instructor/dashboard',
+            path:'/instructor/courses/',
             element:<InstructorAdminDashBoardPage/>
         },
         {
             path:'/course/chapter/lessons',
             element:<CourseLessons/>
+        },
+        {
+            path:'/test',
+            element:<Sidebar/>
+        },
+        {
+            path:'/instructor/courses/create',
+            element:<InstructorCreateCourse/>
         }
     ])
     

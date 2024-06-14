@@ -1,19 +1,27 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import './Sidebar.css'
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <h2>Learn Adobe XD & Prototyping</h2>
-      <p>60% Complete</p>
-      <input type="text" placeholder="Search" />
+      <div className="sidebar-header">
+        <Link to="/mycourse">
+          <div className="circle">
+            <KeyboardReturnIcon/>
+          </div>
+          Back
+        </Link>
+        <h1>Learn Adobe XD & Prototyping</h1>
+        <p>60% Complete</p>
+      </div>
+
       <nav>
         <h3>Change simplification</h3>
         <ul>
           <li>Lesson 01 Introduction about xd [30 min]</li>
           <li>Lesson 02 Introduction about xd [30 min]</li>
-          {/* Add more lessons similarly */}
         </ul>
-        {/* Add more sections similarly */}
       </nav>
     </div>
   );

@@ -28,7 +28,7 @@ function Signin() {
                 if (role === 'admin') {
                     navigate(`/admin/dashboard/`);
                 } else if (role === 'Instructor') {
-                    navigate(`/instructor/dashboard/`);
+                    navigate(`/instructor/courses/`);
                 } else if (role === 'student') {
                     navigate(`/`);
                 }

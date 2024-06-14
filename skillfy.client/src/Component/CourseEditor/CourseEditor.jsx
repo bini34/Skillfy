@@ -79,7 +79,6 @@ const CourseEditor = () => {
 
   return (
     <div className="course-editor_container">
-            <Header/>
       <div>
         <Button variant="contained" onClick={handleSave}>
           <SaveIcon /> Save

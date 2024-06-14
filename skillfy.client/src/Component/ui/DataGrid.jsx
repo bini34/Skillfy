@@ -1,8 +1,9 @@
-// DataGrid.jsx
 import React from 'react';
 import { useTable } from 'react-table';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import './DataGrid.css';
 
 const DataGrid = ({ columns, data }) => {
   const {
@@ -17,16 +18,16 @@ const DataGrid = ({ columns, data }) => {
   });
 
   return (
-    <table {...getTableProps()} style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <table {...getTableProps()} className="data-grid-table">
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()} style={{ borderBottom: 'solid 3px red', background: 'aliceblue', color: 'black', fontWeight: 'bold', padding: '10px' }}>
+              <th {...column.getHeaderProps()} className="data-grid-header">
                 {column.render('Header')}
               </th>
             ))}
-            <th></th>
+            <th className="data-grid-action-header"></th>
           </tr>
         ))}
       </thead>
@@ -36,16 +37,15 @@ const DataGrid = ({ columns, data }) => {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => (
-                <td {...cell.getCellProps()} style={{ padding: '10px', border: 'solid 1px gray' }}>
+                <td {...cell.getCellProps()} className="data-grid-cell">
                   {cell.render('Cell')}
                 </td>
               ))}
-              <td>
+              <td className="data-grid-action-cell">
                 <Menu
-                  menuButton={<MenuButton>⋮</MenuButton>}
+                  menuButton={<MenuButton><MoreHorizIcon /></MenuButton>}
                 >
                   <MenuItem onClick={() => alert('Edit')}>Edit</MenuItem>
-                  <MenuItem onClick={() => alert('Update')}>Update</MenuItem>
                 </Menu>
               </td>
             </tr>
