@@ -95,7 +95,7 @@ const Signup = () => {
       <div className="signup-form">
         <div className='signin'>
           <p>Don’t have an account? </p>
-          <Link to="/api/account/signin" className='signin-link'>Sign In</Link>
+          <Link to="/auth/account/signin" className='signin-link'>Sign In</Link>
         </div>
         <div>
           <h1>Create your free account</h1>

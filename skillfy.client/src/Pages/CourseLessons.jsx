@@ -4,6 +4,7 @@ import LessonList from '../Component/CourseLessons/LessonList';
 import CourseChapter from '../Component/CourseLessons/CourseChapter'
 import ChapterLessons from '../Component/CourseLessons/ChapterLessons'
 import './CourseLessons.css'
+import Header from '../Component/Header/Header'
 export default function CourseLessons() {
   //   const [lessons, setLessons] = useState([]);
 
@@ -19,7 +20,6 @@ export default function CourseLessons() {
   //   </div>
   // );
   return (
-    
     <div className='courseLesson-mainContainer'>
         <div className='courseLesson-rightContainer'>
         <CourseChapter/>

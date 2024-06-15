@@ -1,13 +1,16 @@
-import './Header.css'
+import './Header.css';
 import NavBar from './NavBar';
-function Header() {
+import { Link } from 'react-router-dom';
 
+function Header({ color, backgroundColor}) {
     return (
-        <header className="header">
-            <div className="logo">Skillfy</div>
-            <NavBar/>
-            
-        </header>
+        <div className='header-main_container' style={{backgroundcolor:backgroundColor}}>
+            <header className="header-Container">
+                <Link to="/" className="logo">Skillfy</Link>
+                <NavBar color={color} />
+            </header>
+        </div>
     );
 }
+
 export default Header;

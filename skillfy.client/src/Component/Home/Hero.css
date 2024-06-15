@@ -8,7 +8,7 @@
   height: 100vh;
 }
 
-.container {
+.hero-container {
   display: flex;
   width: 900px;
   background-color: transparent;

@@ -21,27 +21,20 @@ function Signin() {
 
         authService.login(email, password).then(
             (Response) => {
-                setMessage('User logged in successfully!');
-                const roles = Response.data.role;
-                const userId = Response.data.id;
-                localStorage.setItem('userid', JSON.stringify(userId));
+                const user = authService.getCurrentUser();  
+                console.log(user)
 
-                // Extract the first role from the roles array
-              
-                const role = roles && roles.length > 0 ? roles[0] : null;
-                console.log(roles[values])
+                const role = user.role.$values[0];
                 if (role === 'admin') {
                     navigate(`/admin/dashboard/`);
                 } else if (role === 'Instructor') {
                     navigate(`/instructor/dashboard/`);
                 } else if (role === 'student') {
-                    navigate(`/student/dashboard/`);
-                } else {
-                    navigate('/'); // Default redirect if no role matches
+                    navigate(`/`);
                 }
             },
             (error) => {
-               //setMessage('Error occurred during login.');
+               setMessage('Error occurred during login.');
             }
         );
     };
@@ -58,7 +51,7 @@ function Signin() {
             <div className="login-form">
                 <div className='registor'>
                     <p>Already have an Account? </p>
-                    <Link to="/api/account/registor" className='regstora'>Registor</Link>
+                    <Link to="/auth/account/registor" className='regstora'>Registor</Link>
                 </div>
                 <div>
                     <h1>Hello! Welcome back.</h1>

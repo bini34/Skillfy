@@ -9,6 +9,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import authService from '../../Services/authService';
+import Header from '../Header/Header'
 
 import './CourseEditor.css';
 
@@ -78,6 +79,7 @@ const CourseEditor = () => {
 
   return (
     <div className="course-editor_container">
+            <Header/>
       <div>
         <Button variant="contained" onClick={handleSave}>
           <SaveIcon /> Save
