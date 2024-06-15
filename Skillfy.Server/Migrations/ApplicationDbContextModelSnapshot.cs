@@ -364,15 +364,8 @@ namespace Skillfy.Server.Migrations
                     b.Property<int>("ChapterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("PublishDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ThumbnailImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -414,6 +407,96 @@ namespace Skillfy.Server.Migrations
                     b.HasIndex("userID");
 
                     b.ToTable("ratings");
+                });
+
+            modelBuilder.Entity("Skillfy.Server.Models.BankInfo", b =>
+                {
+                    b.Property<int>("BankId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BankId"));
+
+                    b.Property<int>("BankAccount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("balance")
+                        .HasColumnType("int");
+
+                    b.HasKey("BankId");
+
+                    b.ToTable("banks");
+                });
+
+            modelBuilder.Entity("Skillfy.Server.Models.TeacherInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("teachers");
+                });
+
+            modelBuilder.Entity("Skillfy.Server.Models.Transaction", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PlatformFee")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TeacherAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TxRef")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseID");
+
+                    b.ToTable("transactions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -550,6 +633,44 @@ namespace Skillfy.Server.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Skillfy.Server.Models.TeacherInfo", b =>
+                {
+                    b.HasOne("Skillfy.Server.Models.BankInfo", "Bank")
+                        .WithMany("Teachers")
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Skillfy.Server.Model.ApplicationUser", "ApplicationUser")
+                        .WithOne("Teacherinfo")
+                        .HasForeignKey("Skillfy.Server.Models.TeacherInfo", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Bank");
+                });
+
+            modelBuilder.Entity("Skillfy.Server.Models.Transaction", b =>
+                {
+                    b.HasOne("Skillfy.Server.Model.Course", "Course")
+                        .WithMany("Transactions")
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Skillfy.Server.Model.ApplicationUser", "User")
+                        .WithMany("Transaction")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Skillfy.Server.Model.ApplicationUser", b =>
                 {
                     b.Navigation("Courses");
@@ -557,6 +678,11 @@ namespace Skillfy.Server.Migrations
                     b.Navigation("Enroll");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("Teacherinfo")
+                        .IsRequired();
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("Skillfy.Server.Model.Catagory", b =>
@@ -576,6 +702,13 @@ namespace Skillfy.Server.Migrations
                     b.Navigation("Enrolls");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Skillfy.Server.Models.BankInfo", b =>
+                {
+                    b.Navigation("Teachers");
                 });
 #pragma warning restore 612, 618
         }

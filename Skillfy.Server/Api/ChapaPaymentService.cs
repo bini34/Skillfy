@@ -6,8 +6,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Skillfy.Server.Model;
+using Skillfy.Server.Repo;
 
-public class ChapaPaymentService
+public class ChapaPaymentService : Ipayment
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<ChapaPaymentService> _logger;
@@ -20,24 +22,17 @@ public class ChapaPaymentService
         _secretKey = configuration["Chapa:SecretKey"];
     }
 
-    public async Task<string> InitializePaymentAsync(int price, string email, string Fname, string Lname, int phonenumber)
+    public async Task<string> InitializePaymentAsync(int price,int courseId, string userId)
     {
+        var txRef = $"{courseId}-{userId}-{Guid.NewGuid()}";
         var paymentData = new
         {
             amount = price,
             currency = "ETB",
-            email = email,
-            first_name =Fname,
-            last_name = Lname,
-            phone_number = "0912345678",
-            tx_ref = "chewatatest-6669",
-            callback_url = "",
+            tx_ref = txRef,
+            callback_url = "https://localhost:7182/api/payment/callback",            
             return_url = "",
-            customization = new
-            {
-                title = "Payment for my favourite merchant",
-                description = "I love online payments"
-            }
+          
         };
 
         var jsonContent = JsonSerializer.Serialize(paymentData);
@@ -55,9 +50,9 @@ public class ChapaPaymentService
             var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
-            var responseBody = await response.Content.ReadAsStringAsync();
-            _logger.LogInformation("Payment initialized successfully: {0}", responseBody);
-            return responseBody;
+            var respond = await response.Content.ReadAsStringAsync();
+            _logger.LogInformation("Payment initialized successfully: {0}", respond);
+            return respond;
         }
         catch (HttpRequestException ex)
         {
@@ -65,4 +60,6 @@ public class ChapaPaymentService
             throw;
         }
     }
+
+
 }

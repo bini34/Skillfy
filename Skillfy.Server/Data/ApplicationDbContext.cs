@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Skillfy.Server.Model;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Skillfy.Server.Models;
+
 namespace Skillfy.Server.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -19,6 +21,10 @@ namespace Skillfy.Server.Data
         public DbSet<Enroll> enrolls { get; set; }
         public DbSet<Chapter> chapters { get; set; }
       
+        public DbSet<BankInfo> banks { get; set; }
+
+        public DbSet<TeacherInfo> teachers { get; set; }
+        public DbSet<Transaction> transactions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -43,6 +49,21 @@ namespace Skillfy.Server.Data
                 .WithMany()
                 .HasForeignKey(e => e.Id)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Transaction>()
+            .HasOne(t => t.User)
+            .WithMany( u => u.Transaction)
+            .HasForeignKey(t => t.Id);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Course)
+                .WithMany(c => c.Transactions)
+                .HasForeignKey(t => t.CourseID);
+            modelBuilder.Entity<ApplicationUser>()
+           .HasOne(a => a.Teacherinfo)
+           .WithOne(t => t.ApplicationUser)
+           .HasForeignKey<TeacherInfo>(t => t.UserId);
+
 
         }
     }
