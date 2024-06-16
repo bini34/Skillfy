@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Skillfy.Server.Model;
 using Skillfy.Server.service;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace Skillfy.Server.Controllers
 {
@@ -47,7 +48,7 @@ namespace Skillfy.Server.Controllers
                     await courseCreateDto.Thumbline.CopyToAsync(fileStream);
                 }
             }
-
+            
             var result = await _courseService.AddCourse(courseCreateDto, uniqueFileName);
 
             if (!result.Success)

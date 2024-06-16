@@ -1,0 +1,48 @@
+.courseCreate-LeftMainContainer-CourseChapters{
+    display: flex;
+    flex-direction: column;
+}
+.CourseChapters-Header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.CourseChapters-Header button{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px ;
+    color: black;
+    font-size: medium;
+}
+.CourseChapters-List{
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 5px;
+}
+.CreateChapterBtn button{
+    padding: 10px 20px;
+    color: white;
+    font-size: medium;
+    background-color: black;
+}
+.CourseChapter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    padding: 5px 19px;
+    border-radius: 10px;
+}
+.CourseChapter button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.CourseChapters-List{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    border: 1px solid #ccc;
+
+}

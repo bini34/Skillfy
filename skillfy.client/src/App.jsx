@@ -13,8 +13,10 @@ import CourseEditor from './Component/CourseEditor/CourseEditor';
 import CourseLessons from './Pages/CourseLessons';
 import InstructorAdminDashBoardPage from './Pages/InstructorAdminDashBoardPage';
 import Sidebar from './Component/Testt/test';
-import InstructorCreateCourse from './Pages/InstructorCreateCourse'
+import ChapterLessonsPage from './Pages/ChapterLessonsPage'
+//import InstructorCreateCourse from './Pages/InstructorCreateCourse'
 
+import CourseCreate from './Pages/CourseCreate'
  function App() {
     const router = createBrowserRouter([
         {
@@ -52,8 +54,10 @@ import InstructorCreateCourse from './Pages/InstructorCreateCourse'
             element:<InstructorAdminDashBoardPage/>
         },
         {
-            path:'/course/chapter/lessons',
-            element:<CourseLessons/>
+            path:'/instructor/courses/create/add-lessons/',
+            element:<ChapterLessonsPage/>
+            // path:'/course/chapter/lessons',
+            // element:<CourseLessons/>
         },
         {
             path:'/test',
@@ -61,7 +65,8 @@ import InstructorCreateCourse from './Pages/InstructorCreateCourse'
         },
         {
             path:'/instructor/courses/create',
-            element:<InstructorCreateCourse/>
+            element: <CourseCreate/>
+            //element:<InstructorCreateCourse/>
         }
     ])
     

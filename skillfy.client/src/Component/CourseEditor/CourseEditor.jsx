@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import CourseDetails from './CourseDetails';
 import CourseChapter from './CourseChapter';
-import CourseImage from './CourseImage';
+import CourseImage from '../CourseCreate/CourseImage';
 import CourseSell from './CourseSell';
-import CourseCategory from './CourseCategory';
+import CourseCategory from '../CourseCreate/CourseCategory';
 import { Apps } from '@mui/icons-material';
 import SaveIcon from '@mui/icons-material/Save';
 import Button from '@mui/material/Button';
@@ -39,6 +39,7 @@ const CourseEditor = () => {
       console.error('User ID is missing');
       return;
     }
+    console.log(courseChapters)
   
     const formData = new FormData();
     formData.append('courseCreateDto.CourseName', courseName);

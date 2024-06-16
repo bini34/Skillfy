@@ -5,8 +5,8 @@ using Skillfy.Server.Model;
 
 namespace Skillfy.Server.Api
 {
-    [Route("api/chapacallback")]
-    [ApiController]
+  //  [Route("api/chapacallback")]
+   // [ApiController]
     public class Chapacallback
     {
         public ApplicationDbContext _context;

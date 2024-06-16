@@ -1,0 +1,56 @@
+.courseCreate-Container{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+}
+.deleteBtn{
+    display: flex;
+    align-items: center;
+    background-color: red;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+.courseCreate-HeaderContainer button{
+    font-size: medium;
+}
+.courseCreate-HeaderContainer{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-right: 30px;
+}
+.courseCreate-MainContainer{
+    display: flex;
+    flex-direction: raw;
+}
+.courseCreate-LeftContainer{
+    width: 50%;
+    padding: 20px;
+    padding-left: 40px;
+}
+.courseCreate-RightContainer{
+    width: 50%;
+    padding: 20px;
+    
+}
+.courseCreate-LeftMainContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.courseCreate-LeftHeaderContainer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.courseCreate-RightHeaderContainer{
+    display: flex;
+    align-items: center;    
+}
+.courseCreate-RightMainContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

@@ -1,0 +1,20 @@
+.chapter-lessons-container{
+    padding: 20px;
+}
+.chapter-lessons-header{
+    display: flex;
+}
+.back-btn{
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
+.chapter-lessons-body{
+    display: flex;
+    flex-direction: row;
+}
+.chapter-customization{
+    width: 50%;
+    padding-left: 30px;
+}

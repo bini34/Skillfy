@@ -1,11 +1,22 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { styled } from '@mui/material/styles';
 
-export default function CourseCategory({ setCourseCategory }) {
+export default function CourseCategory({ handleDetailChange }) {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const StyledAutocomplete = styled(Autocomplete)({
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'black',
+    },
+    '& .MuiOutlinedInput-root:hover .MuiAutocomplete-input': {
+      color: 'white',
+    },
+  });
 
   useEffect(() => {
     axios.get("https://localhost:7182/api/catagory/allnames")
@@ -24,25 +35,17 @@ export default function CourseCategory({ setCourseCategory }) {
 
   useEffect(() => {
     if (selectedCategory) {
-      setCourseCategory(selectedCategory.label);
+      handleDetailChange('category', selectedCategory.label);
     }
-  }, [selectedCategory, setCourseCategory]);
+  }, [selectedCategory, handleDetailChange]);
 
   return (
-    <div>
-      <div className="CourseCategory-header">
-        <h1>Course Category</h1>
-      </div>
-      <div>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={categories}
-          sx={{ width: 300 }}
-          onChange={(event, newValue) => setSelectedCategory(newValue)}
-          renderInput={(params) => <TextField {...params} label="Category" />}
-        />
-      </div>
-    </div>
+    <Autocomplete
+      disablePortal
+      id="combo-box-demo"
+      options={categories}
+      onChange={(event, newValue) => setSelectedCategory(newValue)}
+      renderInput={(params) => <TextField {...params} placeholder="Select a category" />}
+    />
   );
 }
