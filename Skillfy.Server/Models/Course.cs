@@ -1,9 +1,11 @@
-﻿ using System;
+﻿using Skillfy.Server.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Skillfy.Server.Model
 {
@@ -20,6 +22,8 @@ namespace Skillfy.Server.Model
         public string ThumbnailImage { get; set; }
         public int EnrollmentCount { get; set; }
 
+        
+
 
        public  ApplicationUser User { get; set; }
         public  Catagory Catagory { get; set; }
@@ -28,6 +32,7 @@ namespace Skillfy.Server.Model
 
         public virtual ICollection<Chapter> Chapters { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
 
     }
 }

@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Skillfy.Server.Models;
 
 
 namespace Skillfy.Server.Model
@@ -20,6 +22,9 @@ namespace Skillfy.Server.Model
         public virtual ICollection<Enroll> Enroll { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Transaction> Transaction { get; set; }
+
+        public TeacherInfo Teacherinfo { get; set; }
 
 
 

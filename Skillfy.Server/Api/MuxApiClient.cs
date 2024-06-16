@@ -50,8 +50,7 @@ namespace Skillfy.Server.Api
             if (response.IsSuccessStatusCode)
             {
                 var responseData = await response.Content.ReadAsStringAsync();
-                var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
-
+                var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);             
                 return Ok(jsonResponse);
 
             }

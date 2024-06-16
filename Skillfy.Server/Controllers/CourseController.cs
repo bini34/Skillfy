@@ -61,6 +61,20 @@ namespace Skillfy.Server.Controllers
 
         }
 
+        [HttpGet("coursecard")]
+        public async Task<IActionResult> UploadCourse()
+        {
+            var details =await courseRepositary.getcoursecard();
 
-    }
+            if (details == null)
+                return BadRequest(new ResponsViewModel(false, "Dont fetched", null));
+
+            return Ok( details);
+        }
+
+
+
+
+
+        }
 }
