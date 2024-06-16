@@ -28,12 +28,12 @@ namespace Skillfy.Server.Controllers
 
 
         }
-        [HttpPost("callback")]
-        public async Task<IActionResult> callback([FromBody] Paymentdto payment)
-        {
+        //[HttpPost("callback")]
+        //public async Task<IActionResult> callback([FromBody] Paymentdto payment)
+        //{
 
 
 
-        }
+        //}
     }
 }

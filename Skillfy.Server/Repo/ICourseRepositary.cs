@@ -1,4 +1,5 @@
-﻿using Skillfy.Server.Model;
+﻿using Skillfy.Server.Dto;
+using Skillfy.Server.Model;
 
 namespace Skillfy.Server.Repo
 {
@@ -11,6 +12,8 @@ namespace Skillfy.Server.Repo
         public Task<int> GetCourseCount();
         public Task<int> DeleteCourse(int id);
         public Task<List<Course>> GetEnrolledCourseByUserId(String userId);
+
+        public Task<List<CourseCardDto>> getcoursecard();
 
     }
 }

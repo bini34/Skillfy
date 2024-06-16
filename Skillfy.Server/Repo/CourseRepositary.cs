@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Skillfy.Server.Data;
+using Skillfy.Server.Dto;
 using Skillfy.Server.Model;
 
 namespace Skillfy.Server.Repo
@@ -19,7 +20,6 @@ namespace Skillfy.Server.Repo
             _context.courses.Remove(c);
             _context.SaveChanges();
             return c.CourseID;
-
 
         }
 
@@ -53,12 +53,30 @@ namespace Skillfy.Server.Repo
             .ToListAsync();
         }
 
+      
         public async Task<int> UploadCourse(Course course)
         {
             _context.courses.Add(course);
             await _context.SaveChangesAsync();
             return course.CourseID;
 
+        }
+
+        public async Task<List<CourseCardDto>> getcoursecard()
+        {
+           
+            return await _context.courses.Select(c => new CourseCardDto
+            {
+                
+                Id= c.CourseID,
+                coursename = c.Title,
+                price = c.Price,
+                coursethumbline = c.ThumbnailImage,
+                enrollmentcount = c.EnrollmentCount,
+                teachername = _context.users.Where(u=>u.Id == c.UserId).Select(u=> u.Fname).FirstOrDefault()
+
+                
+            }).ToListAsync();
         }
 
       
