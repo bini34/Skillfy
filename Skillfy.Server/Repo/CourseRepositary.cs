@@ -79,6 +79,35 @@ namespace Skillfy.Server.Repo
             }).ToListAsync();
         }
 
-      
+        //public async Task<CourseDetailsDto> GetCourseDetails(int id)
+        //{
+           
+        //    return await _context.courses.Where(c => c.CourseID == id).Select(async c => new CourseDetailsDto
+        //    {
+        //        price = c.Price,
+        //        chapter =  _context.chapters.Where(ch => ch.CourseId == id).Select(ch => ch.Chaptername).ToArray(),
+        //        rating = _context.ratings.Where(r => r.CourseId == id).Average(r => (int?)r.rating) ?? 0,
+        //        Bio = _context.teachers.Where(t => t.UserId == c.UserId).Select(t => t.bio).FirstOrDefault(),
+        //       lessonname = c.Chapters.SelectMany(ch => ch.Lessons.Select(l => l.Title)).ToArray()
+
+        //    }).FirstOrDefaultAsync();
+        //}
+
+        public async Task<CourseDetailsDto> GetCourseDetails(int id)
+        {
+            return await _context.courses
+                .Where(c => c.CourseID == id)
+                .Select(c => new CourseDetailsDto
+                {
+                    price = c.Price,
+                    chapter = c.Chapters.Select(ch => ch.Chaptername).ToArray(),
+                    lessonname = c.Chapters.SelectMany(ch => ch.Lessons.Select(l => l.Title)).ToArray(),
+                    rating = _context.ratings.Where(r => r.CourseId == id).Average(r => (int?)r.rating) ?? 0,
+                    Bio = _context.teachers.Where(t => t.UserId == c.UserId).Select(t => t.bio).FirstOrDefault()
+                })
+                .FirstOrDefaultAsync();
+        }
+
+
     }
 }

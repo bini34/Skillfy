@@ -15,5 +15,7 @@ namespace Skillfy.Server.Repo
 
         public Task<List<CourseCardDto>> getcoursecard();
 
+        public Task<CourseDetailsDto> GetCourseDetails(int id);
+
     }
 }

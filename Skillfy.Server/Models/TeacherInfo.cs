@@ -14,7 +14,7 @@ namespace Skillfy.Server.Models
 
         public string UserId { get; set; }
 
-        // Navigation property for the related ApplicationUser
+      
         public ApplicationUser ApplicationUser { get; set; }
     }
 }
