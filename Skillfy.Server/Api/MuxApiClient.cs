@@ -8,6 +8,7 @@ namespace Skillfy.Server.Api
 {
 
     using Microsoft.AspNetCore.Mvc;
+    using Skillfy.Server.Model;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text.Json;
@@ -29,7 +30,7 @@ namespace Skillfy.Server.Api
         }
 
         [HttpPost("upload-url")]
-        public async Task<IActionResult> GetUploadUrl()
+        public async Task<IActionResult> GetUploadUrl([FromBody] uploadurldto Dto)
         {
             var client = _httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
@@ -41,6 +42,7 @@ namespace Skillfy.Server.Api
                 new_asset_settings = new
                 {
                     playback_policy = new[] { "public" },
+                    metadata = new { Chapterid = Dto.chpaterId },
                     encoding_tier = "baseline"
                 }
             };
@@ -57,6 +59,16 @@ namespace Skillfy.Server.Api
 
             return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync());
         }
+
+
+
+    }
+
+
+    public class uploadurldto
+    {
+        public int chpaterId { get; set; }
+
     }
 }
 
