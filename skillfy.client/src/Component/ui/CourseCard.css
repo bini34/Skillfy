@@ -9,23 +9,25 @@
   text-align: center;
 }
 
-.course-image {
+.course-card-image {
   width: 255px;
-  height: 199px;
+  height: 200px;
   object-fit: cover; 
 }
 
-.course-info {
+.course-card-info {
   padding: 15px;
 }
 
-.course-stats {
-  font-size: small;
+.course-card-stats {
+  font-size: medium;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 
-
-.course-title {
+.course-card-title {
   font-size: 18px;
   margin: 10px 0;
   white-space: nowrap;
@@ -39,31 +41,28 @@
   align-items: center;
 }
 
-.course-instructor {
+.course-card-instructor {
   display: flex;
   align-items: center;
+
 }
 
-.course-instructor-name {
+.course-card-instructor-name {
   margin-left: 10px;
   color: #888;
 }
 
-.course-pricing {
+.course-card-pricing {
   text-align: right;
 }
 
-.course-original-price {
-  text-decoration: line-through;
-  color: #888;
-}
 
-.course-price {
+.course-card-price {
   font-size: 20px;
   color: #e67e22;
 }
 
-.course-link {
+.course-card-link {
   text-decoration: none;
   color: inherit; /* Ensure that the text color is inherited */
 }

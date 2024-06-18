@@ -21,6 +21,7 @@ function ChapterLessons() {
                     <div className="chapter-customization_body">
                         <h3>Chapter Title</h3>
                         <input type='text' placeholder='Chapter Title' id='title' />
+    
                     </div>
                 </div>
                 <div className='chapter-lessons'>

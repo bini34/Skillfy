@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:7182';
+const API_URL = 'http://localhost:7182/';
 
 const getData = (endpoint) => {
   return axios.get(`${API_URL}/${endpoint}`);
