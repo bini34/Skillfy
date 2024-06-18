@@ -23,21 +23,21 @@ namespace Skillfy.Server.Controllers
             _lessorepo = lessorepo; 
         }
 
-        [HttpPost("uploadLesson")]
-        public async Task<IActionResult> UploadLesson([FromForm] LessonCreateDto lessonDto)
-        {
-            if (lessonDto == null || lessonDto.Video == null)
-            {
-                return BadRequest(new { message = "Invalid lesson data" });
-            }
+        //[HttpPost("uploadLesson")]
+        //public async Task<IActionResult> UploadLesson([FromForm] LessonCreateDto lessonDto)
+        //{
+        //    if (lessonDto == null || lessonDto.Video == null)
+        //    {
+        //        return BadRequest(new { message = "Invalid lesson data" });
+        //    }
                 
-           var result = await _lessorepo.SaveLessonAsync(lessonDto.chapterId, lessonDto.Video);
-            if (result < 0)
-            {
-                return BadRequest(new ResponsViewModel(false, "lesson not created", null));
-            }
+        //   var result = await _lessorepo.SaveLessonAsync(lessonDto.chapterId, lessonDto.Video);
+        //    if (result < 0)
+        //    {
+        //        return BadRequest(new ResponsViewModel(false, "lesson not created", null));
+        //    }
 
-            return Ok(new ResponsViewModel(true, "lesson create succefully", result));
-        }
+        //    return Ok(new ResponsViewModel(true, "lesson create succefully", result));
+        //}
     }
 }
