@@ -24,9 +24,10 @@ namespace Skillfy.Server.Api
             {
                 var playbackUrl = muxEvent.Data.PlaybackIds.FirstOrDefault()?.PlaybackUrl;             
                 var chapId = muxEvent.Data.AssetMetadata.Chapterid;
+                var title = muxEvent.Data.AssetMetadata.Title;
 
 
-                await _lrepo.SaveLessonAsync(chapId, playbackUrl);
+                await _lrepo.SaveLessonAsync(chapId, playbackUrl, title);
 
                 return Ok();
             }
@@ -55,5 +56,6 @@ namespace Skillfy.Server.Api
     public class MuxAssetMetadata
     {
         public int Chapterid { get; set; }
+        public string Title { get; set; }
     }
 }

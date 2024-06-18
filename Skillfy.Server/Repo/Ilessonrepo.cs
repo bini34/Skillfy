@@ -2,6 +2,6 @@
 {
     public interface Ilessonrepo
     {
-       public Task<int> SaveLessonAsync(int chapterid, string videourl);
+       public Task<int> SaveLessonAsync(int chapterid, string videourl, string title);
     }
 }

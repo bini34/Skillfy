@@ -42,7 +42,9 @@ namespace Skillfy.Server.Api
                 new_asset_settings = new
                 {
                     playback_policy = new[] { "public" },
-                    metadata = new { Chapterid = Dto.chpaterId },
+                    metadata = new { Chapterid = Dto.chpaterId,
+                     title = Dto.title
+                    },
                     encoding_tier = "baseline"
                 }
             };
@@ -68,6 +70,8 @@ namespace Skillfy.Server.Api
     public class uploadurldto
     {
         public int chpaterId { get; set; }
+
+        public string title {  get; set; }  
 
     }
 }

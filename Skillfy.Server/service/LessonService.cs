@@ -1,6 +1,7 @@
 ﻿using Skillfy.Server.Data;
 using Skillfy.Server.Model;
 using Skillfy.Server.Repo;
+using System.Runtime.CompilerServices;
 
 namespace Skillfy.Server.service
 {
@@ -13,10 +14,11 @@ namespace Skillfy.Server.service
         
         }
 
-        public async Task<int> SaveLessonAsync(int chapterid, string videourl )
+        public async Task<int> SaveLessonAsync(int chapterid, string videourl , string title)
         {
             var lesson = new Lesson
             {
+                Title = title,
                 ChapterId = chapterid,
                 PublishDate = DateTime.Now,
                 Url = videourl
