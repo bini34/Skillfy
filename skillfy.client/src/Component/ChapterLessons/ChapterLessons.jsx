@@ -2,6 +2,8 @@ import React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link } from 'react-router-dom';
 import LessonList from './LessonList';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import './ChapterLessons.css';
 
 function ChapterLessons() {
@@ -12,6 +14,10 @@ function ChapterLessons() {
                     <ArrowBackIcon />
                     <p>Back to course setup</p>
                 </Link>
+                <div className=''>
+                    <button >Publish</button>
+                    <button className='deleteBtn'><DeleteIcon style={{ color: 'white' }}/></button>
+                </div>
             </div>
             <div className='chapter-lessons-body'>
                 <div className='chapter-customization'>
@@ -30,8 +36,7 @@ function ChapterLessons() {
                     </div>
                     <div className="chapter-lessons_List">
                     <LessonList/>
-                    </div>
-      
+                    </div>     
                 </div>
             </div>
         </div>
