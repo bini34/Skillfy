@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Apps } from '@mui/icons-material';
 import CourseDetail from './CourseDetail';
 import './CreateCourse.css';
 import CourseChapters from './CourseChapters';
 import CourseImage from './CourseImage';
 import DeleteIcon from '@mui/icons-material/Delete';
 import authService from '../../Services/authService';
+import Alert from '@mui/material/Alert';
 
 export default function CreateCourse() {
   const [userid, setUserid] = useState('');
+  const [chapterinfo, setChapterinfo] = useState([])
 
   const [courseDetails, setCourseDetails] = useState({
     title: '',
@@ -54,9 +55,7 @@ export default function CreateCourse() {
       return;
     } else {
       courseDetails.chapters.forEach((chapter, index) => {
-        console.log(chapter)
-        console.log(index)
-        formData.append(`courseCreateDto.Chapters[${index}]`, chapter);
+        formData.append(`courseCreateDto.Chapters[${index}]`, chapter.title); // Only append the title
       });
     }
 
@@ -66,7 +65,20 @@ export default function CreateCourse() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data);
+
+      if (response.status === 200) {
+        alert('Course Created Successfully');
+        const chapters = response.data.data.chapters.$values; // Adjust this based on actual API response structure
+        setChapterinfo(chapters);
+        const updatedChapters = courseDetails.chapters.map((chapter, index) => ({
+          ...chapter,
+          id: chapters[index].chapterId, // Adjust this based on actual API response structure
+        }));
+        setCourseDetails((prevState) => ({
+          ...prevState,
+          chapters: updatedChapters
+        }));
+      }
     } catch (error) {
       console.error('There was an error uploading the course!', error);
     }
@@ -92,11 +104,11 @@ export default function CreateCourse() {
             <h1>Course chapters</h1>
           </div>
           <div className="courseCreate-RightMainContainer">
-            <CourseChapters handleDetailChange={handleDetailChange} />
+            <CourseChapters handleDetailChange={handleDetailChange} chapterinfo={chapterinfo} />
             <CourseImage handleDetailChange={handleDetailChange} />
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
