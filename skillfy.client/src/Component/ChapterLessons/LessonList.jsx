@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import apiService from '../../Services/apiService';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import MuxPlayer from "@mux/mux-player-react"; 
+import MuxPlayer from "@mux/mux-player-react";
 
 export default function LessonList() {
   const [lessons, setLessons] = useState([]);
@@ -18,18 +18,23 @@ export default function LessonList() {
   const [uploadVideo, setUploadVideo] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [chapterId, setChapterId] = useState('');
 
   useEffect(() => {
-    getUploadUrl();
-  }, []);
+    if (location.state && location.state.chapterid) {
+      setChapterId(location.state.chapterid);
+    }
+  }, [location.state]);
 
   const getUploadUrl = async () => {
     try {
-      const response = await axios.post('https://localhost:7182/api/mux/upload-url');
-      setUploadUrl(response.data.data.url);
-      setVideoId(response.data.data.id);
-      console.log("videoid",response.data.data.id)
+      const response = await axios.post('https://localhost:7182/api/mux/upload-url', { chapterId: chapterId, title: newLessonTitle });
+      if (response.data.data.url) {
+        setUploadUrl(response.data.data.url);
+        setVideoId(response.data.data.id);
 
+        console.log('Successfully fetched upload URL');
+      }
     } catch (error) {
       console.error('Error fetching upload URL', error);
     }
@@ -37,17 +42,13 @@ export default function LessonList() {
 
   const handleSuccess = (event) => {
     console.log('Upload successful:', event.detail);
-    const videoId = event.detail.asset_id;
-    
-    setVideoId(videoId);
-    sendVideoIdToBackend(videoId);
     setUploadVideo(true);
   };
 
-  const sendVideoIdToBackend = async (videoId) => {
+  const sendVideoIdToBackend = async () => {
     try {
-      await axios.post('https://localhost:7182/api/lesson/uploadLesson', { videoId, title: newLessonTitle });
-      console.log('Video ID sent to backend successfully');
+      await apiService.createData('api/lesson/uploadLesson', { chapterId: chapterId, title: newLessonTitle, videoId: videoId });
+      console.log('Video ID sent');
     } catch (error) {
       console.error('Error sending video ID to backend', error);
     }
@@ -55,14 +56,15 @@ export default function LessonList() {
 
   const handleAddLesson = () => {
     setIsAdding(true);
-  }
+  };
 
   const handleCancel = () => {
     setIsAdding(false);
-  }
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await sendVideoIdToBackend();
     if (newLessonTitle && videoId) {
       addLesson({ title: newLessonTitle, videoId });
       setNewLessonTitle('');
@@ -73,7 +75,7 @@ export default function LessonList() {
   const addLesson = (lesson) => {
     setLessons([...lessons, lesson]);
     setIsAdding(false);
-  }
+  };
 
   return (
     <div className='courseCreate-LeftMainContainer-CourseChapters'>
@@ -112,21 +114,23 @@ export default function LessonList() {
             />
             <div className="course-video-container">
               <div className="course-video-title">Course Video</div>
-                <MuxPlayer
-                  playbackId=""
-                  metadata={{
-                    video_id: videoId,
-                    video_title: newLessonTitle,
-                    viewer_user_id: "user-d-007",
-                  }}
-                />
+              <MuxPlayer
+                playbackId={playbackId}
+                metadata={{
+                  video_id: videoId,
+                  video_title: newLessonTitle,
+                  viewer_user_id: "user-d-007",
+                }}
+              />
+              {uploadUrl && (
                 <MuxUploader
                   endpoint={uploadUrl}
                   onSuccess={handleSuccess}
                   onError={(error) => console.error('Upload error:', error)}
                 />
+              )}
             </div>
-            <button type="submit">Create Lesson</button>
+            <button type="button" onClick={getUploadUrl}>Create Lesson</button>
           </form>
         </div>
       )}

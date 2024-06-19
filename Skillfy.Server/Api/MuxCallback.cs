@@ -34,6 +34,7 @@ namespace Skillfy.Server.Api
 
             return BadRequest("Event type not handled.");
         }
+
     }
 
     public class MuxEvent
