@@ -67,6 +67,7 @@ export default function CreateCourse() {
       });
 
       if (response.status === 200) {
+        console.log(response)
         alert('Course Created Successfully');
         const chapters = response.data.data.chapters.$values; // Adjust this based on actual API response structure
         setChapterinfo(chapters);
