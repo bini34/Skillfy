@@ -23,7 +23,7 @@ namespace Skillfy.Server.service
                 PublishDate = DateTime.Now,
                 Url = videourl
                     
-            };
+            }; 
             await _context.lessons.AddAsync(lesson);
             return lesson.LessonID;
         }
