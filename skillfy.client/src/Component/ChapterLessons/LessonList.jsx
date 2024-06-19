@@ -28,7 +28,7 @@ export default function LessonList() {
 
   const getUploadUrl = async () => {
     try {
-      const response = await axios.post('https://localhost:7182/api/mux/upload-url', { chapterId: chapterId, title: newLessonTitle });
+      const response = await axios.post('https://localhost:7182/api/mux/upload-url');
       if (response.data.data.url) {
         setUploadUrl(response.data.data.url);
         setVideoId(response.data.data.id);
@@ -39,6 +39,8 @@ export default function LessonList() {
       console.error('Error fetching upload URL', error);
     }
   };
+
+  
 
   const handleSuccess = (event) => {
     console.log('Upload successful:', event.detail);

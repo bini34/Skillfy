@@ -9,29 +9,38 @@ namespace Skillfy.Server.Api
     public class muxcallback : ControllerBase
     {
         public Ilessonrepo _lrepo;
-        public muxcallback(Ilessonrepo repo) {
+
+        private readonly ILogger<muxcallback> _logger;
+        public muxcallback(Ilessonrepo repo, ILogger<muxcallback> logger)
+        {
             _lrepo = repo;
-              
+            _logger = logger;
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] JsonElement payload)
         {
             var muxEvent = JsonSerializer.Deserialize<MuxEvent>(payload.ToString());
-
-            if (muxEvent.Type == "video.asset.ready")
+            try
             {
-                var playbackUrl = muxEvent.Data.PlaybackIds.FirstOrDefault()?.PlaybackUrl;             
-                var chapId = muxEvent.Data.AssetMetadata.Chapterid;
-                var title = muxEvent.Data.AssetMetadata.Title;
+                if (muxEvent.Type == "video.asset.ready")
+                {
+                    var playbackUrl = muxEvent.Data.PlaybackIds.FirstOrDefault()?.PlaybackUrl;
+                    var chapId = muxEvent.Data.AssetMetadata.Chapterid;
+                    var title = muxEvent.Data.AssetMetadata.Title;
 
 
-                await _lrepo.SaveLessonAsync(chapId, playbackUrl, title);
+                    await _lrepo.SaveLessonAsync(chapId, playbackUrl, title);
 
-                return Ok();
+                    return Ok();
+                }
             }
-
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing webhook payload");
+                return StatusCode(500, "Internal server error");
+            }
             return BadRequest("Event type not handled.");
         }
 
