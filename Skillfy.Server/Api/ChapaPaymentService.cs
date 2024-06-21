@@ -30,7 +30,7 @@ public class ChapaPaymentService : Ipayment
             amount = price,
             currency = "ETB",
             tx_ref = txRef,
-            callback_url = "https://localhost:7182/api/payment/callback",            
+         //   callback_url = "https://localhost:7182/api/payment/callback",            
             return_url = "",
           
         };

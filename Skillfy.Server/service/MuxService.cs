@@ -34,7 +34,8 @@ namespace Skillfy.Server.service
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogError($"Error fetching asset details: {response.ReasonPhrase}");
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    _logger.LogError($"Error fetching asset details: {response.ReasonPhrase}. Response: {errorResponse}");
                     throw new Exception($"Error fetching asset details: {response.ReasonPhrase}");
                 }
 
@@ -59,6 +60,41 @@ namespace Skillfy.Server.service
         {
             return $"https://stream.mux.com/{playbackId}.m3u8";
         }
+        public async Task<string> CreatePlaybackIdAsync(string assetId)
+        {
+            try
+            {
+                var client = _httpClientFactory.CreateClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_apiKey}:{_apiKeySecret}")));
 
+                var requestBody = new
+                {
+                    policy = "public"
+                };
+
+                var response = await client.PostAsJsonAsync($"https://api.mux.com/video/v1/assets/{assetId}/playback-ids", requestBody);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    _logger.LogError($"Error creating playback ID: {response.ReasonPhrase}. Response: {errorResponse}");
+                    throw new Exception($"Error creating playback ID: {response.ReasonPhrase}");
+                }
+
+                var responseData = await response.Content.ReadAsStringAsync();
+                _logger.LogInformation($"Mux API Response: {responseData}");
+
+                var jsonResponse = JsonDocument.Parse(responseData);
+                var playbackId = jsonResponse.RootElement.GetProperty("data").GetProperty("id").GetString();
+
+                return playbackId;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception occurred in CreatePlaybackIdAsync");
+                throw;
+            }
+        }
     }
 }
