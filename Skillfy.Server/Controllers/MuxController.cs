@@ -18,20 +18,24 @@ namespace Skillfy.Server.Controllers
 
     [ApiController]
     [Route("api/mux")]
-    public class MuxController : ControllerBase
+    public class MuxController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _apiKey;
         private readonly string _apiKeySecret;
+        private readonly ILogger<MuxController> _logger;
+        private readonly MuxService _mux;
 
         private readonly LessonService _lessonService;
 
-        public MuxController(IHttpClientFactory httpClientFactory, IConfiguration configuration, LessonService lessonService)
+        public MuxController(IHttpClientFactory httpClientFactory, IConfiguration configuration ,  LessonService lessonService, ILogger<MuxController> logger, MuxService mux)
         {
             _httpClientFactory = httpClientFactory;
             _apiKey = configuration["Mux:AccessToken"];
             _apiKeySecret = configuration["Mux:SecretKey"];
-            _lessonService = lessonService;
+           _lessonService = lessonService;
+            _logger = logger;
+            _mux = mux;
         }
 
         [HttpPost("upload-url")]
@@ -64,20 +68,20 @@ namespace Skillfy.Server.Controllers
             return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync());
         }
 
-        [HttpGet("getplaybackid")]
-        public async Task<IActionResult> GetPlaybackUrl(uploadlessondto uploadlessondto)
+        [HttpPost("getid")]
+        public async Task<IActionResult> GetPlaybackUrl([FromBody] uploadlessondto uploadlessondto)
         {
             try
             {
-                var playbackId = await GetPlaybackIdAsync(uploadlessondto.assetId);
-                var playbackUrl = GetPlaybacktoUrl(playbackId);
+                var playbackId = await _mux.GetPlaybackIdAsync(uploadlessondto.assetId);
+                var playbackUrl = _mux.GetPlaybacktoUrl(playbackId);
 
-                var id =await _lessonService.SaveLessonAsync(uploadlessondto.chpaterid, playbackUrl, uploadlessondto.title);
+                var id = await _lessonService.SaveLessonAsync(uploadlessondto.chpaterid, "playbackUrl", uploadlessondto.title);
 
                 if (id < 0)
                     return BadRequest(new ResponsViewModel(false, "lesson not saved", null));
 
-                return Ok(new ResponsViewModel(true, "succesfull", playbackUrl));
+                return Ok(new ResponsViewModel(true, "succesfull", "playbackUrl"));
             }
             catch (Exception ex)
             {
@@ -85,44 +89,19 @@ namespace Skillfy.Server.Controllers
             }
 
         }
-
-        public class uploadlessondto
-        {
-            public string title { get; set; }
-
-            public int chpaterid { get; set; }
-
-            public string assetId { get; set; }
-
-        }
-
-        private async Task<string> GetPlaybackIdAsync(string assetId)
-        {
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-            Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_apiKey}:{_apiKeySecret}")));
-
-            var response = await client.GetAsync($"https://api.mux.com/video/v1/assets/{assetId}");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error fetching asset details: {response.ReasonPhrase}");
-            }
-
-            var responseData = await response.Content.ReadAsStringAsync();
-            var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
-
-            var playbackId = jsonResponse.GetProperty("data").GetProperty("playback_ids").EnumerateArray().FirstOrDefault().GetProperty("id").GetString();
-
-            return playbackId;
-        }
+    
 
 
 
-        public string GetPlaybacktoUrl(string playbackId)
-        {
-            return $"https://stream.mux.com/{playbackId}.m3u8";
-        }
+    }
+
+    public class uploadlessondto
+    {
+        public string title { get; set; }
+
+        public int chpaterid { get; set; }
+
+        public string assetId { get; set; }
 
     }
 

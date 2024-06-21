@@ -30,13 +30,13 @@ namespace Skillfy.Server.Controllers
 
 
         }
-        [HttpPost("getvideourl{assetid}")]
-        public async Task<IActionResult> getvideourl(string assetid)
-        {
+        //[HttpPost("getvideourl{assetid}")]
+        //public async Task<IActionResult> getvideourl(string assetid)
+        //{
            
             
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
     }
 

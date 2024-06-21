@@ -1,7 +1,11 @@
 ﻿using Skillfy.Server.Data;
 using Skillfy.Server.Model;
 using Skillfy.Server.Repo;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Text;
 
 namespace Skillfy.Server.service
 {
@@ -11,7 +15,10 @@ namespace Skillfy.Server.service
         private readonly ApplicationDbContext _context;
         public LessonService(ApplicationDbContext context) {
             _context = context;
-        
+            //_httpClientFactory = httpClientFactory;
+            //_apiKey = configuration["Mux:AccessToken"];
+            //_apiKeySecret = configuration["Mux:SecretKey"];
+
         }
 
         public async Task<int> SaveLessonAsync(int chapterid, string videourl , string title)
@@ -27,5 +34,7 @@ namespace Skillfy.Server.service
             await _context.lessons.AddAsync(lesson);
             return lesson.LessonID;
         }
+
+       
     }
 }

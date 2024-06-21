@@ -4,8 +4,8 @@ using System.Text.Json;
 
 namespace Skillfy.Server.Api
 {
-    [ApiController]
-    [Route("api/muxcallback")]
+    //[ApiController]
+    //[Route("api/muxcallback")]
     public class muxcallback : ControllerBase
     {
         public Ilessonrepo _lrepo;
