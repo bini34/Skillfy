@@ -32,6 +32,7 @@ namespace Skillfy.Server.service
                     
             }; 
             await _context.lessons.AddAsync(lesson);
+            await _context.SaveChangesAsync();
             return lesson.LessonID;
         }
 
