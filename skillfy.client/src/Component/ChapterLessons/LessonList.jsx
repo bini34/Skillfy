@@ -30,7 +30,9 @@ export default function LessonList() {
   const getUploadUrl = async () => {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/upload-url');
-      if (response.data.data.url) {
+      console.log("upload url",response)
+      if (response.data.data.url)
+       {
         setUploadUrl(response.data.data.url);
         setVideoId(response.data.data.id);
 
@@ -64,8 +66,8 @@ export default function LessonList() {
   const sendVideoIdToBackend = async () => {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/getid', {
-        title: newLessonTitle,
-        chapterId: chapterId,
+        // title: newLessonTitle,
+        // chapterId: chapterId,
         assetId: videoId
       });
       console.log('Playback ID:', response.data.playbackId);
