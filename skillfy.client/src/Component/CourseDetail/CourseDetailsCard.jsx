@@ -1,14 +1,18 @@
 // src/CourseDetailsCard.js
 import React from 'react';
 import './CourseDetailsCard.css';
+import { Navigate } from 'react-router-dom';
 
 const CourseDetailsCard = () => {
+  function sendToCart(){
+    Navigate('/cart')
+  }
   return (
     <div className="course-details-card">
       <div className="price-section">
         <span className="current-price">$49.65</span>
     
-        <button className="AddtoCart-now-button">Add to Cart</button>
+        <button onClick={sendToCart} className="AddtoCart-now-button">Add to Cart</button>
 
         <button className="buy-now-button">Buy Now</button>
       </div>
