@@ -44,7 +44,7 @@ export default function LessonList() {
 
 
   const handleSuccess = (event) => {
-    console.log('Upload successful:', event.detail);
+    console.log('Upload successful:', event);
     setUploadVideo(true);
   };
 
