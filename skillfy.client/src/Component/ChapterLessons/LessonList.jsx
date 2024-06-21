@@ -63,7 +63,7 @@ export default function LessonList() {
   // };
   const sendVideoIdToBackend = async () => {
     try {
-      const response = await axios.post('https://localhost:7182/api/mux/getplaybackid', {
+      const response = await axios.post('https://localhost:7182/api/mux/getid', {
         title: newLessonTitle,
         chapterId: chapterId,
         assetId: videoId
