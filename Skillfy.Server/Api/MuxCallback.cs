@@ -6,9 +6,9 @@ namespace Skillfy.Server.Api
 {
     //[ApiController]
     //[Route("api/muxcallback")]
-    //public class muxcallback : ControllerBase
-    //{
-    //    public Ilessonrepo _lrepo;
+    public class muxcallback : ControllerBase
+    {
+        public Ilessonrepo _lrepo;
 
     //    private readonly ILogger<muxcallback> _logger;
     //    public muxcallback(Ilessonrepo repo, ILogger<muxcallback> logger)

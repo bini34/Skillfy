@@ -65,6 +65,8 @@ builder.Services.AddScoped<ICourseRepositary, CourseRepositary>();
 builder.Services.AddScoped<IcatogryRepositary, CatagoryRepositary>();
 builder.Services.AddScoped<ICourseService, CourseSerivce>();
 builder.Services.AddScoped<Ilessonrepo, LessonService>();
+builder.Services.AddScoped<LessonService>();
+builder.Services.AddScoped<MuxService>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
