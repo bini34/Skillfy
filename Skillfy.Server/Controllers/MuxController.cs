@@ -26,12 +26,12 @@ namespace Skillfy.Server.Controllers
 
         private readonly LessonService _lessonService;
 
-        public MuxController(IHttpClientFactory httpClientFactory, IConfiguration configuration ,  LessonService lessonService, ILogger<MuxController> logger, MuxService mux)
+        public MuxController(IHttpClientFactory httpClientFactory, IConfiguration configuration, LessonService lessonService, ILogger<MuxController> logger, MuxService mux)
         {
             _httpClientFactory = httpClientFactory;
             _apiKey = configuration["Mux:AccessToken"];
             _apiKeySecret = configuration["Mux:SecretKey"];
-           _lessonService = lessonService;
+            _lessonService = lessonService;
             _logger = logger;
             _mux = mux;
         }
@@ -88,13 +88,14 @@ namespace Skillfy.Server.Controllers
         //}
 
         [HttpPost("getid")]
-        public async Task<IActionResult> GetPlaybackUrl([FromBody] AssetDto dto)
+        public async Task<IActionResult> GetPlaybackUrl([FromBody] FetchAssetIdDto dto)
         {
+            var AssetId = await _mux.GetAssetId(dto.UploadId);
             var client = _httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                 Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_apiKey}:{_apiKeySecret}")));
 
-            var response = await client.GetAsync($"https://api.mux.com/video/v1/assets/{dto.AssetId}");
+            var response = await client.GetAsync($"https://api.mux.com/video/v1/assets/{AssetId}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -109,14 +110,45 @@ namespace Skillfy.Server.Controllers
             return Ok(new { playbackUrl });
         }
 
+        //[HttpPost("fetch-asset-id")]
+        //public async Task<IActionResult> GetAssetId([FromBody] FetchAssetIdDto dto)
+        //{
+
+        //    try
+        //    {
+        //        var client = _httpClientFactory.CreateClient();
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+        //            Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{_apiKey}:{_apiKeySecret}")));
+
+        //        var response = await client.GetAsync($"https://api.mux.com/video/v1/uploads/{dto.UploadId}");
+
+        //        if (!response.IsSuccessStatusCode)
+        //        {
+        //            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+        //        }
+
+        //        var responseData = await response.Content.ReadAsStringAsync();
+        //        var jsonResponse = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(responseData);
+
+        //        var assetId = jsonResponse.GetProperty("data").GetProperty("asset_id").GetString();
+
+        //        return Ok(new { assetId });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
+    }   
+
 
 
 
     }
 
-    public class AssetDto
-    {
-        public string AssetId { get; set; }
+    public class FetchAssetIdDto
+{
+        public string UploadId { get; set; }
     }
 
     public class uploadlessondto
