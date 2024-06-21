@@ -3,16 +3,16 @@
     align-items: center;
     border: 1px solid #ddd;
     padding: 10px;
-    margin-bottom: 10px;
     border-radius: 8px;
     background-color: #fff;
+    justify-content: space-between;
+    gap: 20px;
   }
   
-  .course-image {
-    width: 40px;
-    height: 40px;
+  .cart-course-image {
+    width: 80px;
+    height: 80px;
     border-radius: 8px;
-    margin-right: 20px;
   }
   
   .course-info {
@@ -29,6 +29,10 @@
     font-weight: bold;
     color: #333;
     margin-right: 10px;
+  }
+  .cartCoueseInstructor{
+    display: flex;
+    gap: 5px;
   }
   
   .original-price {
