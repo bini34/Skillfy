@@ -88,7 +88,7 @@ namespace Skillfy.Server.Controllers
         //}
 
         [HttpPost("getid")]
-        public async Task<IActionResult> GetPlaybackUrl(FetchAssetIdDto dto)
+        public async Task<IActionResult> GetPlaybackUrl([FromBody] FetchAssetIdDto dto)
         {
             var AssetId = await _mux.GetAssetId(dto.UploadId);
             var client = _httpClientFactory.CreateClient();
