@@ -5,6 +5,7 @@ using System.Text;
 using Skillfy.Server.Controllers;
 using Microsoft.Extensions.Hosting;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Skillfy.Server.service
 {
@@ -55,9 +56,7 @@ namespace Skillfy.Server.service
                 throw;
             }
         }
-
-
-
+        
         public string GetPlaybacktoUrl(string playbackId)
         {
             return $"https://stream.mux.com/{playbackId}.m3u8";
@@ -97,6 +96,34 @@ namespace Skillfy.Server.service
             {
                 _logger.LogError(ex, "Exception occurred in CreatePlaybackIdAsync");
                 throw;
+            }
+        }
+        public async Task<string> GetAssetId(string UploadId)
+        {
+            try
+            {
+                var client = _httpClientFactory.CreateClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                    Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{_apiKey}:{_apiKeySecret}")));
+
+                var response = await client.GetAsync($"https://api.mux.com/video/v1/uploads/{UploadId}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError("eroor");
+                }
+
+                var responseData = await response.Content.ReadAsStringAsync();
+                var jsonResponse = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(responseData);
+
+                var assetId = jsonResponse.GetProperty("data").GetProperty("asset_id").GetString();
+
+                return assetId;
+            }
+            catch (Exception ex)
+            {
+                // return StatusCode(500, ex.Message);
+                return ("does work");
             }
         }
     }
