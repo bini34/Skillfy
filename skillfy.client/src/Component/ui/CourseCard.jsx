@@ -9,7 +9,7 @@ const CourseCard = ({ coursename, teachername, price, rating, students, lessons,
   const imageUrl = `${baseUrl}${coursethumbline}`;
 
   return (
-    <Link to="/Course-Detail" className="course-card-link">
+    <Link to="/course-detail-overview" className="course-card-link">
       <div className="course-card">
         <img 
           src={imageUrl}

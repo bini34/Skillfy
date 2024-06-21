@@ -11,7 +11,7 @@ using Skillfy.Server.service;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddScoped<LessonService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

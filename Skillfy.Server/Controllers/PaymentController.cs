@@ -6,8 +6,8 @@ using Skillfy.Server.ViewModel;
 
 namespace Skillfy.Server.Controllers
 {
-    [Route("/api/payment")]
-    [ApiController]
+   // [Route("/api/payment")]
+    //[ApiController]
     public class PaymentController : Controller
     {
         private readonly Ipayment _paymentservice;
@@ -30,13 +30,13 @@ namespace Skillfy.Server.Controllers
 
 
         }
-        [HttpPost("getvideourl{assetid}")]
-        public async Task<IActionResult> getvideourl(string assetid)
-        {
+        //[HttpPost("getvideourl{assetid}")]
+        //public async Task<IActionResult> getvideourl(string assetid)
+        //{
            
             
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
     }
 

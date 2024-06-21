@@ -44,7 +44,7 @@ const NavBar = ({ color }) => {
           <Link to="/MyLearning" className="nav-link" style={{ color }}>My learning</Link>
         </li>
         <li className="nav-item">
-          <Link to="#" className="nav-link" style={{ color }}>
+          <Link to="/cart" className="nav-link" style={{ color }}>
             <Badge badgeContent={0} color="error">
               <ShoppingCartOutlinedIcon />
             </Badge>
@@ -56,7 +56,7 @@ const NavBar = ({ color }) => {
               <Link to="/auth/account/signin" className="nav-link" style={{ color }}>Login</Link>
             </li>
             <li className="nav-item">
-              <Link to="auth/account/register" className="nav-link register" style={{ color }}>Register</Link>
+              <Link to="/auth/account/registor" className="nav-link register">Register</Link>
             </li>
           </>
         ) : (

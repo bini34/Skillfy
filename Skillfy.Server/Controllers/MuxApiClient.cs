@@ -3,16 +3,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 
-
 namespace Skillfy.Server.Controllers
 {
-
     using Microsoft.AspNetCore.Mvc;
     using Skillfy.Server.Model;
     using Skillfy.Server.service;
     using Skillfy.Server.ViewModel;
-    using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
 
@@ -58,21 +56,20 @@ namespace Skillfy.Server.Controllers
                 var responseData = await response.Content.ReadAsStringAsync();
                 var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
                 return Ok(jsonResponse);
-
             }
 
-            return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync());
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
-        [HttpGet("getplaybackid")]
-        public async Task<IActionResult> GetPlaybackUrl(uploadlessondto uploadlessondto)
+        [HttpPost("getplaybackid")]
+        public async Task<IActionResult> GetPlaybackUrl([FromBody] uploadlessondto uploadlessondto)
         {
             try
             {
                 var playbackId = await GetPlaybackIdAsync(uploadlessondto.assetId);
-                var playbackUrl = GetPlaybacktoUrl(playbackId);
+                var playbackUrl = GeneratePlaybackUrl(playbackId);
 
-                var id =await _lessonService.SaveLessonAsync(uploadlessondto.chpaterid, playbackUrl, uploadlessondto.title);
+                var id = await _lessonService.SaveLessonAsync(uploadlessondto.chapterId, playbackUrl, uploadlessondto.title);
 
                 if (id < 0)
                     return BadRequest(new ResponsViewModel(false, "lesson not saved", null));
@@ -83,17 +80,13 @@ namespace Skillfy.Server.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-
         }
 
         public class uploadlessondto
         {
             public string title { get; set; }
-
-            public int chpaterid { get; set; }
-
+            public int chapterId { get; set; }
             public string assetId { get; set; }
-
         }
 
         private async Task<string> GetPlaybackIdAsync(string assetId)
@@ -113,21 +106,12 @@ namespace Skillfy.Server.Controllers
             var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
 
             var playbackId = jsonResponse.GetProperty("data").GetProperty("playback_ids").EnumerateArray().FirstOrDefault().GetProperty("id").GetString();
-
             return playbackId;
+         }
+
+         private string GeneratePlaybackUrl(string playbackId)
+            {
+                return $"https://stream.mux.com/{playbackId}.m3u8";
+            }
         }
-
-
-
-        public string GetPlaybacktoUrl(string playbackId)
-        {
-            return $"https://stream.mux.com/{playbackId}.m3u8";
-        }
-
-    }
-
-
-
 }
-
-
