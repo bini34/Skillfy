@@ -23,11 +23,11 @@ namespace Skillfy.Server.Api
         //[HttpPost("enroll")]
         //public async Task EnrollUserAsync(ResponsViewModel respons)
         //{
-        //    if(respons.Status == false)
+        //    if (respons.Status == false)
         //    {
 
         //    }
-            
+
         //    var parts = txRef.Split('-');
         //    var courseId = int.Parse(parts[0]);
         //    var userId = parts[1];

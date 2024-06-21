@@ -70,10 +70,11 @@ namespace Skillfy.Server.Controllers
         {
             try
             {
-                var playbackId = await _mux.GetPlaybackIdAsync(uploadlessondto.assetId);
+
+                var playbackId = await _mux.CreatePlaybackIdAsync(uploadlessondto.assetId);
                 var playbackUrl = _mux.GetPlaybacktoUrl(playbackId);
 
-                var id = await _lessonService.SaveLessonAsync(uploadlessondto.chpaterid, "playbackUrl", uploadlessondto.title);
+                var id = await _lessonService.SaveLessonAsync(uploadlessondto.chpaterid, playbackUrl, uploadlessondto.title);
 
                 if (id < 0)
                     return BadRequest(new ResponsViewModel(false, "lesson not saved", null));
