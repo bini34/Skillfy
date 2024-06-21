@@ -3,6 +3,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text;
 using Skillfy.Server.Controllers;
+using Microsoft.Extensions.Hosting;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Skillfy.Server.service
 {
@@ -70,7 +72,8 @@ namespace Skillfy.Server.service
 
                 var requestBody = new
                 {
-                    policy = "public"
+                    policy = "public",
+                    Content_type = "application/json"
                 };
 
                 var response = await client.PostAsJsonAsync($"https://api.mux.com/video/v1/assets/{assetId}/playback-ids", requestBody);
@@ -81,7 +84,7 @@ namespace Skillfy.Server.service
                     _logger.LogError($"Error creating playback ID: {response.ReasonPhrase}. Response: {errorResponse}");
                     throw new Exception($"Error creating playback ID: {response.ReasonPhrase}");
                 }
-
+         
                 var responseData = await response.Content.ReadAsStringAsync();
                 _logger.LogInformation($"Mux API Response: {responseData}");
 

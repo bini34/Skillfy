@@ -65,31 +65,58 @@ namespace Skillfy.Server.Controllers
             return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
+        //[HttpPost("getid")]
+        //public async Task<IActionResult> GetPlaybackUrl([FromBody] uploadlessondto uploadlessondto)
+        //{
+        //    try
+        //    {
+
+        //        var playbackId = await _mux.CreatePlaybackIdAsync(uploadlessondto.assetId);
+        //        var playbackUrl = _mux.GetPlaybacktoUrl(playbackId);
+
+        //        var id = await _lessonService.SaveLessonAsync(uploadlessondto.chpaterid, playbackUrl, uploadlessondto.title);
+
+        //        if (id < 0)
+        //            return BadRequest(new ResponsViewModel(false, "lesson not saved", null));
+
+        //        return Ok(new ResponsViewModel(true, "succesfull", "playbackUrl"));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
+
         [HttpPost("getid")]
-        public async Task<IActionResult> GetPlaybackUrl([FromBody] uploadlessondto uploadlessondto)
+        public async Task<IActionResult> GetPlaybackUrl([FromBody] AssetDto dto)
         {
-            try
+            var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+                Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_apiKey}:{_apiKeySecret}")));
+
+            var response = await client.GetAsync($"https://api.mux.com/video/v1/assets/{dto.AssetId}");
+
+            if (!response.IsSuccessStatusCode)
             {
-
-                var playbackId = await _mux.CreatePlaybackIdAsync(uploadlessondto.assetId);
-                var playbackUrl = _mux.GetPlaybacktoUrl(playbackId);
-
-                var id = await _lessonService.SaveLessonAsync(uploadlessondto.chpaterid, playbackUrl, uploadlessondto.title);
-
-                if (id < 0)
-                    return BadRequest(new ResponsViewModel(false, "lesson not saved", null));
-
-                return Ok(new ResponsViewModel(true, "succesfull", "playbackUrl"));
+                return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
+            var playbackId = jsonResponse.GetProperty("data").GetProperty("playback_ids")[0].GetProperty("id").GetString();
+            var playbackUrl = $"https://stream.mux.com/{playbackId}.m3u8";
+
+            return Ok(new { playbackUrl });
         }
-    
 
 
 
+
+    }
+
+    public class AssetDto
+    {
+        public string AssetId { get; set; }
     }
 
     public class uploadlessondto
