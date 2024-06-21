@@ -106,8 +106,14 @@ namespace Skillfy.Server.Controllers
             var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
             var playbackId = jsonResponse.GetProperty("data").GetProperty("playback_ids")[0].GetProperty("id").GetString();
             var playbackUrl = $"https://stream.mux.com/{playbackId}.m3u8";
+            var result =await _lessonService.SaveLessonAsync(dto.chpaterid, playbackUrl, dto.title);
 
-            return Ok(new { playbackUrl });
+            if(result< 0)
+            {
+                return BadRequest(new ResponsViewModel(false, "problem while saving", null));
+            }
+
+            return Ok(new ResponsViewModel(true, "sucessfully saved ", result));
         }
 
         //[HttpPost("fetch-asset-id")]
@@ -139,15 +145,13 @@ namespace Skillfy.Server.Controllers
         //        return StatusCode(500, ex.Message);
         //    }
         //}
-    }   
-
-
-
-
     }
-
     public class FetchAssetIdDto
-{
+    {
+        public string title { get; set; }
+
+        public int chpaterid { get; set; }
+
         public string UploadId { get; set; }
     }
 
@@ -160,6 +164,11 @@ namespace Skillfy.Server.Controllers
         public string assetId { get; set; }
 
     }
+
+
+
+
+   
 
 
 
