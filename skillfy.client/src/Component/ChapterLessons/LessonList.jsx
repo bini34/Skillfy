@@ -66,9 +66,9 @@ export default function LessonList() {
   const sendVideoIdToBackend = async () => {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/getid', {
-        // // title: newLessonTitle,
-        // // chapterId: chapterId,
-        // uploadId: videoId
+        title: newLessonTitle,
+        chapterId: chapterId,
+        uploadId: videoId
       });
       console.log('Playback ID:', response.data.playbackId);
     } catch (error) {
