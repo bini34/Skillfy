@@ -24,6 +24,7 @@ export default function LessonList() {
     if (location.state && location.state.chapterid) {
       setChapterId(location.state.chapterid);
     }
+    getUploadUrl();
   }, [location.state]);
 
   const getUploadUrl = async () => {
@@ -40,19 +41,36 @@ export default function LessonList() {
     }
   };
 
-  
+
 
   const handleSuccess = (event) => {
     console.log('Upload successful:', event.detail);
     setUploadVideo(true);
   };
 
+  // const sendVideoIdToBackend = async () => {
+  //   try {
+  //     console.log( newLessonTitle)
+  //     console.log( chapterId)
+  //     console.log( videoId)
+
+  //     await apiService.createData('api/mux/getplaybackid', { title: newLessonTitle, chapterId: chapterId, assetId: videoId });
+
+  //     console.log('Video ID sent');
+  //   } catch (error) {
+  //     console.error('Error sending video ID to backend', error);
+  //   }
+  // };
   const sendVideoIdToBackend = async () => {
     try {
-      await apiService.createData('api/lesson/uploadLesson', { chapterId: chapterId, title: newLessonTitle, videoId: videoId });
-      console.log('Video ID sent');
+      const response = await axios.post('https://localhost:7182/api/mux/getplaybackid', {
+        title: newLessonTitle,
+        chapterId: chapterId,
+        assetId: videoId
+      });
+      console.log('Playback ID:', response.data.playbackId);
     } catch (error) {
-      console.error('Error sending video ID to backend', error);
+      console.error('Error sending video ID to backend:', error.response ? error.response.data : error.message);
     }
   };
 
@@ -66,7 +84,7 @@ export default function LessonList() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await sendVideoIdToBackend();
+    sendVideoIdToBackend();
     if (newLessonTitle && videoId) {
       addLesson({ title: newLessonTitle, videoId });
       setNewLessonTitle('');
@@ -132,7 +150,7 @@ export default function LessonList() {
                 />
               )}
             </div>
-            <button type="button" onClick={getUploadUrl}>Create Lesson</button>
+            <button type="button" onClick={sendVideoIdToBackend}>Create Lesson</button>
           </form>
         </div>
       )}

@@ -3,13 +3,6 @@ import './CourseReview.css';
 
 const CourseReview = () => {
   return (
-    <div className="course-review">
-      <div className="tabs">
-        <button className="tab-button active">Overview</button>
-        <button className="tab-button">Curriculum</button>
-        <button className="tab-button">Instructor</button>
-        <button className="tab-button">Reviews</button>
-      </div>
       <div className="content">
         <h2>Course Description</h2>
         <p>
@@ -30,7 +23,6 @@ const CourseReview = () => {
           boring theory + we won’t cover business topics that are common sense).
         </p>
       </div>
-    </div>
   );
 }
 

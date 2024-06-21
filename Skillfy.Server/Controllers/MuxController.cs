@@ -3,16 +3,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 
-
 namespace Skillfy.Server.Controllers
 {
-
     using Microsoft.AspNetCore.Mvc;
     using Skillfy.Server.Model;
     using Skillfy.Server.service;
     using Skillfy.Server.ViewModel;
-    using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
 
@@ -62,10 +60,9 @@ namespace Skillfy.Server.Controllers
                 var responseData = await response.Content.ReadAsStringAsync();
                 var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
                 return Ok(jsonResponse);
-
             }
 
-            return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync());
+            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
         }
 
         [HttpPost("getid")]
@@ -88,7 +85,6 @@ namespace Skillfy.Server.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-
         }
     
 

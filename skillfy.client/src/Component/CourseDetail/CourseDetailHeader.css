@@ -1,15 +1,18 @@
-.course-detail-header {
+.course-header-container {
   background-color: inherit;
-  padding: 20px;
   border-radius: 10px;
-  color: #5E5980;
+  color: #5E5880;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
 }
 
 .course-header-about {
   flex: 1;
 }
 
-.course-header h1 {
+.course-header-container h1 {
   font-size: 2em;
   margin-bottom: 10px;
 }
@@ -17,6 +20,7 @@
 .course-header-main {
   display: flex;
   width: 100%;
+  gap: 30px;
 }
 
 .course-header p {
@@ -27,7 +31,7 @@
 .course-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
+  font-size: smaller;
 }
 
 .course-rating, .course-enrollment, .course-duration, .course-lessons {
@@ -38,10 +42,5 @@
   background-color:inherit;
 }
 
-.course-rating .star {
-  color: gold;
-}
 
-.course-enrollment{
 
-}

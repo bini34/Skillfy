@@ -6,8 +6,8 @@ using Skillfy.Server.ViewModel;
 
 namespace Skillfy.Server.Controllers
 {
-    [Route("/api/payment")]
-    [ApiController]
+   // [Route("/api/payment")]
+    //[ApiController]
     public class PaymentController : Controller
     {
         private readonly Ipayment _paymentservice;

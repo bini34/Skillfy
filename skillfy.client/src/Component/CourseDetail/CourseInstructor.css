@@ -1,9 +1,6 @@
-.course-instructor {
-    font-family: Arial, sans-serif;
+/* .course-instructor {
     max-width: 800px;
-    margin: auto;
-    padding: 20px;
-  }
+  } */
   
   .tabs {
     display: flex;
@@ -31,7 +28,7 @@
   }
   
   .instructor-content {
-    background-color: #f9f9f9;
+    background-color: #FFEFEF;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -69,13 +66,13 @@
     margin-top: 10px;
   }
   
-  h3 {
+  .instructor-content h3 {
     font-size: 20px;
     color: #555;
     margin-top: 20px;
   }
   
-  p {
+  instructor-content p {
     font-size: 16px;
     color: #666;
     line-height: 1.6;
