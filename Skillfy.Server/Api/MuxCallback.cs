@@ -67,5 +67,5 @@ namespace Skillfy.Server.Api
     //{
     //    public int Chapterid { get; set; }
     //    public string Title { get; set; }
-    //}
+    }
 }
