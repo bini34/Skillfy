@@ -43,7 +43,7 @@ function App() {
         element: <CourseDetail />
     },
     {
-        path: '/course-detail-reviews',
+        path: '/:coursename',
         element: <CourseDetail />
     },
     {
