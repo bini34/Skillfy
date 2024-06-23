@@ -22,7 +22,7 @@ public class ChapaPaymentService : Ipayment
         _secretKey = configuration["Chapa:SecretKey"];
     }
 
-    public async Task<string> InitializePaymentAsync(int price,int courseId, string userId)
+    public async Task<object> InitializePaymentAsync(int price,int courseId, string userId)
     {
         var txRef = $"{courseId}-{userId}-{Guid.NewGuid()}";
         var paymentData = new
@@ -52,7 +52,12 @@ public class ChapaPaymentService : Ipayment
 
             var respond = await response.Content.ReadAsStringAsync();
             _logger.LogInformation("Payment initialized successfully: {0}", respond);
-            return respond;
+            // Deserialize response string to JSON object
+            var responseJson = JsonSerializer.Deserialize<object>(respond, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return responseJson;
         }
         catch (HttpRequestException ex)
         {
