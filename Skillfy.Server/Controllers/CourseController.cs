@@ -82,6 +82,16 @@ namespace Skillfy.Server.Controllers
 
             return Ok(details);
         }
+        //[HttpGet("coursedetail{course}")]
+        //public async Task<IActionResult> coursedetail(string  course)
+        //{
+        //    var details = await courseRepositary.GetCourseDetails(id);
+
+        //    if (details == null)
+        //        return BadRequest(new ResponsViewModel(false, "Dont fetched", null));
+
+        //    return Ok(details);
+        //}
 
 
 

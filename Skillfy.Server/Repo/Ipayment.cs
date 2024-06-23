@@ -7,7 +7,7 @@ namespace Skillfy.Server.Repo
         //public Task transaction(ResponsViewModel repo);
         //public Task enrollment(int courseid, string userid, bool paymentstatus);
 
-        public Task<string> InitializePaymentAsync(int price, int courseId, string userId);
+        public Task<object> InitializePaymentAsync(int price, int courseId, string userId);
 
     }
 }
