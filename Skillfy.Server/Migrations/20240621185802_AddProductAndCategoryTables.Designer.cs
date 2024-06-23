@@ -12,8 +12,8 @@ using Skillfy.Server.Data;
 namespace Skillfy.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240614104825_intialcreate")]
-    partial class intialcreate
+    [Migration("20240621185802_AddProductAndCategoryTables")]
+    partial class AddProductAndCategoryTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
