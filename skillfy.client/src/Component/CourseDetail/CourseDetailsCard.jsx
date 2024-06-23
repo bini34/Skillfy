@@ -1,20 +1,39 @@
-// src/CourseDetailsCard.js
 import React from 'react';
 import './CourseDetailsCard.css';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import authService from '../../Services/authService';
 
-const CourseDetailsCard = () => {
-  function sendToCart(){
-    Navigate('/cart')
-  }
+const CourseDetailsCard = ({ courseId, price }) => {
+  const user = authService.getCurrentUser();
+  console.log('User:', user)
+  const navigate = useNavigate();
+
+  const sendToCart = () => {
+    navigate('/cart');
+  };
+
+  const buyNow = async () => {
+    try {
+      const response = await axios.post('https://localhost:7182/api/payment/Initialize', {
+        courseId: courseId,
+        userId: user.id,  // Assuming the user object has an id property
+        price: price
+      });
+      console.log(response.data.data);
+    } catch (error) {
+      console.error('Error sending buy course data:', error);
+    }
+  };
+
   return (
     <div className="course-details-card">
       <div className="price-section">
-        <span className="current-price">$49.65</span>
+        <span className="current-price">${price}</span>
     
         <button onClick={sendToCart} className="AddtoCart-now-button">Add to Cart</button>
 
-        <button className="buy-now-button">Buy Now</button>
+        <button onClick={buyNow} className="buy-now-button">Buy Now</button>
       </div>
       <div className="course-includes">
         <h3>This course includes</h3>
@@ -43,6 +62,6 @@ const CourseDetailsCard = () => {
       </div>
     </div>
   );
-}
+};
 
 export default CourseDetailsCard;
