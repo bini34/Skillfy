@@ -14,15 +14,22 @@ export default function LessonList() {
   const [newLessonTitle, setNewLessonTitle] = useState('');
   const [uploadUrl, setUploadUrl] = useState('');
   const [playbackId, setPlaybackId] = useState('');
-  const [videoId, setVideoId] = useState('');
+  const [uploadId, setuploadId] = useState('');
   const [uploadVideo, setUploadVideo] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [chapterId, setChapterId] = useState('');
+  const [ChapterId, setChapterId] = useState('');
 
   useEffect(() => {
     if (location.state && location.state.chapterid) {
-      setChapterId(location.state.chapterid);
+      const id = parseInt(location.state.chapterid, 10);
+      console.log('Chapter ID:', id);
+      console.log(typeof(id));
+      if (!isNaN(id)) {
+        setChapterId(id);
+      } else {
+        console.log("Invalid chapter ID");
+      }
     }
     getUploadUrl();
   }, [location.state]);
@@ -30,12 +37,9 @@ export default function LessonList() {
   const getUploadUrl = async () => {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/upload-url');
-      console.log("upload url",response)
-      if (response.data.data.url)
-       {
+      if (response.data.data.url) {
         setUploadUrl(response.data.data.url);
-        setVideoId(response.data.data.id);
-
+        setuploadId(response.data.data.id);
         console.log('Successfully fetched upload URL');
       }
     } catch (error) {
@@ -43,33 +47,19 @@ export default function LessonList() {
     }
   };
 
-
-
   const handleSuccess = (event) => {
     console.log('Upload successful:', event);
     setUploadVideo(true);
   };
 
-  // const sendVideoIdToBackend = async () => {
-  //   try {
-  //     console.log( newLessonTitle)
-  //     console.log( chapterId)
-  //     console.log( videoId)
-
-  //     await apiService.createData('api/mux/getplaybackid', { title: newLessonTitle, chapterId: chapterId, assetId: videoId });
-
-  //     console.log('Video ID sent');
-  //   } catch (error) {
-  //     console.error('Error sending video ID to backend', error);
-  //   }
-  // };
   const sendVideoIdToBackend = async () => {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/getid', {
-        // // title: newLessonTitle,
-        // // chapterId: chapterId,
-        // uploadId: videoId
+        title: newLessonTitle,
+        chpaterid: ChapterId,
+        uploadId: uploadId
       });
+      setPlaybackId(response.data.playbackId);
       console.log('Playback ID:', response.data.playbackId);
     } catch (error) {
       console.error('Error sending video ID to backend:', error.response ? error.response.data : error.message);
@@ -139,7 +129,7 @@ export default function LessonList() {
               <MuxPlayer
                 playbackId={playbackId}
                 metadata={{
-                  video_id: videoId,
+                  video_id: uploadId,
                   video_title: newLessonTitle,
                   viewer_user_id: "user-d-007",
                 }}
@@ -152,7 +142,7 @@ export default function LessonList() {
                 />
               )}
             </div>
-            <button type="button" onClick={sendVideoIdToBackend}>Create Lesson</button>
+            <button type="submit">Create Lesson</button>
           </form>
         </div>
       )}

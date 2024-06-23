@@ -5,8 +5,8 @@ import EditIcon from '@mui/icons-material/Edit';
 const CourseDetails = ({ setCourseDetails }) => {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [title, setTitle] = useState('Advanced Web Development');
-  const [description, setDescription] = useState('This is a course about development');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [tempTitle, setTempTitle] = useState(title);
   const [tempDescription, setTempDescription] = useState(description);
 

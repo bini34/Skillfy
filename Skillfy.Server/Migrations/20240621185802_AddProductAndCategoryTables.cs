@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Skillfy.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class intialcreate : Migration
+    public partial class AddProductAndCategoryTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

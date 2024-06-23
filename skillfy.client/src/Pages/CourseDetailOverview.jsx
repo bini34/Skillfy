@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import './CourseDetailOverview.css';
 import CourseDetailHeader from '../Component/CourseDetail/CourseDetailHeader';
 import VideoPlayer from '../Component/ui/VideoPlayer';

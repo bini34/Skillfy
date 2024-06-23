@@ -5,7 +5,7 @@ import MuxPlayer from "@mux/mux-player-react";
 export default function VideoPlayer() {
   return (
         <MuxPlayer
-        playbackId="EcHgOK9coz5K4rjSwOkoE7Y7O01201YMIC200RI6lNxnhs"
+        playbackId="fqOgC00yLXZ3qg5K5MMV5vHUpLDxUNmX1GaA9dcXlznU"
         metadata={{
         video_id: "video-id-54321",
         video_title: "Test video title",

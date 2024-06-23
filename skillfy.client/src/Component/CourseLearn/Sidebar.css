@@ -1,30 +1,83 @@
 /* Sidebar Styles */
 .sidebar {
-    width: 400px;
+    width: 420px;
     background-color: #f9f9f9;
     color: white;
   }
   .sidebar-header{
     width: 100%;
-    height: 200px;
+    height: 270px;
     background-color: #F66962;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
+  .sidebar-header-header{
+    padding-left: 40px;
+    padding-top: 20px;
+    padding: 40px 20px 0px 20px;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .progress{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .sidebar-header p{
+    font-size: medium;
+    display: block;
 
+  }
+  
+  .searchtextbox{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    margin: 10px 0;
+    background-color: #EFEFF7;
+ }
+  input[type=text], .searchtextbox {
+    width: 100%;
+    padding: 12px 20px;
+    /* margin: 8px 0; */
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: black;
+    font-size: 16px;
+}
+  .sidebar-header a{
+    display: flex;
+  color: white;
+  text-decoration: none;
+  align-items: center;
+  gap: 10px;
+  }
+  .sidebar-header-header h1{
+    font-weight: 300;
+    font-size: 35px;
+  }
   .sidebar h2 {
     font-size: 20px;
-    color: #ff6f61;
-    margin-bottom: 10px;
+    color: #38373a;
+    font-weight: 600;
   }
   
-  .sidebar p {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 20px;
-  }
+ 
+.learnLessonList{
+  width: 100%;
+  padding: 25px;
+}  
+.learnLessonList nav{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
   
-
-  
-  .sidebar nav h3 {
+.learnLessonList nav h3 {
     font-size: 16px;
     margin-bottom: 10px;
     color: #333;
@@ -34,17 +87,44 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
   }
   
   .sidebar nav ul li {
     font-size: 14px;
     color: #555;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px 5px;
+    gap: 3px;
+    width: 100%;
+    
   }
+  .sidebar nav ul li span {
+    background-color: rgba(246, 105, 98, 0.3); /* #F66962 with 30% opacity */
+    backdrop-filter: blur(50px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(50px); /* For Safari support */
+    color: #F66962;
+    padding: 5px 10px;
+    font-size: small;
+}
+
+
   
   .sidebar nav ul li:hover {
-    background-color: #f0f0f0;
+    background:#43C9B1;
+    color: white;
+  }
+  .circle{
+    width: 25px;  /* Set the width of the circle */
+    height: 25px; /* Set the height of the circle */
+    background-color: rgba(255, 255, 255, 0.44); /* Set the background color of the circle */
+    border-radius: 50%;
+    padding: 7px;
+
   }
   
