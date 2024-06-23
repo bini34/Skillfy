@@ -106,9 +106,9 @@ namespace Skillfy.Server.Controllers
             var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
             var playbackId = jsonResponse.GetProperty("data").GetProperty("playback_ids")[0].GetProperty("id").GetString();
             var playbackUrl = $"https://stream.mux.com/{playbackId}.m3u8";
-            var result =await _lessonService.SaveLessonAsync(dto.chpaterid, playbackUrl, dto.title);
+            var result = await _lessonService.SaveLessonAsync(dto.chpaterid, playbackUrl, dto.title);
 
-            if(result< 0)
+            if (result < 0)
             {
                 return BadRequest(new ResponsViewModel(false, "problem while saving", null));
             }
@@ -166,7 +166,7 @@ namespace Skillfy.Server.Controllers
     }
 
 
-
+}
 
    
 
