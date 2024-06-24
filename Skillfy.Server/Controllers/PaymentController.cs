@@ -58,12 +58,6 @@ namespace Skillfy.Server.Controllers
         //    }
 
         //    return Ok(new ResponsViewModel(true, "succfully created", result));
-
-
-
-
-
-
         //}
 
         [HttpGet("paymentreturn")]
