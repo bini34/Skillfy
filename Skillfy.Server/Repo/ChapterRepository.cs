@@ -13,6 +13,7 @@ namespace Skillfy.Server.Repo
             _context = context;
         }
 
+      
         public async Task<IEnumerable<Chapter>> GetAllChaptersAsync()
         {
             return await _context.chapters.ToListAsync();

@@ -14,6 +14,21 @@ namespace Skillfy.Server.Repo
         {
             _context = context;
         }
+
+        public async Task<List<Course>> getenrolled(string userid)
+        {
+            return await _context.enrolls
+                               .Where(e => e.Id == userid)
+                               .Join(
+                                   _context.courses,
+                                   enroll => enroll.CourseID,
+                                   course => course.CourseID,
+                                   (enroll, course) => course
+                               )
+                               .ToListAsync();
+
+
+        }
         public async Task<int> DeleteCourse(int id)
         {
             Course c = await _context.courses.FirstOrDefaultAsync(c => c.CourseID == id);

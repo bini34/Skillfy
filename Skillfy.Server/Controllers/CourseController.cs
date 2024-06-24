@@ -15,14 +15,14 @@ namespace Skillfy.Server.Controllers
     [ApiController]
     public class CourseController : Controller
     {
-        private readonly ICourseRepositary courseRepositary;
+        private readonly ICourseRepositary _courseRepositary;
         private readonly ICourseService _courseService;  
 
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
        public CourseController(ICourseRepositary courseRepositary, ApplicationDbContext applicationDbContext, IWebHostEnvironment webHostEnvironment, ICourseService courseService) {
 
-            this.courseRepositary = courseRepositary;
+            _courseRepositary = courseRepositary;
             this.applicationDbContext = applicationDbContext;
             _webHostEnvironment = webHostEnvironment;
             _courseService = courseService;
@@ -64,7 +64,7 @@ namespace Skillfy.Server.Controllers
         [HttpGet("coursecard")]
         public async Task<IActionResult> UploadCourse()
         {
-            var details =await courseRepositary.getcoursecard();
+            var details =await _courseRepositary.getcoursecard();
 
             if (details == null)
                 return BadRequest(new ResponsViewModel(false, "Dont fetched", null));
@@ -75,23 +75,24 @@ namespace Skillfy.Server.Controllers
         [HttpGet("coursedetail{id}")]
         public async Task<IActionResult> coursedetail(int id)
         {
-            var details = await courseRepositary.GetCourseDetails(id);
+            var details = await _courseRepositary.GetCourseDetails(id);
 
             if (details == null)
                 return BadRequest(new ResponsViewModel(false, "Dont fetched", null));
 
             return Ok(details);
         }
-        //[HttpGet("coursedetail{course}")]
-        //public async Task<IActionResult> coursedetail(string  course)
-        //{
-        //    var details = await courseRepositary.GetCourseDetails(id);
+        [HttpGet("enrolledcourse{userid}")]
+        public async Task<IActionResult> enrolledcourse(string userid)
+        {
+            var course = await _courseRepositary.getenrolled(userid);
+            if(course == null)
+            {
+                return BadRequest(new ResponsViewModel(false, "no course registered", null));
+            }
 
-        //    if (details == null)
-        //        return BadRequest(new ResponsViewModel(false, "Dont fetched", null));
-
-        //    return Ok(details);
-        //}
+            return Ok(course);
+        }
 
 
 
