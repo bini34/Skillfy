@@ -27,7 +27,7 @@ const CourseDetailsCard = ({ courseId, price }) => {
        console.log("checkouturl",checkout_url)
       // if(checkout_url)
       //  {
-         window.location.href = response.data.data.data.checkout_url;
+        //  window.location.href = response.data.data.data.checkout_url;
       // }
     } catch (error) {
       console.error('Error sending buy course data:', error);
