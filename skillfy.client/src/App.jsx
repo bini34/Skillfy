@@ -15,7 +15,7 @@ import Sidebar from './Component/Testt/test';
 import ChapterLessonsPage from './Pages/ChapterLessonsPage';
 import CourseDetail from './Pages/CourseDetailOverview';
 import CourseCreate from './Pages/CourseCreate';
-
+import MyCourse from './Pages/MyCoursePage'
 function App() {
   const router = createBrowserRouter([
     {
@@ -69,6 +69,11 @@ function App() {
     {
       path: '/instructor/courses/create',
       element: <CourseCreate />
+    },
+    {
+      path: '/mycourse',
+      element:<MyCourse/>
+
     }
   ]);
 
