@@ -26,7 +26,7 @@ public class ChapaPaymentService : Ipayment
     {
 
         var txRef = $"{courseId}-{userId}-{Guid.NewGuid()}";
-        var returnUrl = $"https://localhost:7182/api/payment/paymentreturn?courseId={courseId}&userId={userId}";
+        var returnUrl = $"https://localhost:7182/api/payment/paymentreturn?userId={userId}&courseId={courseId}";
         var paymentData = new
         {
 
