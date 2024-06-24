@@ -39,7 +39,6 @@
 // }
 
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar'; // Importing Avatar component from Material-UI
 import './MyCourseCard.css';
 
 export default function MyCourseCard({
