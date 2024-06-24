@@ -26,14 +26,15 @@ public class ChapaPaymentService : Ipayment
     {
 
         var txRef = $"{courseId}-{userId}-{Guid.NewGuid()}";
+        var returnUrl = $"https://localhost:7182/api/payment/paymentreturn?courseId={courseId}&userId={userId}";
         var paymentData = new
         {
-            
-            amount = price,
+
+            amount = price.ToString(),
             currency = "ETB",
             tx_ref = txRef,
             callback_url = "https://localhost:7182/api/payment/callback",            
-            return_url = "https://localhost:7182/api/payment/paymentreturn?courseId={courseId}&userId={userId}",
+           return_url = returnUrl,
           
         };
  
@@ -54,7 +55,7 @@ public class ChapaPaymentService : Ipayment
 
             var respond = await response.Content.ReadAsStringAsync();
             _logger.LogInformation("Payment initialized successfully: {0}", respond);
-            // Deserialize response string to JSON object
+        
             var responseJson = JsonSerializer.Deserialize<object>(respond, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase

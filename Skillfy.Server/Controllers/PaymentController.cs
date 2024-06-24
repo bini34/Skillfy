@@ -63,7 +63,7 @@ namespace Skillfy.Server.Controllers
 
 
         //}
-        [HttpGet("paymentreturn")]
+        [HttpGet("paymentreturn{courseId}&{userId}")]
         public async Task<IActionResult> PaymentReturn(int courseId , string userId)
         {
                                                
