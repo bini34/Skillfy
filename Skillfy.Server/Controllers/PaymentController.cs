@@ -17,14 +17,16 @@ namespace Skillfy.Server.Controllers
         private readonly ICourseRepositary _courserepositary;
         private readonly EnrollmentService  _enrollmentService;
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<PaymentController> _logger;
 
 
-        public PaymentController(Ipayment payment, ICourseRepositary courserepositary, EnrollmentService enrollmentService ,ApplicationDbContext context)
+        public PaymentController(Ipayment payment, ICourseRepositary courserepositary, EnrollmentService enrollmentService ,ApplicationDbContext context, ILogger<PaymentController> logger)
         {
             _paymentservice = payment;
             _courserepositary = courserepositary;
             _enrollmentService = enrollmentService;
             _context = context;
+            _logger = logger;
         }
 
         [HttpPost("Initialize")]
@@ -63,10 +65,11 @@ namespace Skillfy.Server.Controllers
 
 
         //}
-        [HttpGet("paymentreturn{courseId}&{userId}")]
+        [HttpGet("paymentreturn")]
         public async Task<IActionResult> PaymentReturn(int courseId , string userId)
         {
-                                               
+            _logger.LogInformation("Payment return received: courseId={0}, userId={1}, status={2}", courseId, userId);
+
             var result = await _enrollmentService.EnrollUserAsync(courseId, userId);
                
 
