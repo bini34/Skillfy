@@ -15,6 +15,7 @@ const CourseDetailsCard = ({ courseId, price }) => {
   };
 
   const buyNow = async () => {
+    console.log('Buy now clicked', user.id, courseId, price);
     try {
       const response = await axios.post('https://localhost:7182/api/payment/Initialize', {
         courseId: courseId,

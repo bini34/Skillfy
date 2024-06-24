@@ -58,13 +58,8 @@ namespace Skillfy.Server.Controllers
         //    }
 
         //    return Ok(new ResponsViewModel(true, "succfully created", result));
-
-
-
-
-
-
         //}
+
         [HttpGet("paymentreturn")]
         public async Task<IActionResult> PaymentReturn(int courseId , string userId)
         {
