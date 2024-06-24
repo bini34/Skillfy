@@ -1,6 +1,6 @@
 import React from 'react'
 import Curriculum from './Curriculum'
-
+import './TestCurriclum.css'
 export default function TestCurriclum() {
     const courseData = [
         {
@@ -30,11 +30,11 @@ export default function TestCurriclum() {
         }
       ];
   return (
-    <>
+    <div className='mainCurriclum'>
       {courseData.map((section, index) => (
         <Curriculum key={index} section={section} />
       ))}
-    </>
+    </div>
   
   )
 }
