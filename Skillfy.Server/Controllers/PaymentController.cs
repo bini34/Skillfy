@@ -73,7 +73,7 @@ namespace Skillfy.Server.Controllers
                 return BadRequest(new ResponsViewModel(false, "not registerd", null));
             }
 
-            return Ok(new ResponsViewModel(true, "success full", result));
+            return Redirect("https://localhost:5173/");
          
                
         }
