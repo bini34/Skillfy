@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './CourseDetailsCard.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import authService from '../../Services/authService';
 
 const CourseDetailsCard = ({ courseId, price }) => {
+  const [checkout_url, setcheckout_url] = useState('');
   const user = authService.getCurrentUser();
   console.log('User:', user)
   const navigate = useNavigate();
@@ -20,11 +21,27 @@ const CourseDetailsCard = ({ courseId, price }) => {
         userId: user.id,  // Assuming the user object has an id property
         price: price
       });
-      console.log(response.data.data);
+      console.log("checkout url from response",response.data.data.data.checkout_url)
+      //  setcheckout_url(response.data.data.data.checkout_url);
+       console.log("checkouturl",checkout_url)
+      // if(checkout_url)
+      //  {
+         window.location.href = response.data.data.data.checkout_url;
+      // }
     } catch (error) {
       console.error('Error sending buy course data:', error);
     }
   };
+  const sendcheckouturl = () =>{
+    if(checkout_url)
+      {
+        
+      }
+      else{
+        console.log("checkout url null")
+      }
+
+  }
 
   return (
     <div className="course-details-card">
