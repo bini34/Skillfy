@@ -67,7 +67,7 @@ namespace Skillfy.Server.Controllers
         //}
 
         [HttpGet("paymentreturn")]
-        public async Task<IActionResult> PaymentReturn(int courseId , string userId)
+        public async Task<IActionResult> PaymentReturn([FromQuery] int courseId , [FromQuery] string userId)
         {
             _logger.LogInformation("Payment return received: courseId={0}, userId={1}", courseId, userId);
 
