@@ -24,14 +24,16 @@ public class ChapaPaymentService : Ipayment
 
     public async Task<object> InitializePaymentAsync(int price,int courseId, string userId)
     {
+
         var txRef = $"{courseId}-{userId}-{Guid.NewGuid()}";
         var paymentData = new
         {
+            
             amount = price,
             currency = "ETB",
             tx_ref = txRef,
             callback_url = "https://localhost:7182/api/payment/callback",            
-            return_url = "",
+            return_url = "https://localhost:7182/api/payment/paymentreturn?courseId={courseId}&userId={userId}",
           
         };
  

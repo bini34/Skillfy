@@ -12,24 +12,18 @@ namespace Skillfy.Server.service
             _context = context;
         }
        
-        public async Task<int> EnrollUserAsync(ChapaCallBackModel respons)
+        public async Task<int> EnrollUserAsync(int courseId, string userId)
         {
             
-            if (respons.Status == "failed")
-            {
-                return -2;
-            }
-
-            var parts = respons.TxRef.Split('-');
-            var courseId = int.Parse(parts[0]);
-            var userId = parts[1];
+          
            
            var enrollment = new Enroll
               {
                 CourseID = courseId,
                 Id = userId,
                 EnrollmentDate = DateTime.UtcNow,
-                PaymentStatus = "Paid"
+                PaymentStatus = "Paid",
+                Grade = "0"
              };
            
 

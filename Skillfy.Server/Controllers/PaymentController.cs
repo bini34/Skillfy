@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Skillfy.Server.Data;
 using Skillfy.Server.Dto;
 using Skillfy.Server.Repo;
 using Skillfy.Server.service;
 using Skillfy.Server.ViewModel;
-
+using System.Security.Cryptography;
 namespace Skillfy.Server.Controllers
 {
     [Route("/api/payment")]
@@ -14,13 +16,15 @@ namespace Skillfy.Server.Controllers
         private readonly Ipayment _paymentservice;
         private readonly ICourseRepositary _courserepositary;
         private readonly EnrollmentService  _enrollmentService;
-    
+        private readonly ApplicationDbContext _context;
 
-        public PaymentController(Ipayment payment, ICourseRepositary courserepositary, EnrollmentService enrollmentService)
+
+        public PaymentController(Ipayment payment, ICourseRepositary courserepositary, EnrollmentService enrollmentService ,ApplicationDbContext context)
         {
             _paymentservice = payment;
             _courserepositary = courserepositary;
             _enrollmentService = enrollmentService;
+            _context = context;
         }
 
         [HttpPost("Initialize")]
@@ -36,35 +40,53 @@ namespace Skillfy.Server.Controllers
         }
 
 
-        [HttpPost("callback")]
-        public async Task<IActionResult> paymentcallback([FromBody] ChapaCallBackModel payment)
+        //[HttpPost("callback")]
+        //public async Task<IActionResult> paymentcallback([FromBody] ChapaCallBackModel payment)
+        //{
+        //    if (payment == null)
+        //    {
+        //        return BadRequest(new ResponsViewModel(false, "dto is null", null));
+        //    }
+
+        //    var result = await _enrollmentService.EnrollUserAsync(payment);
+
+        //    if(result == -2)
+        //    {
+        //        return BadRequest(new ResponsViewModel(false, "not filled", null));
+        //    }
+
+        //    return Ok(new ResponsViewModel(true, "succfully created", result));
+
+
+
+
+
+
+        //}
+        [HttpGet("paymentreturn")]
+        public async Task<IActionResult> PaymentReturn(int courseId , string userId)
         {
-            if (payment == null)
+                                               
+            var result = await _enrollmentService.EnrollUserAsync(courseId, userId);
+               
+
+            if(result < 0)
             {
-                return BadRequest(new ResponsViewModel(false, "dto is null", null));
+                return BadRequest(new ResponsViewModel(false, "not registerd", null));
             }
 
-            var result = await _enrollmentService.EnrollUserAsync(payment);
-
-            if(result == -2)
-            {
-                return BadRequest(new ResponsViewModel(false, "not filled", null));
-            }
-
-            return Ok(new ResponsViewModel(true, "succfully created", result));
-        
-
-
-           
-
-
+            return Ok(new ResponsViewModel(true, "success full", result));
+         
+               
         }
-
-
-
-
-
     }
+
+
+
+
+
+
+}
 
 
 
@@ -92,4 +114,3 @@ namespace Skillfy.Server.Controllers
     //    public string LastName { get; set; }
     //    public string PhoneNumber { get; set; }
     //}
-}
