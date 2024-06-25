@@ -125,6 +125,14 @@ namespace Skillfy.Server.Repo
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<Course> GetenrolledCourseDetailsAsync(int courseId)
+        {
+            return await _context.courses
+                                 .Include(c => c.Chapters)            
+                                 .ThenInclude(ch => ch.Lessons)     
+                                 .FirstOrDefaultAsync(c => c.CourseID == courseId);  
+        }
+
 
     }
 }

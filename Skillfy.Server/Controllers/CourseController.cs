@@ -107,6 +107,20 @@ namespace Skillfy.Server.Controllers
             return Ok(course);
         }
 
+        [HttpGet("detailenrolled{courseid}")]
+        public async Task<IActionResult> enrolledcoursedetails(int courseid)
+        {
+           var course = await _courseRepositary.GetenrolledCourseDetailsAsync(courseid);
+            
+            if(course == null)
+            {
+                return BadRequest(new ResponsViewModel(false, "course not fetched", null));
+            }
+
+            return Ok(course);  
+
+        }
+
 
 
     }
