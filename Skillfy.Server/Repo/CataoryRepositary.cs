@@ -36,5 +36,13 @@ namespace Skillfy.Server.Repo
 
             return catagory;
         }
+
+        public async Task<List<Course>> GetCoursesByCategoryAsync(string categoryName)
+        {
+            return await _context.courses
+                                 .Where(course => course.Catagory.CatagoryName == categoryName)
+                                 .ToListAsync();
+        }
+
     }
 }
