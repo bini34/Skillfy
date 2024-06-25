@@ -8,43 +8,43 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  .lesson-image img {
-    width: 100px;
+  .lesson-card-image img {
+    width: 80px;
     height: auto;
     object-fit: cover;
   }
   
-  .lesson-content {
+  .lesson-card-content {
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
   
-  .lesson-info {
+  .lesson-card-info {
     font-size: 0.8em;
     color: #888;
   }
   
-  .lesson-title {
+  .lesson-card-title {
     font-size: 1em;
     font-weight: bold;
     margin: 10px 0;
   }
   
-  .lesson-instructor {
+  .lesson-card-instructor {
     display: flex;
     align-items: center;
   }
   
-  .lesson-instructor img {
+  .lesson-card-instructor img {
     border-radius: 50%;
     width: 40px;
     height: 40px;
     margin-right: 10px;
   }
   
-  .lesson-progress {
+  .lesson-card-progress {
     width: 100%;
     height: 5px;
     background: #f0f0f0;
@@ -53,7 +53,7 @@
     margin-top: 10px;
   }
   
-  .lesson-progress .progress-bar {
+  .lesson-card-progress .progress-bar {
     width: 50%;
     height: 100%;
     background: #f9a826;

@@ -53,7 +53,7 @@ export default function MyCourseCard({
     
 }) {
     function sendtocourselearning(){
-               navigator
+               
         }
     return (
         <button onClick={sendtocourselearning} className="course-card-button">

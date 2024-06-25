@@ -4,13 +4,13 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Avatar from '@mui/material/Avatar';
 import { Link } from 'react-router-dom';
 import authService from '../../Services/authService';
-import menu from '../../assets/icon/menu.png';
-import ResponsiveNavBar from './ResponsiveNavBar';
+import AppsIcon from '@mui/icons-material/Apps';
 import './NavBar.css';
 
 const NavBar = ({ color }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -27,21 +27,26 @@ const NavBar = ({ color }) => {
     setUser(null);
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav>
       <ul className="nav-list">
         <li className="nav-item">
+          <AppsIcon sx={{ color: color }} />
           <Link to="#" className="nav-link" style={{ color }}>Categories</Link>
         </li>
         <li className="nav-item search">
-          <input type="text" placeholder="What do you want learn ?" />
+          <input type="text" placeholder="What do you want to learn?" />
           <button><i className="fas fa-search"></i></button>
         </li>
         <li className="nav-item">
           <Link to="/Courses" className="nav-link" style={{ color }}>Courses</Link>
         </li>
         <li className="nav-item">
-          <Link to="/MyLearning" className="nav-link" style={{ color }}>My learning</Link>
+          <Link to="/mylearning" className="nav-link" style={{ color }}>My Learning</Link>
         </li>
         <li className="nav-item">
           <Link to="/cart" className="nav-link" style={{ color }}>
@@ -56,22 +61,29 @@ const NavBar = ({ color }) => {
               <Link to="/auth/account/signin" className="nav-link" style={{ color }}>Login</Link>
             </li>
             <li className="nav-item">
-              <Link to="/auth/account/registor" className="nav-link register">Register</Link>
+              <Link to="/auth/account/register" className="nav-link register">Register</Link>
             </li>
           </>
         ) : (
           <>
             <li className="nav-item">
-              <Avatar alt={user?.FName} src="/static/images/avatar/1.jpg" />
-            </li>
-            <li className="nav-item">
-              <button onClick={handleLogout} className="nav-link" style={{ color }}>Logout</button>
+              <Avatar alt={user?.FName} onClick={toggleMenu} src="/static/images/avatar/1.jpg" />
+              {isMenuOpen && (
+                <div className="menu">
+                  <ul>
+                    <li>
+                      <Link to="/profile" className="nav-link" style={{ color }}>Profile</Link>
+                    </li>
+                    <li>
+                       <button onClick={handleLogout} className="nav-link" style={{ color }}>Logout</button>
+
+                    </li>             
+                  </ul>
+                </div>
+              )}
             </li>
           </>
         )}
-        {/* <li className="nav-item">
-          <button> <img src={menu} alt="Menu icon" /></button>
-        </li> */}
       </ul>
     </nav>
   );

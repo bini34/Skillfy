@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './CourseDetailsCard.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -33,6 +33,17 @@ const CourseDetailsCard = ({ courseId, price }) => {
       console.error('Error sending buy course data:', error);
     }
   };
+    useEffect(() => {
+      fetch(`https://localhost:7182/api/payment/paymentreturn/${courseId}/${user.id}`)
+          .then(response => {
+              if (response.ok) {
+                  history.push('/');
+              } else {
+                  // Handle errors if needed
+                  console.error('Failed to complete payment return');
+              }
+          });
+  }, [courseId, user.id, history]);
   const sendcheckouturl = () =>{
     if(checkout_url)
       {
