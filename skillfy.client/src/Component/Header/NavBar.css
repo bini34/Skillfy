@@ -7,6 +7,8 @@
 }
 
 .nav-item {
+  display: flex;
+  gap: 5px;
   margin: 0 10px;
 }
 
@@ -52,4 +54,34 @@
 
 .register:hover {
   background-color: #ff7879;
+}
+.menu {
+  position: absolute;
+  top: 70px;
+  right: 20%; /* Adjust based on where you want your menu to appear */
+  background: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
+  backdrop-filter: blur(10px); /* Blur effect for the background */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  color: black;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Semi-transparent white border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* Optional: add some extra styling */
+  box-sizing: border-box;
+}
+
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.menu li:hover {
+  background-color: #f0f0f0;
 }

@@ -13,13 +13,14 @@
   width: 900px;
 }
 .header-Container a{
-  text-decoration: none;
+  text-decoration: none;;
 }
+
 .header-Container button{
   width: 25px;
 }
 .logo {
-  font-size: 24px;  
+  font-size: 35px;  
   font-weight: bold;
   color: #FF5A5F;
 }
