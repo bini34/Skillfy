@@ -16,16 +16,17 @@ namespace Skillfy.Server.Controllers
     public class CourseController : Controller
     {
         private readonly ICourseRepositary _courseRepositary;
-        private readonly ICourseService _courseService;  
-
+        private readonly ICourseService _courseService;
+        private readonly IcatogryRepositary _chatrepo;
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IWebHostEnvironment _webHostEnvironment;
-       public CourseController(ICourseRepositary courseRepositary, ApplicationDbContext applicationDbContext, IWebHostEnvironment webHostEnvironment, ICourseService courseService) {
+       public CourseController(ICourseRepositary courseRepositary, ApplicationDbContext applicationDbContext, IWebHostEnvironment webHostEnvironment, ICourseService courseService, IcatogryRepositary chaprepo) {
 
             _courseRepositary = courseRepositary;
             this.applicationDbContext = applicationDbContext;
             _webHostEnvironment = webHostEnvironment;
             _courseService = courseService;
+            _chatrepo = chaprepo;
         }
 
 
@@ -94,7 +95,17 @@ namespace Skillfy.Server.Controllers
             return Ok(course);
         }
 
+        [HttpGet("coursebycatagory{catagory}")]
+        public async Task<IActionResult> coursebycatagory(string catagory)
+        {
+           var course = await _chatrepo.GetCoursesByCategoryAsync(catagory);
+            if (course == null)
+            {
+                return BadRequest(new ResponsViewModel(false, "no course in this catagory", null));
+            }
 
+            return Ok(course);
+        }
 
 
 
