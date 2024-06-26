@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Component/Header/Header';
 import Footer from '../Component/Footer/Footer';
-import MyCourseCard from '../Component/ui/MyCourseCard';
+import LessonCard from '../Component/ui/LessonCard'; // Make sure to import the correct path
 import './MyCourse.css';
 
 export default function MyCourse() {
@@ -15,8 +15,10 @@ export default function MyCourse() {
       lessons: 12,
       teachername: 'John Doe',
       price: 59.99,
-      handleImageError: () => { console.log('Image failed to load'); },
-      sendToCourseDetail: () => { console.log('Navigating to React for Beginners details'); }
+      instructorImage: 'https://via.placeholder.com/40',
+      lessonInfo: 'LESSON 5 OF 17 | 5m',
+      lessonTitle: 'Merge Duplicates in Sketch - Inconsistent Symbols & Styles',
+      instructorName: 'Nicole Brown'
     },
     {
       imageUrl: 'https://via.placeholder.com/150',
@@ -27,8 +29,10 @@ export default function MyCourse() {
       lessons: 15,
       teachername: 'Jane Smith',
       price: 79.99,
-      handleImageError: () => { console.log('Image failed to load'); },
-      sendToCourseDetail: () => { console.log('Navigating to Advanced JavaScript details'); }
+      instructorImage: 'https://via.placeholder.com/40',
+      lessonInfo: 'LESSON 8 OF 20 | 8m',
+      lessonTitle: 'Advanced JS Patterns',
+      instructorName: 'John Smith'
     },
     {
       imageUrl: 'https://via.placeholder.com/150',
@@ -39,8 +43,10 @@ export default function MyCourse() {
       lessons: 10,
       teachername: 'Alice Johnson',
       price: 69.99,
-      handleImageError: () => { console.log('Image failed to load'); },
-      sendToCourseDetail: () => { console.log('Navigating to UI/UX Design Essentials details'); }
+      instructorImage: 'https://via.placeholder.com/40',
+      lessonInfo: 'LESSON 3 OF 12 | 10m',
+      lessonTitle: 'UI/UX Design Principles',
+      instructorName: 'Alice Johnson'
     },
     {
       imageUrl: 'https://via.placeholder.com/150',
@@ -51,8 +57,10 @@ export default function MyCourse() {
       lessons: 20,
       teachername: 'Bob Brown',
       price: 89.99,
-      handleImageError: () => { console.log('Image failed to load'); },
-      sendToCourseDetail: () => { console.log('Navigating to Full-Stack Web Development details'); }
+      instructorImage: 'https://via.placeholder.com/40',
+      lessonInfo: 'LESSON 12 OF 20 | 15m',
+      lessonTitle: 'Full-Stack Project Setup',
+      instructorName: 'Bob Brown'
     }
   ];
 
@@ -65,18 +73,13 @@ export default function MyCourse() {
         </div>
         <div className='mycourseBody'>
           {courses.map((course, index) => (
-            <MyCourseCard
+            <LessonCard
               key={index}
               imageUrl={course.imageUrl}
-              coursename={course.coursename}
-              rating={course.rating}
-              students={course.students}
-              enrollmentcount={course.enrollmentcount}
-              lessons={course.lessons}
-              teachername={course.teachername}
-              price={course.price}
-              handleImageError={course.handleImageError}
-              sendToCourseDetail={course.sendToCourseDetail}
+              lessonInfo={course.lessonInfo}
+              lessonTitle={course.lessonTitle}
+              instructorImage={course.instructorImage}
+              instructorName={course.instructorName}
             />
           ))}
         </div>

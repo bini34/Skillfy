@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './CourseDetailsCard.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import authService from '../../Services/authService';
 
 const CourseDetailsCard = ({ courseId, price }) => {
-  const [checkout_url, setcheckout_url] = useState('');
+  const [checkoutUrl, setCheckoutUrl] = useState('');
   const user = authService.getCurrentUser();
-  console.log('User:', user)
   const navigate = useNavigate();
 
   const sendToCart = () => {
@@ -17,51 +16,46 @@ const CourseDetailsCard = ({ courseId, price }) => {
   const buyNow = async () => {
     console.log('Buy now clicked', user.id, courseId, price);
     try {
-      const response = await axios.post('https://localhost:7182/api/payment/Initialize', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/payment/Initialize`, {
         courseId: courseId,
-        userId: user.id,  // Assuming the user object has an id property
+        userId: user.id,
         price: price
       });
-      console.log("checkout url from response",response.data.data.data.checkout_url)
-      //  setcheckout_url(response.data.data.data.checkout_url);
-       console.log("checkouturl",checkout_url)
-      // if(checkout_url)
-      //  {
-        window.location.href = response.data.data.data.checkout_url;
-      // }
+      const url = response.data.data.data.checkout_url;
+      console.log("checkout url from response", url);
+      if (url) {
+        setCheckoutUrl(url);
+        window.location.href = url;
+      } else {
+        console.error('Checkout URL is null');
+      }
     } catch (error) {
       console.error('Error sending buy course data:', error);
     }
   };
-    useEffect(() => {
-      fetch(`https://localhost:7182/api/payment/paymentreturn/${courseId}/${user.id}`)
-          .then(response => {
-              if (response.ok) {
-                  history.push('/');
-              } else {
-                  // Handle errors if needed
-                  console.error('Failed to complete payment return');
-              }
-          });
-  }, [courseId, user.id, history]);
-  const sendcheckouturl = () =>{
-    if(checkout_url)
-      {
-        
-      }
-      else{
-        console.log("checkout url null")
-      }
 
-  }
+  useEffect(() => {
+    const checkPaymentStatus = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/payment/paymentreturn/${courseId}/${user.id}`);
+        if (response.ok) {
+          navigate('/');
+        } else {
+          console.error('Failed to complete payment return');
+        }
+      } catch (error) {
+        console.error('Error checking payment status:', error);
+      }
+    };
+
+    checkPaymentStatus();
+  }, [courseId, user.id, navigate]);
 
   return (
     <div className="course-details-card">
       <div className="price-section">
         <span className="current-price">${price}</span>
-    
         <button onClick={sendToCart} className="AddtoCart-now-button">Add to Cart</button>
-
         <button onClick={buyNow} className="buy-now-button">Buy Now</button>
       </div>
       <div className="course-includes">

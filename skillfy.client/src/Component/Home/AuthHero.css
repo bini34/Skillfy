@@ -16,6 +16,7 @@
   flex-direction: column; 
   justify-content: space-between;
   height: 100%;
+  margin-bottom: 100px;
 }
 .Authhero-Header{
   display: flex;
@@ -32,7 +33,7 @@
 .Authhero-main{
   display: flex;
   flex-direction: column;
-  gap: 10pX;
+  gap: 10px;
 }
 .lesson-container{
     display: grid;

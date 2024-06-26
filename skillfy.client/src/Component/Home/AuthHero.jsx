@@ -30,8 +30,9 @@ export default function AuthHero() {
             <LessonCard />
             <LessonCard />
             <LessonCard />
-            <LessonCard />
-            {/* Add more LessonCards as needed */}
+            <LessonCard /> 
+            <LessonCard /> 
+
           </div>
           <div className="navigation">
             <button className="nav-button" onClick={scrollLeft}><ArrowBackIcon/></button>

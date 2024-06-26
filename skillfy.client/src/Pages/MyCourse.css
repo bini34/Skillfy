@@ -16,5 +16,6 @@
 }
 .mycourseBody{
     display: flex;
+    flex-wrap: wrap;
     
 }
