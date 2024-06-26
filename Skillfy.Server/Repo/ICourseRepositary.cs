@@ -13,7 +13,7 @@ namespace Skillfy.Server.Repo
         public Task<int> DeleteCourse(int id);
         public Task<List<Course>> GetEnrolledCourseByUserId(String userId);
 
-        public  Task<List<Course>> getenrolled(string userid);
+        public  Task<List<enrolldcoursecardDto>> getenrolled(string userid);
 
         public Task<List<CourseCardDto>> getcoursecard();
 
