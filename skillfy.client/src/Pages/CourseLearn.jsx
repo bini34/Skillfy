@@ -5,7 +5,7 @@ import './CourseLearn.css';
 
 function CourseLearn() {
   return (
-    <div className="app">
+    <div className="courselearnContainer">
       <Sidebar />
       <MainContent />
     </div>
