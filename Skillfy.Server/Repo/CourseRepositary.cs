@@ -15,19 +15,53 @@ namespace Skillfy.Server.Repo
             _context = context;
         }
 
-        public async Task<List<Course>> getenrolled(string userid)
+        public async Task<List<enrolldcoursecardDto>> getenrolled(string userId)
         {
-            return await _context.enrolls
-                               .Where(e => e.Id == userid)
-                               .Join(
-                                   _context.courses,
-                                   enroll => enroll.CourseID,
-                                   course => course.CourseID,
-                                   (enroll, course) => course
-                               )
-                               .ToListAsync();
+            var enrolls = await _context.enrolls
+                              .Where(e => e.Id == userId)
+                              .ToListAsync();
+
+            if (!enrolls.Any())
+            {
+                return null;
+            }
+
+            var courseIds = enrolls.Select(e => e.CourseID).ToList();
+
+            var courses = await _context.courses
+                                        .Where(c => courseIds.Contains(c.CourseID))
+                                        .Select(c => new
+                                        {
+                                            c.Title,
+                                            c.ThumbnailImage,
+                                            c.UserId,
+                                            c.CourseID
+                                        })
+                                        .ToListAsync();
+
+            var userIds = courses.Select(c => c.UserId).ToList(); // there is teacher id retrived 
+
+            var teacherInfos = await _context.teachers //using the teacher teacher info is fetched 
+                                             .Where(ti => userIds.Contains(ti.UserId))
+                                             .ToListAsync();
+
+            var teachers = await _context.Users
+                                          .Where(u => userIds.Contains(u.Id))
+                                          .ToListAsync();
+
+            var result = (from course in courses
+                          join teacherInfo in teacherInfos on course.UserId equals teacherInfo.UserId
+                          join teacher in teachers on teacherInfo.UserId equals teacher.Id
+                          select new enrolldcoursecardDto
+                          {
+                              coursename = course.Title,
+                              teachername = teacher.Fname,
+                              teacherpicture = teacher.ProfileUrl,
+                              thumbline = course.ThumbnailImage, 
+                          }).ToList();
 
 
+            return result;
         }
         public async Task<int> DeleteCourse(int id)
         {
@@ -114,12 +148,13 @@ namespace Skillfy.Server.Repo
                 .Where(c => c.CourseID == id)
                 .Select(c => new CourseDetailsDto
                 {
+                    coursename = c.Title,
                     price = c.Price,
                     chapter = c.Chapters.Select(ch => ch.Chaptername).ToArray(),
                     lessonname = c.Chapters.SelectMany(ch => ch.Lessons.Select(l => l.Title)).ToArray(),
                     rating = _context.ratings.Where(r => r.CourseId == id).Average(r => (int?)r.rating) ?? 0,
                     Bio = _context.teachers.Where(t => t.UserId == c.UserId).Select(t => t.bio).FirstOrDefault(),
-                  //  TotalLessons = c.Chapters.Sum(ch => ch.Lessons.Count)
+                    //  TotalLessons = c.Chapters.Sum(ch => ch.Lessons.Count)
 
                 })
                 .FirstOrDefaultAsync();
