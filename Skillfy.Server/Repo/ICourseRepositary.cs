@@ -5,6 +5,7 @@ namespace Skillfy.Server.Repo
 {
     public interface ICourseRepositary
     {
+        public Task<bool> UpdateCourseAsync(CourseUpdateDto courseUpdateDto)
         public Task<int> UploadCourse(Course course);
         public Task<Course> GetCourseByName(string name);
         public Task<Course> GetCourseById(int id);

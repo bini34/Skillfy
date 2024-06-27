@@ -121,6 +121,24 @@ namespace Skillfy.Server.Controllers
 
         }
 
+        [HttpPut("updatecourse")]
+        public async Task<IActionResult> UpdateCourse([FromBody] CourseUpdateDto courseUpdateDto)
+        {
+            if (courseUpdateDto == null || !ModelState.IsValid)
+            {
+                return BadRequest(new ResponsViewModel(false, "Invalid course data", null));
+            }
+
+            var result = await _courseRepositary.UpdateCourseAsync(courseUpdateDto);
+
+            if (!result)
+            {
+                return NotFound(new ResponsViewModel(false, "Course not found", null));
+            }
+
+            return Ok(new ResponsViewModel(true, "Course updated successfully", null));
+        }
+
 
 
     }

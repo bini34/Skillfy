@@ -14,7 +14,25 @@ namespace Skillfy.Server.Repo
         {
             _context = context;
         }
+        public async Task<bool> UpdateCourseAsync(CourseUpdateDto courseUpdateDto)
+        {
+            var course = await _context.courses.FindAsync(courseUpdateDto.CourseID);
 
+            if (course == null)
+            {
+                return false;
+            }
+
+            course.Title = courseUpdateDto.CourseName;
+            course.ThumbnailImage = courseUpdateDto.Thumbnail;
+            course.Price = courseUpdateDto.Price;
+            course.Description = courseUpdateDto.Description;
+
+            _context.courses.Update(course);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
         public async Task<List<enrolldcoursecardDto>> getenrolled(string userId)
         {
             var enrolls = await _context.enrolls
