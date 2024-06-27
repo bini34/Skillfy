@@ -101,6 +101,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+
+
 app.UseDefaultFiles();
 
 app.UseStaticFiles();

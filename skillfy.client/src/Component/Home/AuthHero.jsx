@@ -23,7 +23,7 @@ export default function AuthHero() {
         <Header color="black" backgroundcolor="inherit" />
         <div className="Authhero-Header">
           <h1>Welcome Back, ready for your next lesson?</h1>
-          <Link to="/my_learning">My Learning</Link>
+          <Link to="/mycourse">My Learning</Link>
         </div>
         <div className="Authhero-main">
           <div className="lesson-container" ref={lessonContainerRef}>

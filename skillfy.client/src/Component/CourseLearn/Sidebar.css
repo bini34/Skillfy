@@ -15,8 +15,7 @@
   .sidebar-header-header{
     padding-left: 40px;
     padding-top: 20px;
-    padding: 40px 20px 0px 20px;
-    
+    padding: 40px 20px 0px 20px; 
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -59,6 +58,8 @@
   .sidebar-header-header h1{
     font-weight: 300;
     font-size: 35px;
+    color: white;
+
   }
   .sidebar h2 {
     font-size: 20px;
