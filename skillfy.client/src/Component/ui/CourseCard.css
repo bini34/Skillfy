@@ -16,9 +16,14 @@
 }
 
 .course-card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 15px;
 }
-
+.course-card-info h3{
+display: flex;
+}
 .course-card-stats {
   font-size: medium;
   display: flex;
@@ -26,7 +31,18 @@
   align-items: center;
 }
 
-
+.course-card-stats span {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #767092;
+  font-size: small;
+}
+hr{
+  margin-top: 10px;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
 .course-card-title {
   font-size: 18px;
   margin: 10px 0;
