@@ -4,6 +4,7 @@ namespace Skillfy.Server.Dto
 {
     public class enrolldcoursecardDto
     {
+        public int courseid {  get; set; }  
         public string coursename {  get; set; }
 
         public string teachername { get; set; }

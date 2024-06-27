@@ -32,6 +32,7 @@ namespace Skillfy.Server.Repo
                                         .Where(c => courseIds.Contains(c.CourseID))
                                         .Select(c => new
                                         {
+                                           
                                             c.Title,
                                             c.ThumbnailImage,
                                             c.UserId,
@@ -54,6 +55,7 @@ namespace Skillfy.Server.Repo
                           join teacher in teachers on teacherInfo.UserId equals teacher.Id
                           select new enrolldcoursecardDto
                           {
+                              courseid = course.CourseID,
                               coursename = course.Title,
                               teachername = teacher.Fname,
                               teacherpicture = teacher.ProfileUrl,
@@ -130,14 +132,14 @@ namespace Skillfy.Server.Repo
 
         //public async Task<CourseDetailsDto> GetCourseDetails(int id)
         //{
-           
+
         //    return await _context.courses.Where(c => c.CourseID == id).Select(async c => new CourseDetailsDto
         //    {
         //        price = c.Price,
-        //        chapter =  _context.chapters.Where(ch => ch.CourseId == id).Select(ch => ch.Chaptername).ToArray(),
+        //        chapter = _context.chapters.Where(ch => ch.CourseId == id).Select(ch => ch.Chaptername).ToArray(),
         //        rating = _context.ratings.Where(r => r.CourseId == id).Average(r => (int?)r.rating) ?? 0,
         //        Bio = _context.teachers.Where(t => t.UserId == c.UserId).Select(t => t.bio).FirstOrDefault(),
-        //       lessonname = c.Chapters.SelectMany(ch => ch.Lessons.Select(l => l.Title)).ToArray()
+        //        lessonname = c.Chapters.SelectMany(ch => ch.Lessons.Select(l => l.Title)).ToArray()
 
         //    }).FirstOrDefaultAsync();
         //}
