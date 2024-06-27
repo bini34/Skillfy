@@ -7,7 +7,7 @@ import img from '../../assets/image/signinImg.png';
 import authService from '../../Services/authService'
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import './Signup.css';
 
 const Signup = () => {
@@ -74,8 +74,18 @@ const Signup = () => {
  
   
     authService.register( firstName, lastName, email, role, password ).then(
-      (data) => {
-        setMessage('User registered successfully!');
+        (Response) => {
+          const user = authService.getCurrentUser();  
+          console.log(user)
+
+          const role = user.role.$values[0];
+          if (role === 'admin') {
+              navigate(`/admin/dashboard/`);
+          } else if (role === 'Instructor') {
+              navigate(`/instructor/courses/`);
+          } else if (role === 'student') {
+              navigate(`/`);
+          }
       },
       (error) => {
         setMessage('Error occurred during registration.');

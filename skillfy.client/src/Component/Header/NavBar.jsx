@@ -46,7 +46,7 @@ const NavBar = ({ color }) => {
           <Link to="/Courses" className="nav-link" style={{ color }}>Courses</Link>
         </li>
         <li className="nav-item">
-          <Link to="/mylearning" className="nav-link" style={{ color }}>My Learning</Link>
+          <Link to="/mycourse" className="nav-link" style={{ color }}>My Learning</Link>
         </li>
         <li className="nav-item">
           <Link to="/cart" className="nav-link" style={{ color }}>
@@ -61,7 +61,7 @@ const NavBar = ({ color }) => {
               <Link to="/auth/account/signin" className="nav-link" style={{ color }}>Login</Link>
             </li>
             <li className="nav-item">
-              <Link to="/auth/account/register" className="nav-link register">Register</Link>
+              <Link to="/auth/account/registor" className="nav-link register">Register</Link>
             </li>
           </>
         ) : (

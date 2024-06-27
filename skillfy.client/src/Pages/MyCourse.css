@@ -4,12 +4,11 @@
     align-items: center;
     height: 100%; /* Optional: ensures the container takes up the full height of the viewport */
     background: linear-gradient(to bottom, #EEEEF6 30%, #EEEEF6 35%, #FFFFFF 35%);
-
 }
-
 .mycourseHeader {
-    width: 900px;
     padding: 70px 0;
+    width: 900px;
+
 }
 .mycourseHeader h1 {
     color: #2F2D3A;
@@ -17,5 +16,6 @@
 .mycourseBody{
     display: flex;
     flex-wrap: wrap;
-    
+    width: 900px;
+
 }

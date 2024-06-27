@@ -1,68 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Component/Header/Header';
 import Footer from '../Component/Footer/Footer';
-import LessonCard from '../Component/ui/LessonCard'; // Make sure to import the correct path
+import LessonCard from '../Component/ui/LessonCard';
 import './MyCourse.css';
+import authService from '../Services/authService';
+import apiService from '../Services/apiService';
 
 export default function MyCourse() {
-  const courses = [
-    {
-      imageUrl: 'https://via.placeholder.com/150',
-      coursename: 'React for Beginners',
-      rating: 4.8,
-      students: 150,
-      enrollmentcount: 300,
-      lessons: 12,
-      teachername: 'John Doe',
-      price: 59.99,
-      instructorImage: 'https://via.placeholder.com/40',
-      lessonInfo: 'LESSON 5 OF 17 | 5m',
-      lessonTitle: 'Merge Duplicates in Sketch - Inconsistent Symbols & Styles',
-      instructorName: 'Nicole Brown'
-    },
-    {
-      imageUrl: 'https://via.placeholder.com/150',
-      coursename: 'Advanced JavaScript',
-      rating: 4.7,
-      students: 200,
-      enrollmentcount: 500,
-      lessons: 15,
-      teachername: 'Jane Smith',
-      price: 79.99,
-      instructorImage: 'https://via.placeholder.com/40',
-      lessonInfo: 'LESSON 8 OF 20 | 8m',
-      lessonTitle: 'Advanced JS Patterns',
-      instructorName: 'John Smith'
-    },
-    {
-      imageUrl: 'https://via.placeholder.com/150',
-      coursename: 'UI/UX Design Essentials',
-      rating: 4.9,
-      students: 180,
-      enrollmentcount: 450,
-      lessons: 10,
-      teachername: 'Alice Johnson',
-      price: 69.99,
-      instructorImage: 'https://via.placeholder.com/40',
-      lessonInfo: 'LESSON 3 OF 12 | 10m',
-      lessonTitle: 'UI/UX Design Principles',
-      instructorName: 'Alice Johnson'
-    },
-    {
-      imageUrl: 'https://via.placeholder.com/150',
-      coursename: 'Full-Stack Web Development',
-      rating: 4.6,
-      students: 220,
-      enrollmentcount: 600,
-      lessons: 20,
-      teachername: 'Bob Brown',
-      price: 89.99,
-      instructorImage: 'https://via.placeholder.com/40',
-      lessonInfo: 'LESSON 12 OF 20 | 15m',
-      lessonTitle: 'Full-Stack Project Setup',
-      instructorName: 'Bob Brown'
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const user = authService.getCurrentUser();
+
+  useEffect(() => {
+    console.log("user", user.id);
+
+    if (user && user.id) {
+      apiService.getData(`api/course/enrolledcourse${user.id}`)
+        .then((response) => {
+          setCourses(response.data.$values);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError('Failed to fetch courses');
+          setLoading(false);
+        });
+    } else {
+      setError('User ID is not available');
+      setLoading(false);
     }
-  ];
+  }, [user]);
 
   return (
     <>
@@ -72,16 +39,24 @@ export default function MyCourse() {
           <h1>My Courses</h1>
         </div>
         <div className='mycourseBody'>
-          {courses.map((course, index) => (
-            <LessonCard
-              key={index}
-              imageUrl={course.imageUrl}
-              lessonInfo={course.lessonInfo}
-              lessonTitle={course.lessonTitle}
-              instructorImage={course.instructorImage}
-              instructorName={course.instructorName}
-            />
-          ))}
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : courses.length > 0 ? (
+            courses.map((course, index) => (
+              <LessonCard
+                key={index}
+                courseID={course.$id}
+                imageUrl={course.thumbline}
+                Title={course.coursename}
+                instructorImage={course.teacherpicture}
+                instructorName={course.teachername}
+              />
+            ))
+          ) : (
+            <p>No courses available</p>
+          )}
         </div>
       </div>
       <Footer />
