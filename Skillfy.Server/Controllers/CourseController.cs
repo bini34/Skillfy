@@ -138,7 +138,18 @@ namespace Skillfy.Server.Controllers
 
             return Ok(new ResponsViewModel(true, "Course updated successfully", null));
         }
+        [HttpDelete("deletecourse/{courseId}")]
+        public async Task<IActionResult> DeleteCourse(int courseId)
+        {
+            var result = await _courseRepositary.DeleteCourseAsync(courseId);
 
+            if (!result)
+            {
+                return NotFound(new ResponsViewModel(false, "Course not found", null));
+            }
+
+            return Ok(new ResponsViewModel(true, "Course deleted successfully", null));
+        }
 
 
     }

@@ -14,6 +14,20 @@ namespace Skillfy.Server.Repo
         {
             _context = context;
         }
+        public async Task<bool> DeleteCourseAsync(int courseId)
+        {
+            var course = await _context.courses.FindAsync(courseId);
+
+            if (course == null)
+            {
+                return false;
+            }
+
+            _context.courses.Remove(course);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
         public async Task<bool> UpdateCourseAsync(CourseUpdateDto courseUpdateDto)
         {
             var course = await _context.courses.FindAsync(courseUpdateDto.CourseID);
