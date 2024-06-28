@@ -35,8 +35,30 @@ export default function AuthHero() {
 
           </div>
           <div className="navigation">
-            <button className="nav-button" onClick={scrollLeft}><ArrowBackIcon/></button>
-            <button className="nav-button" onClick={scrollRight}><ArrowForwardIcon/></button>
+          <button className="nav-button" onClick={scrollLeft}>
+              <ArrowBackIcon
+                sx={{
+                  '&:hover': {
+                    color: 'red',
+                  },
+                  '&:active': {
+                    color: 'red',
+                  },
+                }}
+              />
+            </button>
+            <button className="nav-button" onClick={scrollRight}>
+              <ArrowForwardIcon
+                sx={{
+                  '&:hover': {
+                    color: 'red',
+                  },
+                  '&:active': {
+                    color: 'red',
+                  },
+                }}
+              />
+            </button>
           </div>
         </div>
       </div>

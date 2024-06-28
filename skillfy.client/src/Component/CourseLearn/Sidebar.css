@@ -71,11 +71,13 @@
 .learnLessonList{
   width: 100%;
   padding: 25px;
+  display: flex;
+  flex-direction: column; 
+  
 }  
 .learnLessonList nav{
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
   
 .learnLessonList nav h3 {

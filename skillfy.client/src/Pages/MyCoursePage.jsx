@@ -19,6 +19,7 @@ export default function MyCourse() {
       apiService.getData(`api/course/enrolledcourse${user.id}`)
         .then((response) => {
           setCourses(response.data.$values);
+          console.log('Courses:', response.data.$values);
           setLoading(false);
         })
         .catch((err) => {
@@ -47,7 +48,7 @@ export default function MyCourse() {
             courses.map((course, index) => (
               <LessonCard
                 key={index}
-                courseID={course.$id}
+                courseID={course.courseid}
                 imageUrl={course.thumbline}
                 Title={course.coursename}
                 instructorImage={course.teacherpicture}

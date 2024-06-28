@@ -41,7 +41,7 @@ const Sidebar = ({ setCurrentLessonData }) => {
     const fetchCourses = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://localhost:7182/api/course/detailenrolled9`);
+        const response = await axios.get(`https://localhost:7182/api/course/detailenrolled${courseID}`);
         setCourseData(response.data);
         console.log('Course data:', response.data);
       } catch (error) {
@@ -59,16 +59,14 @@ const Sidebar = ({ setCurrentLessonData }) => {
   }, [courseID]);
 
   const calculateProgress = () => {
-    // Assume 60% is the completion percentage for example purposes
-    return 60;
+    return 60; // Example progress calculation
   };
 
   const handleLessonClick = (url, title) => {
-    const playbackId = url.split('/').pop().replace('.m3u8', '');
     setCurrentLessonData({ 
-      lessonUrl: playbackId,
+      lessonUrl: url,
       lessonTitle: title,
-     });
+    });
   };
 
   return (
@@ -102,12 +100,12 @@ const Sidebar = ({ setCurrentLessonData }) => {
                 <ul>
                   {chapter.lessons?.$values?.length > 0 ? (
                     chapter.lessons.$values.map((lesson, lessonIndex) => (
-                      <li  key={lessonIndex} onClick={() => handleLessonClick(lesson.url, lesson.title)}>
-                       <PlayLessonIcon /> {lesson.title} <span>{lesson.duration}</span>
+                      <li key={lessonIndex} onClick={() => handleLessonClick(lesson.url, lesson.title)}>
+                        <PlayLessonIcon /> {lesson.title} <span>{lesson.duration}</span>
                       </li>
                     ))
                   ) : (
-                    <li>No lessons available</li>
+                    <>No lessons available</>
                   )}
                 </ul>
               </nav>
