@@ -31,8 +31,7 @@ export default function CourseChapters({ handleDetailChange, chapterinfo }) {
   };
 
   const handleEditChapter = (chapterId) => {
-    navigate(`add-lessons/`, { state: { chapterid: chapterId  } });
-
+    navigate(`add-lessons/`, { state: { chapterId, courseDetails: chapters } });
   };
 
   return (

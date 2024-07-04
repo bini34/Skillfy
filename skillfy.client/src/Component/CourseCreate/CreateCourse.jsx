@@ -6,12 +6,16 @@ import CourseChapters from './CourseChapters';
 import CourseImage from './CourseImage';
 import DeleteIcon from '@mui/icons-material/Delete';
 import authService from '../../Services/authService';
-import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function CreateCourse() {
   const [userid, setUserid] = useState('');
-  const [chapterinfo, setChapterinfo] = useState([])
-
+  const [chapterinfo, setChapterinfo] = useState([]);
   const [courseDetails, setCourseDetails] = useState({
     title: '',
     description: '',
@@ -20,6 +24,9 @@ export default function CreateCourse() {
     image: null,
     chapters: []
   });
+
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  const [isCreated, setIsCreated] = useState(false);
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -35,10 +42,11 @@ export default function CreateCourse() {
     }));
   };
 
-  const handlePublish = async (event) => {
+  const handleCreate = async (event) => {
     event.preventDefault();
-    if (!userid) {
-      console.error('User ID is missing');
+
+    if (!courseDetails.title || !courseDetails.description || !courseDetails.category || !courseDetails.price || !courseDetails.image || courseDetails.chapters.length === 0) {
+      setSnackbar({ open: true, message: 'Please complete all fields before creating the course.', severity: 'error' });
       return;
     }
 
@@ -50,14 +58,9 @@ export default function CreateCourse() {
     formData.append('courseCreateDto.price', courseDetails.price);
     formData.append('courseCreateDto.userid', userid);
 
-    if (courseDetails.chapters.length === 0) {
-      console.error('At least one chapter is required');
-      return;
-    } else {
-      courseDetails.chapters.forEach((chapter, index) => {
-        formData.append(`courseCreateDto.Chapters[${index}]`, chapter.title); // Only append the title
-      });
-    }
+    courseDetails.chapters.forEach((chapter, index) => {
+      formData.append(`courseCreateDto.Chapters[${index}]`, chapter.title);
+    });
 
     try {
       const response = await axios.post('https://localhost:7182/api/course/createcourse', formData, {
@@ -67,8 +70,8 @@ export default function CreateCourse() {
       });
 
       if (response.status === 200) {
-        console.log(response)
-        alert('Course Created Successfully');
+        setSnackbar({ open: true, message: 'Course Created Successfully', severity: 'success' });
+        setIsCreated(true);
         const chapters = response.data.data.chapters.$values; // Adjust this based on actual API response structure
         setChapterinfo(chapters);
         const updatedChapters = courseDetails.chapters.map((chapter, index) => ({
@@ -82,14 +85,24 @@ export default function CreateCourse() {
       }
     } catch (error) {
       console.error('There was an error uploading the course!', error);
+      setSnackbar({ open: true, message: 'There was an error creating the course.', severity: 'error' });
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ open: false, message: '', severity: 'success' });
   };
 
   return (
     <div className='courseCreate-Container'>
       <div className="courseCreate-HeaderContainer">
-        <button onClick={handlePublish}>Publish</button>
-        <button className='deleteBtn'><DeleteIcon style={{ color: 'white' }}/></button>
+        {!isCreated && <button onClick={handleCreate}>Create</button>}
+        {isCreated && (
+          <>
+            <button className='deleteBtn'><DeleteIcon style={{ color: 'white' }} /></button>
+            <button className='publishBtn'>Publish</button>
+          </>
+        )}
       </div>
       <div className="courseCreate-MainContainer">
         <div className="courseCreate-LeftContainer">
@@ -110,6 +123,11 @@ export default function CreateCourse() {
           </div>
         </div>
       </div>
+      <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

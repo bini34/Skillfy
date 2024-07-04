@@ -10,17 +10,29 @@
     text-decoration: none;
     color: black;
 }
+.chapter-lessons-header{
+    display: flex;
+    justify-content: space-between;
+}
 
 .chapter-lessons-body{
     display: flex;
     flex-direction: row;
+
 }
 .chapter-customization{
     width: 50%;
-    padding: 30px;
-    
+    padding: 30px;   
+}
+.chapter-customization_body{
+    width: 70%;
 }
 .chapter-lessons{
     width: 50%;
     padding: 20px;
+}
+.lessonbtns{
+    display: flex;
+    flex-direction: row;
+
 }

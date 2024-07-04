@@ -19,6 +19,7 @@ const NavBar = ({ color }) => {
     if (currentUser) {
       setIsAuthenticated(true);
       setUser(currentUser);
+      console.log("user",user?.fname);
     }
   }, []);
 
@@ -74,7 +75,8 @@ const NavBar = ({ color }) => {
           </>
         ) : (
           <li className="nav-item avatar">
-            <Avatar alt={user?.FName} onClick={toggleMenu} src="/static/images/avatar/1.jpg" />
+            <Avatar alt={user?.fname} onClick={toggleMenu} src={user} />
+
             {isMenuOpen && (
               <div className="menu">
                 <ul>

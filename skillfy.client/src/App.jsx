@@ -54,15 +54,15 @@ function App() {
     },
     {
       path: '/course/learn',
-      element: <PrivateRoute element={<CourseLearn />} allowedRoles={['user']} />
+      element: <PrivateRoute element={<CourseLearn />} allowedRoles={['student']} />
     },
     {
       path: '/instructor/courses/',
-      element: <PrivateRoute element={<InstructorAdminDashBoardPage />} allowedRoles={['instructor']} />
+      element: <PrivateRoute element={<InstructorAdminDashBoardPage />} allowedRoles={['Instructor']} />
     },
     {
       path: '/instructor/courses/create/add-lessons/',
-      element: <PrivateRoute element={<ChapterLessonsPage />} allowedRoles={['instructor']} />
+      element: <PrivateRoute element={<ChapterLessonsPage />} allowedRoles={['Instructor']} />
     },
     {
       path: '/test',
@@ -70,11 +70,11 @@ function App() {
     },
     {
       path: '/instructor/courses/create',
-      element: <PrivateRoute element={<CourseCreate />} allowedRoles={['instructor']} />
+      element: <PrivateRoute element={<CourseCreate />} allowedRoles={['Instructor']} />
     },
     {
       path: '/mycourse',
-      element: <PrivateRoute element={<MyCourse />} allowedRoles={['user']} />
+      element: <PrivateRoute element={<MyCourse />} allowedRoles={['student']} />
     },
     {
       path: '*',
