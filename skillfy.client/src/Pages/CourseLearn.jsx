@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../Component/CourseLearn/Sidebar';
 import MainContent from '../Component/CourseLearn/MainContent';
 import './CourseLearn.css';
 
 function CourseLearn() {
-
   const [currentLessonData, setCurrentLessonData] = useState({
     lessonUrl: '',
     lessonTitle: ''
@@ -13,7 +12,7 @@ function CourseLearn() {
   return (
     <div className="courselearnContainer">
       <Sidebar setCurrentLessonData={setCurrentLessonData} />
-      <MainContent  CurrentLessonData={currentLessonData} />
+      <MainContent CurrentLessonData={currentLessonData} />
     </div>
   );
 }

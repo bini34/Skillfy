@@ -10,15 +10,14 @@ const CourseCard = ({ id, coursename, teachername, price, rating, students, less
   const navigate = useNavigate();
   const baseUrl = 'https://localhost:7182';
   const imageUrl = `${baseUrl}${coursethumbline}`;
-
+  console.log('course', id)
   const handleImageError = (e) => {
     console.error('Failed to load image:', e.target.src);
     e.target.onerror = null; // Prevent infinite loop
-    e.target.src = '/path/to/placeholder/image.jpg'; // Set a placeholder image
   };
 
   const sendtoCourseDetail = () => {
-    navigate(`${coursename}/`, { state: { courseid: id } });
+    navigate(`/course/${coursename}/`, { state: { courseid: id } });
   };
 
   return (

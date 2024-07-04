@@ -15,10 +15,7 @@ width: 50%;
     height: 100vh;
   }
   
-  button {
-    margin-bottom: 20px;
-  }
-  
+
   .Add-lesson {
     position: fixed;
     top: 50%;

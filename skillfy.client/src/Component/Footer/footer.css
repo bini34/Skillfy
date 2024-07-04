@@ -9,9 +9,8 @@
 .footer-content {
   display: flex;
   justify-content: flex-start; /* Align columns to flex-start */
-  align-items: flex-start; /* Align items to flex-start */
-  width: 100%;
-  max-width: 900px;
+  /* align-items: flex-start; Align items to flex-start */
+  width: 1000px;
 }
 
 .footer-content > div {

@@ -1,0 +1,87 @@
+.container {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+  }
+  
+  .grid {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1fr;
+    align-items: center;
+    width: 1000px;
+    height: 100%;
+    
+  }
+  .grid div button {
+    padding: 15px 20px;
+    color: white;
+    font-size: 16px;
+    background-color: #FF5A5F;
+    border: none;
+
+  }
+  @media (min-width: 600px) {
+    .grid {
+      gap: 80px;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .title {
+    font-weight: 900;
+    font-size: 34px;
+    margin-bottom: 16px;
+    font-family: 'Greycliff CF', sans-serif;
+  }
+  
+  @media (max-width: 600px) {
+    .title {
+      font-size: 32px;
+    }
+  }
+  
+  .text {
+    color: #6b7280;
+    font-size: 18px;
+  }
+  
+  .control {
+    border: 1px solid #000;
+    padding: 10px 20px;
+    margin-top: 24px;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 600px) {
+    .control {
+      width: 100%;
+    }
+  }
+  
+  .mobileImage {
+    display: block;
+  }
+  
+  @media (min-width: 48em) {
+    .mobileImage {
+      display: none;
+    }
+  }
+  
+  .desktopImage {
+    display: none;
+  }
+  
+  @media (min-width: 48em) {
+    .desktopImage {
+      display: block;
+    }
+  }
+  

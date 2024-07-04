@@ -25,6 +25,8 @@ export default function CourseDetail() {
   const location = useLocation();
 
   useEffect(() => {
+    console.log("courseidfromlocation", location.state.courseid);
+
     if (location.state && location.state.courseid) {
       setCourseId(location.state.courseid);
       console.log("courseid", courseId);

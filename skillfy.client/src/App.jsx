@@ -2,7 +2,6 @@ import './App.css';
 import SignupPage from './Pages/SignupPage';
 import SigninPage from './Pages/SigninPage';
 import HomePage from './Pages/HomePage';
-import ShoppingCart from './Pages/ShoppingCart';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Cart from './Pages/CartPage';
 import CourseLearn from './Pages/CourseLearn';
@@ -15,7 +14,10 @@ import Sidebar from './Component/Testt/test';
 import ChapterLessonsPage from './Pages/ChapterLessonsPage';
 import CourseDetail from './Pages/CourseDetailOverview';
 import CourseCreate from './Pages/CourseCreate';
-import MyCourse from './Pages/MyCoursePage'
+import MyCourse from './Pages/MyCoursePage';
+import PrivateRoute from './Component/PrivateRoute'; // Make sure to import your PrivateRoute component
+import NotFoundPage from './Pages/404'; // Import your 404 page component
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -35,16 +37,16 @@ function App() {
       element: <CourseDetail />
     },
     {
-        path: '/course-detail-curriculum',
-        element: <CourseDetail />
+      path: '/course-detail-curriculum',
+      element: <CourseDetail />
     },
     {
-        path: '/course-detail-instructor',
-        element: <CourseDetail />
+      path: '/course-detail-instructor',
+      element: <CourseDetail />
     },
     {
-        path: '/:coursename',
-        element: <CourseDetail />
+      path: 'course/:coursename',
+      element: <CourseDetail />
     },
     {
       path: '/cart',
@@ -52,15 +54,15 @@ function App() {
     },
     {
       path: '/course/learn',
-      element: <CourseLearn />
+      element: <PrivateRoute element={<CourseLearn />} allowedRoles={['user']} />
     },
     {
       path: '/instructor/courses/',
-      element: <InstructorAdminDashBoardPage />
+      element: <PrivateRoute element={<InstructorAdminDashBoardPage />} allowedRoles={['instructor']} />
     },
     {
       path: '/instructor/courses/create/add-lessons/',
-      element: <ChapterLessonsPage />
+      element: <PrivateRoute element={<ChapterLessonsPage />} allowedRoles={['instructor']} />
     },
     {
       path: '/test',
@@ -68,12 +70,15 @@ function App() {
     },
     {
       path: '/instructor/courses/create',
-      element: <CourseCreate />
+      element: <PrivateRoute element={<CourseCreate />} allowedRoles={['instructor']} />
     },
     {
       path: '/mycourse',
-      element:<MyCourse/>
-
+      element: <PrivateRoute element={<MyCourse />} allowedRoles={['user']} />
+    },
+    {
+      path: '*',
+      element: <NotFoundPage /> // Add the 404 page route
     }
   ]);
 
