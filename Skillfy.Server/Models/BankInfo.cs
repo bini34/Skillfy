@@ -11,7 +11,7 @@ namespace Skillfy.Server.Models
         public string BankName { get; set; }
         = string.Empty;
         [Required]
-        public int BankAccount { get; set; }
+        public string BankAccount { get; set; }
 
         public int balance {  get; set; }
 

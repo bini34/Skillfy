@@ -24,7 +24,8 @@ namespace Skillfy.Server.Model
         public string ThumbnailImage { get; set; }
         public int EnrollmentCount { get; set; }
 
-        
+        public string about {  get; set; }  
+
 
 
        public  ApplicationUser User { get; set; }
