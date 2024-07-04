@@ -63,7 +63,7 @@ namespace Skillfy.Server.Controllers
         }
 
         [HttpGet("coursecard")]
-        public async Task<IActionResult> UploadCourse()
+        public async Task<IActionResult> coursecard()
         {
             var details =await _courseRepositary.getcoursecard();
 
@@ -149,6 +149,39 @@ namespace Skillfy.Server.Controllers
             }
 
             return Ok(new ResponsViewModel(true, "Course deleted successfully", null));
+        }
+        [HttpPost("rating")]
+        public async Task<IActionResult> rating(courseratingdto courseratingdto)
+        {
+            var review = new Review
+            {
+                CourseId = courseratingdto.courseid,
+                userID = courseratingdto.userid,
+                comment = courseratingdto.comment
+            };
+
+            var respons =await applicationDbContext.ratings.AddAsync(review);
+            
+            if(respons == null)
+            {
+                return BadRequest(new ResponsViewModel(false, "not succesfull", null));
+            }
+            return Ok(new ResponsViewModel(true, "succesfull", null));
+
+
+        }
+        [HttpGet("search{coursename}")]
+        public async Task<IActionResult> search(string  coursename)
+        {
+
+          var course = await _courseRepositary.GetCourseByName(coursename);
+            var courseid = course.CourseID;
+           var coursecard= await _courseRepositary.getcoursecardbyid(courseid);
+            if (coursecard == null)
+                return BadRequest(new ResponsViewModel(false, "Dont fetched", null));
+
+            return Ok(coursecard);
+
         }
 
 

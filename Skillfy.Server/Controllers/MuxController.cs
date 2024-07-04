@@ -57,6 +57,7 @@ namespace Skillfy.Server.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+              
                 var responseData = await response.Content.ReadAsStringAsync();
                 var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseData);
                 return Ok(jsonResponse);

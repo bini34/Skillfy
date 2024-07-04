@@ -12,8 +12,8 @@ using Skillfy.Server.Data;
 namespace Skillfy.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240621185802_AddProductAndCategoryTables")]
-    partial class AddProductAndCategoryTables
+    [Migration("20240704094344_initail")]
+    partial class initail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -395,6 +395,10 @@ namespace Skillfy.Server.Migrations
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
+
+                    b.Property<string>("comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("rating")
                         .HasColumnType("int");

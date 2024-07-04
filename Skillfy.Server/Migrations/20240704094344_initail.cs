@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Skillfy.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class AddProductAndCategoryTables : Migration
+    public partial class initail : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -306,7 +306,8 @@ namespace Skillfy.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     userID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
-                    rating = table.Column<int>(type: "int", nullable: false)
+                    rating = table.Column<int>(type: "int", nullable: false),
+                    comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

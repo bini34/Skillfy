@@ -330,8 +330,9 @@ namespace Skillfy.Server.Migrations
                     b.Property<DateTime>("EnrollmentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Grade")
-                        .HasColumnType("int");
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Id")
                         .IsRequired()
@@ -391,6 +392,10 @@ namespace Skillfy.Server.Migrations
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
+
+                    b.Property<string>("comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("rating")
                         .HasColumnType("int");

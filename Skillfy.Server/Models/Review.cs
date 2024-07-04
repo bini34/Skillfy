@@ -15,8 +15,8 @@ namespace Skillfy.Server.Model
 
         public string userID { get; set; }
         public int CourseId { get; set; }
-        public int rating { get; set; }
-    
+        public int rating { get; set; }      
+        public string comment {  get; set; }    
         public ApplicationUser User { get; set; }
         public Course Course { get; set; }
     }

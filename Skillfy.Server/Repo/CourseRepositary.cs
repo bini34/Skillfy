@@ -162,6 +162,23 @@ namespace Skillfy.Server.Repo
             }).ToListAsync();
         }
 
+        public async Task<List<CourseCardDto>> getcoursecardbyid(int courseid)
+        {
+
+            return await _context.courses.Where(c=> c.CourseID ==  courseid).Select(c => new CourseCardDto
+            {
+
+                Id = c.CourseID,
+                coursename = c.Title,
+                price = c.Price,
+                coursethumbline = c.ThumbnailImage,
+                enrollmentcount = c.EnrollmentCount,
+                teachername = _context.users.Where(u => u.Id == c.UserId).Select(u => u.Fname).FirstOrDefault()
+
+
+            }).ToListAsync();
+        }
+
         //public async Task<CourseDetailsDto> GetCourseDetails(int id)
         //{
 
