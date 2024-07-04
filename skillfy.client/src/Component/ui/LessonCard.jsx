@@ -35,7 +35,6 @@ const LessonCard = ({ courseID, imageUrl, Title, instructorImage, instructorName
       <h1 className="enrolled-lesson-card-title">{Title}</h1>
       <div className="enrolled-lesson-card-instructor">
         <Avatar   sx={{ width: 24, height: 24 }} alt={instructorName}  src={instructorImage} />
-        {/* <img className="instructor-card-image" src={instructorImage} alt={instructorName} /> */}
         <p>{instructorName}</p>
       </div>
       <BorderLinearProgress variant="determinate" value={50} />
