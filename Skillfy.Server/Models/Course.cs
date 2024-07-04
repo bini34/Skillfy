@@ -15,6 +15,8 @@ namespace Skillfy.Server.Model
         public int CourseID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+
+        
         public string UserId { get; set; }
         public int CatagoryId { get; set; }
 
