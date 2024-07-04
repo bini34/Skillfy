@@ -37,6 +37,8 @@ namespace Skillfy.Server.service
                 Title = courseCreateDto.CourseName,
                 UserId = courseCreateDto.userid,
                 CatagoryId =  catagoryid,
+                about = courseCreateDto.about,
+                course_audience = courseCreateDto.course_audience,
                 Price = courseCreateDto.price,
                 Description = courseCreateDto.Description,
                 ThumbnailImage = $"/coursethumbline/{imgpath}"

@@ -201,6 +201,8 @@ namespace Skillfy.Server.Repo
                 {
                     coursename = c.Title,
                     price = c.Price,
+                    about = c.about,
+                    course_audience = c.course_audience,
                     chapter = c.Chapters.Select(ch => ch.Chaptername).ToArray(),
                     lessonname = c.Chapters.SelectMany(ch => ch.Lessons.Select(l => l.Title)).ToArray(),
                     rating = _context.ratings.Where(r => r.CourseId == id).Average(r => (int?)r.rating) ?? 0,
