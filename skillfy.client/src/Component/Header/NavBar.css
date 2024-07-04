@@ -42,8 +42,6 @@
   color: #ffffff;
 }
 
-
-
 .register {
   background-color: #FF5A5F;
   color: #fff;
@@ -58,7 +56,7 @@
 .menu {
   position: absolute;
   top: 70px;
-  right: 20%; /* Adjust based on where you want your menu to appear */
+  right: 17%; /* Adjust based on where you want your menu to appear */
   background: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
   backdrop-filter: blur(10px); /* Blur effect for the background */
   -webkit-backdrop-filter: blur(10px); /* For Safari */

@@ -15,7 +15,7 @@ import { Link, useLocation } from 'react-router-dom';
 export default function CourseDetail() {
   const [courseId, setCourseId] = useState(0);
   const [courseData, setCourseData] = useState({
-    $id: '',
+    id: '',
     price: 0,
     description: '',
     chapter: [],
@@ -46,7 +46,7 @@ export default function CourseDetail() {
     try {
       const response = await axios.get(`https://localhost:7182/api/course/coursedetail${courseId}`);
       setCourseData({
-        $id :response.data.$id,
+        id :response.data.id,
         price : response.data.price,
         description : response.data.description,
         chapter : response.data.chapter,

@@ -9,8 +9,8 @@
   
   .lesson-card-image {
     border-radius: 10px;
-    width: 50%;
-    height: auto;
+    width: 150px;
+    height: 150px;
   }
   
   .lesson-card-info {
