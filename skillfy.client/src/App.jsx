@@ -17,40 +17,53 @@ import CourseCreate from './Pages/CourseCreate';
 import MyCourse from './Pages/MyCoursePage';
 import PrivateRoute from './Component/PrivateRoute'; // Make sure to import your PrivateRoute component
 import NotFoundPage from './Pages/404'; // Import your 404 page component
+import Courses from './Pages/Courses';
+import SearchPage from './Pages/SearchPage';
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
       element: <HomePage />
+
     },
     {
       path: '/auth/account/signin',
       element: <SigninPage />
     },
     {
-      path: '/auth/account/registor',
+      path: '/auth/account/register',
       element: <SignupPage />
     },
     {
-      path: '/course-detail-overview',
-      element: <CourseDetail />
+      path: 'course/:coursename/overview',
+      element: <PrivateRoute element={<CourseDetail />} allowedRoles={['student']} />
+
     },
     {
-      path: '/course-detail-curriculum',
-      element: <CourseDetail />
+      path: 'course/:coursename/curriculum',
+      element: <PrivateRoute element={<CourseDetail />} allowedRoles={['student']} />
+
     },
     {
-      path: '/course-detail-instructor',
-      element: <CourseDetail />
+      path: 'course/:coursename/instructor',
+      element: <PrivateRoute element={<CourseDetail />} allowedRoles={['student']} />
+
     },
     {
-      path: 'course/:coursename',
-      element: <CourseDetail />
+      path: 'course/:coursename/reviews',
+      element: <PrivateRoute element={<CourseDetail />} allowedRoles={['student']} />
+
+    },
+    {
+      path: '/courses',
+      element: <PrivateRoute element={<Courses />} allowedRoles={['student']} />
+
     },
     {
       path: '/cart',
-      element: <Cart />
+      element: <PrivateRoute element={<Cart />} allowedRoles={['student']} />
+
     },
     {
       path: '/course/learn',
@@ -65,16 +78,16 @@ function App() {
       element: <PrivateRoute element={<ChapterLessonsPage />} allowedRoles={['Instructor']} />
     },
     {
-      path: '/test',
-      element: <Sidebar />
-    },
-    {
       path: '/instructor/courses/create',
       element: <PrivateRoute element={<CourseCreate />} allowedRoles={['Instructor']} />
     },
     {
       path: '/mycourse',
       element: <PrivateRoute element={<MyCourse />} allowedRoles={['student']} />
+    },
+    {
+      path: '/course/search',
+      element: <SearchPage />
     },
     {
       path: '*',

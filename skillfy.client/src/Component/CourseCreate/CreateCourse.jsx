@@ -72,7 +72,9 @@ export default function CreateCourse() {
       if (response.status === 200) {
         setSnackbar({ open: true, message: 'Course Created Successfully', severity: 'success' });
         setIsCreated(true);
-        const chapters = response.data.data.chapters.$values; // Adjust this based on actual API response structure
+        const chapters = response.data.data.chapters.$values; 
+        console.log("chaptrers",chapters);
+        console.log("from respo",response.data.data.chapters.$values);
         setChapterinfo(chapters);
         const updatedChapters = courseDetails.chapters.map((chapter, index) => ({
           ...chapter,

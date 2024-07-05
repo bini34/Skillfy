@@ -12,7 +12,8 @@ export default function Courses() {
       try {
         const response = await axios.get('https://localhost:7182/api/course/coursecard');
         console.log('Response:', response.data.$values);
-        setCourseData(response.data.$values);
+        const sortedCourses = response.data.$values.sort((a, b) => b.enrollmentcount - a.enrollmentcount);
+        setCourseData(sortedCourses.slice(0, 6));
       } catch (error) {
         console.error('Error fetching course data:', error);
       } finally {

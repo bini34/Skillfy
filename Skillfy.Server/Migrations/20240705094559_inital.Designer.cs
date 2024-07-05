@@ -12,8 +12,8 @@ using Skillfy.Server.Data;
 namespace Skillfy.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240704094344_initail")]
-    partial class initail
+    [Migration("20240705094559_inital")]
+    partial class inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

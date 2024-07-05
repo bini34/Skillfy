@@ -71,7 +71,12 @@
   border: 2px solid #2c3e50; /* color of the circle border */
   border-radius: 50%;
 }
-.icon-container .fa-book {
+
+.icon-container {
   font-size: 48px; /* size of the book icon */
   color: #2c3e50; /* color of the book icon */
+}
+.peopleicon{
+  color: #F56962;
+  border-color: #F56962;
 }

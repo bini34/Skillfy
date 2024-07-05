@@ -19,7 +19,11 @@ export default function CourseChapters({ handleDetailChange, chapterinfo }) {
 
   const handleSaveChapter = () => {
     if (newChapterTitle.trim()) {
-      setChapters([...chapters, { id: null, title: newChapterTitle }]); // id is set to null initially
+      const newChapter = {
+        id: chapters.length + 1, // Ensure a unique ID for each chapter
+        title: newChapterTitle,
+      };
+      setChapters([...chapters, newChapter]);
       setNewChapterTitle('');
     }
     setIsAdding(false);
@@ -31,6 +35,7 @@ export default function CourseChapters({ handleDetailChange, chapterinfo }) {
   };
 
   const handleEditChapter = (chapterId) => {
+    console.log('chapterId', chapterId);
     navigate(`add-lessons/`, { state: { chapterId, courseDetails: chapters } });
   };
 

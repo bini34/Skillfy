@@ -56,8 +56,8 @@
 .menu {
   position: absolute;
   top: 70px;
-  right: 17%; /* Adjust based on where you want your menu to appear */
-  background: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
+  right: 17%; 
+  background: rgba(255, 255, 255, 0.3); 
   backdrop-filter: blur(10px); /* Blur effect for the background */
   -webkit-backdrop-filter: blur(10px); /* For Safari */
   color: black;
@@ -65,7 +65,6 @@
   border-radius: 10px; /* Rounded corners */
   padding: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  /* Optional: add some extra styling */
   box-sizing: border-box;
 }
 
@@ -83,4 +82,31 @@ display: flex;
 
 .menu li:hover {
   background-color: #f0f0f0;
+}
+.categories-menu {
+  position: absolute;
+  background-color: white;
+  z-index: 1000;
+  margin-top: 30px;
+
+
+  background: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
+  backdrop-filter: blur(10px); /* Blur effect for the background */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  color: black;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Semi-transparent white border */
+  border-radius: 10px; /* Rounded corners */
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.categories-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categories-menu li {
+  padding: 8px 16px;
 }

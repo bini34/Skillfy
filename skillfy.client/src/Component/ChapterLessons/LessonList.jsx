@@ -3,8 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import MuxUploader from '@mux/mux-uploader-react';
 import './LessonList.css';
 import EditIcon from '@mui/icons-material/Edit';
-import apiService from '../../Services/apiService';
-import Button from '@mui/material/Button';
 import axios from 'axios';
 import MuxPlayer from "@mux/mux-player-react";
 
@@ -14,19 +12,22 @@ export default function LessonList() {
   const [newLessonTitle, setNewLessonTitle] = useState('');
   const [uploadUrl, setUploadUrl] = useState('');
   const [playbackId, setPlaybackId] = useState('');
-  const [uploadId, setuploadId] = useState('');
+  const [uploadId, setUploadId] = useState('');
   const [uploadVideo, setUploadVideo] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const [ChapterId, setChapterId] = useState('');
+  const [chapterId, setChapterId] = useState('');
+  console.log("chapter id from location",location.state.chapterId);
 
   useEffect(() => {
-    if (location.state && location.state.chapterid) {
-      const id = parseInt(location.state.chapterid, 10);
-      console.log('Chapter ID:', id);
-      console.log(typeof(id));
+    if (location.state && location.state.chapterId) {
+      console.log("chapter id from location",location.state.chapterId);
+      const id = parseInt(location.state.chapterId, 10);
+      console.log("chapter id",typeof id);
+
       if (!isNaN(id)) {
         setChapterId(id);
+        console.log("chapter id",typeof id);
       } else {
         console.log("Invalid chapter ID");
       }
@@ -39,16 +40,15 @@ export default function LessonList() {
       const response = await axios.post('https://localhost:7182/api/mux/upload-url');
       if (response.data.data.url) {
         setUploadUrl(response.data.data.url);
-        setuploadId(response.data.data.id);
-        console.log('Successfully fetched upload URL');
+        setUploadId(response.data.data.id);
       }
     } catch (error) {
       console.error('Error fetching upload URL', error);
     }
   };
 
+ 
   const handleSuccess = (event) => {
-    console.log('Upload successful:', event);
     setUploadVideo(true);
   };
 
@@ -56,11 +56,14 @@ export default function LessonList() {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/getid', {
         title: newLessonTitle,
-        chpaterid: ChapterId,
+        chpaterid: chapterId,
         uploadId: uploadId
       });
       setPlaybackId(response.data.playbackId);
-      console.log('Playback ID:', response.data.playbackId);
+      addLesson({
+        title: newLessonTitle,
+        playbackId: response.data.playbackId
+      });
     } catch (error) {
       console.error('Error sending video ID to backend:', error.response ? error.response.data : error.message);
     }
@@ -76,12 +79,10 @@ export default function LessonList() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    sendVideoIdToBackend();
-    if (newLessonTitle && videoId) {
-      addLesson({ title: newLessonTitle, videoId });
-      setNewLessonTitle('');
-      setVideoId('');
-    }
+    await sendVideoIdToBackend();
+    setNewLessonTitle('');
+    setPlaybackId('');
+    setUploadVideo(false);
   };
 
   const addLesson = (lesson) => {
@@ -126,14 +127,16 @@ export default function LessonList() {
             />
             <div className="course-video-container">
               <div className="course-video-title">Course Video</div>
-              <MuxPlayer
-                playbackId={playbackId}
-                metadata={{
-                  video_id: uploadId,
-                  video_title: newLessonTitle,
-                  viewer_user_id: "user-d-007",
-                }}
-              />
+              {playbackId && (
+                <MuxPlayer
+                  playbackId={playbackId}
+                  metadata={{
+                    video_id: uploadId,
+                    video_title: newLessonTitle,
+                    viewer_user_id: "user-d-007",
+                  }}
+                />
+              )}
               {uploadUrl && (
                 <MuxUploader
                   endpoint={uploadUrl}

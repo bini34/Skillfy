@@ -13,48 +13,39 @@ import CourseReviews from '../Component/CourseDetail/CourseReviews';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function CourseDetail() {
-  const [courseId, setCourseId] = useState(0);
-  const [courseData, setCourseData] = useState({
-    id: '',
-    price: 0,
-    description: '',
-    chapter: [],
-    lessonname: [],
-    rating: 0
-  });
+  const [courseId, setCourseId] = useState(null);
+  const [courseName, setCourseName] = useState('');
+  const [courseData, setCourseData] = useState(null); // Initialize as null to check loading state
   const location = useLocation();
 
   useEffect(() => {
-    console.log("courseidfromlocation", location.state.courseid);
-
     if (location.state && location.state.courseid) {
+      console.log('Course ID from location state:', location.state.courseid);
+      console.log('Type of Course ID from location state:', typeof location.state.courseid);
       setCourseId(location.state.courseid);
-      console.log("courseid", courseId);
-      console.log("courseidfromlocation", location.state.courseid);
+      setCourseName(location.state.coursename);
     }
   }, [location.state]);
 
   useEffect(() => {
+    console.log('Updated Course ID:', courseId);
     if (courseId) {
       fetchCourseDetail();
     }
   }, [courseId]);
 
   const fetchCourseDetail = async () => {
-    console.log('Course id:', courseId);
-    console.log('courseidtype', typeof(courseId));
     try {
+      console.log('Fetching course details for Course ID:', courseId);
       const response = await axios.get(`https://localhost:7182/api/course/coursedetail${courseId}`);
       setCourseData({
-        id :response.data.id,
-        price : response.data.price,
-        description : response.data.description,
-        chapter : response.data.chapter,
-        lessonname : response.data.lessonname,
-        rating : response.data.rating
+        id: response.data.id,
+        price: response.data.price,
+        description: response.data.description,
+        chapter: response.data.chapter,
+        lessonname: response.data.lessonname,
+        rating: response.data.rating,
       });
-      console.log('Response:', response.data);
-      console.log('Course Data:', courseData);
     } catch (error) {
       console.error('Error fetching course data:', error);
     }
@@ -62,13 +53,13 @@ export default function CourseDetail() {
 
   const renderOverviewContent = () => {
     switch (location.pathname) {
-      case '/course-detail-overview':
+      case `/course/${courseName}/overview`:
         return <CourseOverview />;
-      case '/course-detail-curriculum':
+      case `/course/${courseName}/curriculum`:
         return <TestCurriclum />;
-      case '/course-detail-instructor':
+      case `/course/${courseName}/instructor`:
         return <CourseInstructor />;
-      case '/course-detail-reviews':
+      case `/course/${courseName}/reviews`:
         return <CourseReviews />;
       default:
         return <CourseOverview />; // Default to Overview if no match is found
@@ -80,58 +71,64 @@ export default function CourseDetail() {
       <Header color="black" />
       <main className='main-courseDetail-Container'>
         <div className='courseDetail-Container'>
-          <CourseDetailHeader courseData={courseData || {}} />
-          <div className='courseDetail'>
-            <div className='courseDetail-main_container'>
-              <div className="courseDetail-Video">
-                <VideoPlayer />
+          {courseData ? (
+            <>
+              <CourseDetailHeader courseData={courseData}  courseName={courseName}/>
+              <div className='courseDetail'>
+                <div className='courseDetail-main_container'>
+                  <div className="courseDetail-Video">
+                    <VideoPlayer />
+                  </div>
+                  <div className='courseDetail-main-header'>
+                    <nav>
+                      <ul>
+                        <li>
+                          <Link
+                            to={`/course/${courseName}/overview`}
+                            className={location.pathname === `/course/${courseName}/overview` ? 'active' : ''}
+                          >
+                            Overview
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to={`/course/${courseName}/curriculum`}
+                            className={location.pathname === `/course/${courseName}/curriculum` ? 'active' : ''}
+                          >
+                            Curriculum
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to={`/course/${courseName}/instructor`}
+                            className={location.pathname === `/course/${courseName}/instructor` ? 'active' : ''}
+                          >
+                            Instructor
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to={`/course/${courseName}/reviews`}
+                            className={location.pathname === `/course/${courseName}/reviews` ? 'active' : ''}
+                          >
+                            Reviews
+                          </Link>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                  <div className="courseDetail-main-main">
+                    {renderOverviewContent()}
+                  </div>
+                </div>
+                <div className="courseDetail-card">
+                  <CourseDetailsCard courseId={courseId} price={courseData.price} />
+                </div>
               </div>
-              <div className='courseDetail-main-header'>
-                <nav>
-                  <ul>
-                    <li>
-                      <Link
-                        to='/course-detail-overview'
-                        className={location.pathname === '/course-detail-overview' ? 'active' : ''}
-                      >
-                        Overview
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to='/course-detail-curriculum'
-                        className={location.pathname === '/course-detail-curriculum' ? 'active' : ''}
-                      >
-                        Curriculum
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to='/course-detail-instructor'
-                        className={location.pathname === '/course-detail-instructor' ? 'active' : ''}
-                      >
-                        Instructor
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to='/course-detail-reviews'
-                        className={location.pathname === '/course-detail-reviews' ? 'active' : ''}
-                      >
-                        Reviews
-                      </Link>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-              <div className="courseDetail-main-main">
-                {renderOverviewContent()}
-              </div>
-            </div>
-            <div className="courseDetail-card">
-              <CourseDetailsCard courseId={courseId} price={courseData.price}           />
-            </div>
-          </div>
+            </>
+          ) : (
+            <p>Loading course details...</p>
+          )}
         </div>
       </main>
       <Footer />

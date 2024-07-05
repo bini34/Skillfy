@@ -16,7 +16,7 @@ export default function Hero() {
             <div className="hero-content">
                 <h1>Distant learning for further expansion</h1>
                 <p>Choose from over 100,000 online video courses with new additions published every month.</p>
-                <Link to="/registor" className="cta-btn">Get Started Now for Free</Link>
+                <Link to="/auth/account/register" className="cta-btn">Get Started Now for Free</Link>
             </div>
             <div className="features">
                 <div className="feature-item">
@@ -26,7 +26,7 @@ export default function Hero() {
                     <span>100k Online Courses</span>
                 </div>
                 <div className="feature-item">
-                    <div className="icon-container">
+                    <div className="icon-container peopleicon">
                         <PeopleIcon/>
                     </div>                    
                     <span>Expert Instruction</span>

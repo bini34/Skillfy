@@ -55,7 +55,7 @@ function Signin() {
             <div className="login-form">
                 <div className='registor'>
                     <p>Already have an Account? </p>
-                    <Link to="/auth/account/registor" className='regstora'>Registor</Link>
+                    <Link to="/auth/account/register" className='regstora'>Registor</Link>
                 </div>
                 <div>
                     <h1>Hello! Welcome back.</h1>

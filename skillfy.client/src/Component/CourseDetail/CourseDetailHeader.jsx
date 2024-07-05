@@ -5,10 +5,13 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import './CourseDetailHeader.css';
 
-const CourseDetailHeader = () => {
+const CourseDetailHeader = ({courseData, courseName}) => {
+  console.log('Course name:', courseName);
+  console.log('Course Data:', courseData);
   return (
     <div className="course-header-container">
-      <h1>Adobe Masterclass Photoshop, Illustrator, XD & InDesign</h1>
+      
+      <h1>{courseName}</h1>
       <div className='course-header-main'>
         <div className='course-header-about'>
           <h3>Learn graphic design today with Photoshop, Illustrator, Adobe XD, InDesign & more in this Adobe CC Masterclass!</h3>
