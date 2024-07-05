@@ -156,7 +156,7 @@ namespace Skillfy.Server.Repo
                 price = c.Price,
                 coursethumbline = c.ThumbnailImage,
                 enrollmentcount = c.EnrollmentCount,
-                teachername = _context.users.Where(u=>u.Id == c.UserId).Select(u=> u.Fname).FirstOrDefault()               
+                teachername = _context.users.Where(u=>u.Id == c.UserId).Select(u=> u.Fname).FirstOrDefault(),             
                 EnrollmentCount = _context.enrolls.Count(e => e.CourseID == c.CourseID),
                 lessoncount = _context.chapters
                               .Where(ch => ch.CourseId == c.CourseID)
