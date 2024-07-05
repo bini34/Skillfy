@@ -3,6 +3,9 @@
     public class CourseCreateDto
     {
         public string CourseName {  get; set; }
+        public string about { get; set; }
+
+        public string course_audience { get; set; }
 
         public string Description { get; set; }
 

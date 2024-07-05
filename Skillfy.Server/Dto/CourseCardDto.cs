@@ -9,6 +9,10 @@
         public decimal price { get; set; }
         public int enrollmentcount {  get; set; }
 
+
+        public int EnrollmentCount { get; set; }
+
+        public int lessoncount { get; set; }
         //public int rating {  get; set; }
 
         //public int lesson

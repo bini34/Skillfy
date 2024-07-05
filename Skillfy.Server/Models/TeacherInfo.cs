@@ -16,5 +16,7 @@ namespace Skillfy.Server.Models
 
       
         public ApplicationUser ApplicationUser { get; set; }
+
+       
     }
 }

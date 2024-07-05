@@ -156,9 +156,13 @@ namespace Skillfy.Server.Repo
                 price = c.Price,
                 coursethumbline = c.ThumbnailImage,
                 enrollmentcount = c.EnrollmentCount,
-                teachername = _context.users.Where(u=>u.Id == c.UserId).Select(u=> u.Fname).FirstOrDefault()
+                teachername = _context.users.Where(u=>u.Id == c.UserId).Select(u=> u.Fname).FirstOrDefault(),             
+                EnrollmentCount = _context.enrolls.Count(e => e.CourseID == c.CourseID),
+                lessoncount = _context.chapters
+                              .Where(ch => ch.CourseId == c.CourseID)
+                              .SelectMany(ch => _context.lessons.Where(l => l.ChapterId == ch.ChapterId))
+                              .Count()
 
-                
             }).ToListAsync();
         }
 
@@ -200,7 +204,10 @@ namespace Skillfy.Server.Repo
                 .Select(c => new CourseDetailsDto
                 {
                     coursename = c.Title,
+                    description=c.Description,
                     price = c.Price,
+                    about = c.about,
+                    course_audience = c.course_audience,
                     chapter = c.Chapters.Select(ch => ch.Chaptername).ToArray(),
                     lessonname = c.Chapters.SelectMany(ch => ch.Lessons.Select(l => l.Title)).ToArray(),
                     rating = _context.ratings.Where(r => r.CourseId == id).Average(r => (int?)r.rating) ?? 0,

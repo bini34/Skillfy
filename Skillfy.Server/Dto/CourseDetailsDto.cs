@@ -15,5 +15,7 @@
         public string Bio {  get; set; }
 
         public int TotalLessons {  get; set; }
+        public string about { get; set; }
+        public string course_audience { get; set; }
     }
 }
