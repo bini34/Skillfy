@@ -73,7 +73,7 @@ export default function CourseDetail() {
         <div className='courseDetail-Container'>
           {courseData ? (
             <>
-              <CourseDetailHeader courseData={courseData} />
+              <CourseDetailHeader courseData={courseData}  courseName={courseName}/>
               <div className='courseDetail'>
                 <div className='courseDetail-main_container'>
                   <div className="courseDetail-Video">

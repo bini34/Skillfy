@@ -17,13 +17,17 @@ export default function LessonList() {
   const navigate = useNavigate();
   const location = useLocation();
   const [chapterId, setChapterId] = useState('');
+  console.log("chapter id from location",location.state.chapterId);
 
   useEffect(() => {
-    if (location.state && location.state.chapterid) {
-      const id = parseInt(location.state.chapterid, 10);
+    if (location.state && location.state.chapterId) {
+      console.log("chapter id from location",location.state.chapterId);
+      const id = parseInt(location.state.chapterId, 10);
+      console.log("chapter id",typeof id);
+
       if (!isNaN(id)) {
         setChapterId(id);
-        fetchLessons(id);
+        console.log("chapter id",typeof id);
       } else {
         console.log("Invalid chapter ID");
       }
@@ -43,15 +47,7 @@ export default function LessonList() {
     }
   };
 
-  const fetchLessons = async (chapterId) => {
-    try {
-      const response = await axios.get(`https://localhost:7182/api/lessons?chapterId=${chapterId}`);
-      setLessons(response.data);
-    } catch (error) {
-      console.error('Error fetching lessons:', error);
-    }
-  };
-
+ 
   const handleSuccess = (event) => {
     setUploadVideo(true);
   };
@@ -60,7 +56,7 @@ export default function LessonList() {
     try {
       const response = await axios.post('https://localhost:7182/api/mux/getid', {
         title: newLessonTitle,
-        chapterId: chapterId,
+        chpaterid: chapterId,
         uploadId: uploadId
       });
       setPlaybackId(response.data.playbackId);
