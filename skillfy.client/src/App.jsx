@@ -24,7 +24,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <PrivateRoute element={<HomePage />} allowedRoles={['student']} />
+      element: <HomePage />
 
     },
     {
@@ -32,7 +32,7 @@ function App() {
       element: <SigninPage />
     },
     {
-      path: '/auth/account/registor',
+      path: '/auth/account/register',
       element: <SignupPage />
     },
     {

@@ -1,24 +1,24 @@
 import React from 'react'
 import './Categories.css'
-import img from '../../assets/image/bussiness.jpg'
-// import design from '../../assets/image/design.jpg'
-// import development from '../../assets/image/development.jpg'
-// import health from '../../assets/image/health.jpg'
-// import it from '../../assets/image/it.jpg'
-// import marketing from '../../assets/image/marketing.jpg'
-// import photography from '../../assets/image/photography.jpg'
-// import technology from '../../assets/image/technology.jpg'
+import bussiness from '../../assets/image/bussiness.jpg'
+import designing from '../../assets/image/designing.jpg'
+import development from '../../assets/image/development.jpg'
+import health from '../../assets/image/health.jpg'
+import it from '../../assets/image/it.jpg'
+ import marketing from '../../assets/image/marketing.jpg'
+import photography from '../../assets/image/photography.jpg'
+import technology from '../../assets/image/technology.jpg'
 
 export default function Categories() {
     const categories = [
-        { name: 'Design', image: img },
-        { name: 'Development', image: img },
-        { name: 'IT & Software', image: img },
-        { name: 'Business', image: img },
-        { name: 'Marketing', image: img },
-        { name: 'Photography', image: img },
-        { name: 'Health & care', image: img },
-        { name: 'Technology', image: img },
+        { name: 'Design', image: designing },
+        { name: 'Development', image: development },
+        { name: 'IT & Software', image: it },
+        { name: 'Business', image: bussiness },
+        { name: 'Marketing', image: marketing },
+        { name: 'Photography', image: photography },
+        { name: 'Health & care', image: health },
+        { name: 'Technology', image: technology },
       ];
   return (
     <div className='categorie-section'>

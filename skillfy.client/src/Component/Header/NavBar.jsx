@@ -14,6 +14,7 @@ const NavBar = ({ color }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCategoriesMenuOpen, setIsCategoriesMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
 
   const navigate = useNavigate();
@@ -38,8 +39,13 @@ const NavBar = ({ color }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleCategoriesMenu = () => {
+    setIsCategoriesMenuOpen(!isCategoriesMenuOpen);
+  };
+
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
+    setIsCategoriesMenuOpen(false);
   };
 
   const handleSearchInputChange = (e) => {
@@ -48,17 +54,29 @@ const NavBar = ({ color }) => {
 
   const handleSearchKeyPress = (e) => {
     if (e.key === 'Enter') {
-      navigate(`/course/search?query=${searchInput}`, {state:{coursename:searchInput}});
+      navigate(`/course/search?query=${searchInput}`, { state: { coursename: searchInput } });
     }
   };
-  
+
+  const categories = ['Programming', 'Design', 'Marketing', 'Business'];
 
   return (
     <nav className="nav">
       <ul className="nav-list">
-        <li className="nav-item">
+        <li className="nav-item" onClick={toggleCategoriesMenu}>
           <AppsIcon sx={{ color }} />
           <Link to="#" className="nav-link" style={{ color }}>Categories</Link>
+          {isCategoriesMenuOpen && (
+            <div className="categories-menu">
+              <ul>
+                {categories.map((category, index) => (
+                  <li key={index} onClick={handleMenuItemClick}>
+                    <Link to={`/categories/${category.toLowerCase()}`} className="nav-link" style={{ color }}>{category}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </li>
         <li className="nav-item search">
           <input
