@@ -64,6 +64,14 @@ namespace Skillfy.Server.Controllers
 
 
         }
+        [HttpGet("getteachercourse{userid}")]
+        public async Task<IActionResult> getteachercourse(string userid)
+        {
+            var titles = await _context.courses.Where(c => c.UserId == userid).SelectMany(c => c.Title).ToListAsync();
+
+            return Ok(titles);
+
+        }
 
 
 
