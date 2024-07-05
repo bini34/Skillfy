@@ -1,0 +1,18 @@
+.courseContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto; /* Optional: ensures the container takes up the full height of the viewport */
+    /* background: linear-gradient(to bottom, #EEEEF6 30%, #EEEEF6 35%, #FFFFFF 35%); */
+    width: 100%;
+}
+.coursemainContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 1000px;
+    min-height: 500px;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 30px 0;
+}

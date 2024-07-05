@@ -1,6 +1,13 @@
 import React from 'react'
 import './Categories.css'
-import img from '../../assets/image/young2.png'
+import img from '../../assets/image/bussiness.jpg'
+// import design from '../../assets/image/design.jpg'
+// import development from '../../assets/image/development.jpg'
+// import health from '../../assets/image/health.jpg'
+// import it from '../../assets/image/it.jpg'
+// import marketing from '../../assets/image/marketing.jpg'
+// import photography from '../../assets/image/photography.jpg'
+// import technology from '../../assets/image/technology.jpg'
 
 export default function Categories() {
     const categories = [

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Avatar from '@mui/material/Avatar';
@@ -13,13 +14,16 @@ const NavBar = ({ color }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
     if (currentUser) {
       setIsAuthenticated(true);
       setUser(currentUser);
-      console.log("user",user?.fname);
+      console.log("user", user?.fname);
     }
   }, []);
 
@@ -38,6 +42,17 @@ const NavBar = ({ color }) => {
     setIsMenuOpen(false);
   };
 
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      navigate(`/course/search?query=${searchInput}`, {state:{coursename:searchInput}});
+    }
+  };
+  
+
   return (
     <nav className="nav">
       <ul className="nav-list">
@@ -46,24 +61,31 @@ const NavBar = ({ color }) => {
           <Link to="#" className="nav-link" style={{ color }}>Categories</Link>
         </li>
         <li className="nav-item search">
-          <input type="text" placeholder="What do you want to learn?" aria-label="Search courses" />
+          <input
+            type="text"
+            placeholder="What do you want to learn?"
+            aria-label="Search courses"
+            value={searchInput}
+            onChange={handleSearchInputChange}
+            onKeyPress={handleSearchKeyPress}
+          />
           <button aria-label="Search"><i className="fas fa-search"></i></button>
         </li>
         <li className="nav-item">
-          <Link to="/Courses" className="nav-link" style={{ color }}>Courses</Link>
+          <Link to="/courses" className="nav-link" style={{ color }}>Courses</Link>
         </li>
         {isAuthenticated && (
           <li className="nav-item">
             <Link to="/mycourse" className="nav-link" style={{ color }}>My Learning</Link>
           </li>
         )}
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link to="/cart" className="nav-link" style={{ color }}>
             <Badge badgeContent={0} color="error">
               <ShoppingCartOutlinedIcon />
             </Badge>
           </Link>
-        </li>
+        </li> */}
         {!isAuthenticated ? (
           <>
             <li className="nav-item">
@@ -76,18 +98,17 @@ const NavBar = ({ color }) => {
         ) : (
           <li className="nav-item avatar">
             <Avatar alt={user?.fname} onClick={toggleMenu} src={user} />
-
             {isMenuOpen && (
               <div className="menu">
                 <ul>
                   <li onClick={handleMenuItemClick}>
-                    <Person2Icon/>
+                    <Person2Icon />
                     <Link to="/profile" className="nav-link" style={{ color }}>Profile</Link>
                   </li>
                   <li onClick={handleMenuItemClick}>
-                    <LogoutIcon/>
+                    <LogoutIcon />
                     <button onClick={handleLogout} className="nav-link" style={{ color }}>Logout</button>
-                  </li>             
+                  </li>
                 </ul>
               </div>
             )}

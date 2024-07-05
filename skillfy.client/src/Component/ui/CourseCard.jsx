@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CourseCard.css';
 import Avatar from '@mui/material/Avatar';
@@ -10,15 +10,15 @@ const CourseCard = ({ id, coursename, teachername, price, rating, students, less
   const navigate = useNavigate();
   const baseUrl = 'https://localhost:7182';
   const imageUrl = `${baseUrl}${coursethumbline}`;
-  console.log('course', id)
-  const handleImageError = (e) => {
+
+  const handleImageError = useCallback((e) => {
     console.error('Failed to load image:', e.target.src);
     e.target.onerror = null; // Prevent infinite loop
-  };
+  }, []);
 
-  const sendtoCourseDetail = () => {
-    navigate(`/course/${coursename}/`, { state: { courseid: id } });
-  };
+  const sendtoCourseDetail = useCallback(() => {
+    navigate(`/course/${coursename}/overview`, { state: { courseid: id, coursename: coursename } });
+  }, [navigate, id, coursename]);
 
   return (
     <button onClick={sendtoCourseDetail} className="course-card-button">
@@ -32,14 +32,17 @@ const CourseCard = ({ id, coursename, teachername, price, rating, students, less
         <div className="course-card-info">
           <div className="course-card-stats">
             <span>
-            <StarBorderOutlinedIcon fontSize="small" sx={{color:"#F3B23A"}}/>
-            {rating }4.5 ({students}1600)</span>
+              <StarBorderOutlinedIcon fontSize="small" sx={{ color: "#F3B23A" }} />
+              {rating} ({students})
+            </span>
             <span>
-            <RemoveRedEyeIcon fontSize="small" sx={{color:"#DD5416"}}/>
-              {enrollmentcount}</span>
+              <RemoveRedEyeIcon fontSize="small" sx={{ color: "#DD5416" }} />
+              {enrollmentcount}
+            </span>
             <span>
-            <PlayCircleOutlinedIcon fontSize="small" sx={{color:"#409466"}}/>
-              {lessons} lessons</span>
+              <PlayCircleOutlinedIcon fontSize="small" sx={{ color: "#409466" }} />
+              {lessons} lessons
+            </span>
           </div>
           <hr />
           <h3 className="course-card-title">{coursename}</h3>

@@ -26,7 +26,7 @@ export default function Hero() {
                     <span>100k Online Courses</span>
                 </div>
                 <div className="feature-item">
-                    <div className="icon-container">
+                    <div className="icon-container peopleicon">
                         <PeopleIcon/>
                     </div>                    
                     <span>Expert Instruction</span>

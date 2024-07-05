@@ -175,6 +175,8 @@ namespace Skillfy.Server.Controllers
         {
 
           var course = await _courseRepositary.GetCourseByName(coursename);
+            if (course == null)
+                return BadRequest("not founded");
             var courseid = course.CourseID;
            var coursecard= await _courseRepositary.getcoursecardbyid(courseid);
             if (coursecard == null)
