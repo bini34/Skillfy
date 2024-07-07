@@ -19,6 +19,7 @@ import PrivateRoute from './Component/PrivateRoute'; // Make sure to import your
 import NotFoundPage from './Pages/404'; // Import your 404 page component
 import Courses from './Pages/Courses';
 import SearchPage from './Pages/SearchPage';
+import CategoriesPage from './Pages/CategoriesPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -90,8 +91,12 @@ function App() {
       element: <SearchPage />
     },
     {
+      path: '/topic/:category',
+      element: <PrivateRoute element={<CategoriesPage/>} allowedRoles={['student']} />
+    },
+    {
       path: '*',
-      element: <NotFoundPage /> // Add the 404 page route
+      element: <NotFoundPage />
     }
   ]);
 

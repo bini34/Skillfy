@@ -12,8 +12,8 @@ using Skillfy.Server.Data;
 namespace Skillfy.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240705094559_inital")]
-    partial class inital
+    [Migration("20240707110231_create-migration")]
+    partial class createmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -307,6 +307,14 @@ namespace Skillfy.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("about")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("course_audience")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CourseID");
 
                     b.HasIndex("CatagoryId");
@@ -424,8 +432,9 @@ namespace Skillfy.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BankId"));
 
-                    b.Property<int>("BankAccount")
-                        .HasColumnType("int");
+                    b.Property<string>("BankAccount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BankName")
                         .IsRequired()

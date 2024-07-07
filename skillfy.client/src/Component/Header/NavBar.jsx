@@ -57,8 +57,9 @@ const NavBar = ({ color }) => {
       navigate(`/course/search?query=${searchInput}`, { state: { coursename: searchInput } });
     }
   };
+ 
 
-  const categories = ['Programming', 'Design', 'Marketing', 'Business'];
+  const categories = ['Design', 'Development', 'IT &Software', 'Business', 'Marketing', 'Photography', 'Health & care', 'Technology'];
 
   return (
     <nav className="nav">

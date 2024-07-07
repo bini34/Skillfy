@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Skillfy.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class inital : Migration
+    public partial class createmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,7 +60,7 @@ namespace Skillfy.Server.Migrations
                     BankId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BankName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BankAccount = table.Column<int>(type: "int", nullable: false),
+                    BankAccount = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     balance = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -226,7 +226,9 @@ namespace Skillfy.Server.Migrations
                     CatagoryId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ThumbnailImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EnrollmentCount = table.Column<int>(type: "int", nullable: false)
+                    EnrollmentCount = table.Column<int>(type: "int", nullable: false),
+                    about = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    course_audience = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
