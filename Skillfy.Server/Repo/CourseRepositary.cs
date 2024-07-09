@@ -208,10 +208,13 @@ namespace Skillfy.Server.Repo
                     price = c.Price,
                     about = c.about,
                     course_audience = c.course_audience,
-                    chapter = c.Chapters.Select(ch => ch.Chaptername).ToArray(),
+                    chapter =  c.Chapters.Select(ch => ch.Chaptername).ToArray(),
                     lessonname = c.Chapters.SelectMany(ch => ch.Lessons.Select(l => l.Title)).ToArray(),
                     rating = _context.ratings.Where(r => r.CourseId == id).Average(r => (int?)r.rating) ?? 0,
                     Bio = _context.teachers.Where(t => t.UserId == c.UserId).Select(t => t.bio).FirstOrDefault(),
+                    teacherprofile =  _context.users.Where(u=> u.Id == c.UserId).Select(u=> u.ProfileUrl).FirstOrDefault(),
+                    comment = _context.ratings.Where(r => r.CourseId == id).Select(r => r.comment).ToArray()
+
                     //  TotalLessons = c.Chapters.Sum(ch => ch.Lessons.Count)
 
                 })
