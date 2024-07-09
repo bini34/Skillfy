@@ -1,0 +1,38 @@
+.rating-form {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  .back-button {
+    margin-bottom: 10px;
+  }
+  
+  .rating-form h2 {
+    margin: 10px 0;
+  }
+  
+  .rating-text {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .stars {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .feedback-text {
+    margin: 10px 0;
+  }
+  
+  .save-button {
+    margin-top: 10px;
+  }
+  

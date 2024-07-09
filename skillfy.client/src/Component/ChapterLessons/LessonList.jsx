@@ -145,7 +145,7 @@ export default function LessonList() {
                 />
               )}
             </div>
-            <button type="submit">Create Lesson</button>
+            <button className="createBtn" type="submit">Create Lesson</button>
           </form>
         </div>
       )}

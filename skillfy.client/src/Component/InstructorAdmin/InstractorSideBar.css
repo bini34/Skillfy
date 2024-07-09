@@ -17,7 +17,9 @@
 
 .InstractorSideBar-nav ul li {
     display: flex;
-    gap: 100px;
+    align-items: center;
+    padding-left: 20px;
+
 }
 .logo-button {
         font-size: 24px;  

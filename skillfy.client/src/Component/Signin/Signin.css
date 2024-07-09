@@ -55,15 +55,14 @@
   height: 100%;
   gap: 10px;
 }
-.registor{
+.registerbtn{
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   align-content: center;
-  
 }
 
-.regstora{
+.registerbtn  a{
   color: white;
   background-color: #ff6b6b;
   padding: 10px;

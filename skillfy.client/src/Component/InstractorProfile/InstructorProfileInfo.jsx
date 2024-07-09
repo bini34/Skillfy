@@ -1,7 +1,7 @@
 import React from 'react';
-import './InstructorProfileInfo.css'; // Import the CSS file
+import './InstractorProfileInfo.css'; // Import the CSS file
 
-const InstructorProfileInfo = () => {
+const InstractorProfileInfo = () => {
   return (
     <div className="profile-card">
       <img 
@@ -20,7 +20,7 @@ const InstructorProfileInfo = () => {
             <svg className="stat-icon" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927C9.3 2.36 9.924 2 10.5 2c.576 0 1.2.36 1.451.927l1.2 2.43 2.683.39c.623.09 1.164.502 1.394 1.098.229.596.145 1.25-.22 1.74l-1.94 1.89.458 2.672c.1.622-.164 1.248-.693 1.596a1.81 1.81 0 01-1.78.077L10 14.347l-2.4 1.26a1.81 1.81 0 01-1.78-.077 1.655 1.655 0 01-.693-1.596l.458-2.672-1.94-1.89a1.7 1.7 0 01-.22-1.74c.229-.596.771-1.008 1.394-1.098l2.683-.39 1.2-2.43z"/>
             </svg>
-            4.6 Instructor Rating
+            4.6 Instractor Rating
           </span>
           <span className="profile-stat">
             <svg className="stat-icon" fill="currentColor" viewBox="0 0 20 20">
@@ -40,4 +40,4 @@ const InstructorProfileInfo = () => {
   );
 };
 
-export default InstructorProfileInfo;
+export default InstractorProfileInfo;

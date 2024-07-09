@@ -55,7 +55,7 @@ const CourseDetailsCard = ({ courseId, price }) => {
     <div className="course-details-card">
       <div className="price-section">
         <span className="current-price">${price}</span>
-        <button onClick={sendToCart} className="AddtoCart-now-button">Add to Cart</button>
+        {/* <button onClick={sendToCart} className="AddtoCart-now-button">Add to Cart</button> */}
         <button onClick={buyNow} className="buy-now-button">Buy Now</button>
       </div>
       <div className="course-includes">

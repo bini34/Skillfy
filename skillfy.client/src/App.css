@@ -3,3 +3,9 @@
     padding: 0;
     height: 100%;
   }
+
+  button{
+    background-color: inherit;
+    color: black;
+    border: none;
+  }

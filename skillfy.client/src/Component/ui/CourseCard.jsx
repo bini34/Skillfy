@@ -16,9 +16,15 @@ const CourseCard = ({ id, coursename, teachername, price, rating, students, less
     e.target.onerror = null; // Prevent infinite loop
   }, []);
 
+  const formatCourseName = (name) => {
+    return name.replace(/\s+/g, '-');
+  };
+
+  const formattedCourseName = formatCourseName(coursename);
+
   const sendtoCourseDetail = useCallback(() => {
-    navigate(`/course/${coursename}/overview`, { state: { courseid: id, coursename: coursename } });
-  }, [navigate, id, coursename]);
+    navigate(`/course/${formattedCourseName}/overview`, { state: { courseid: id, coursename: coursename} });
+  }, [navigate, id, formattedCourseName]);
 
   return (
     <button onClick={sendtoCourseDetail} className="course-card-button">

@@ -1,42 +1,47 @@
 .instructorAdminContainer {
-    display: grid;
-    grid-template-areas: 
-      "sidebar header"
-      "sidebar main";
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: auto 1fr;
-    height: 100%;
-  }
-  
-  .instractorAdminHeader {
-    grid-area: header;
-    border-bottom: solid 1px rgba(128, 128, 128, 0.203);
-    padding: 10px;
-    display: flex;
-    justify-content: flex-end;
-    
-  }
-  .InstractorAdminMain-header{
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px;
-  }
-  .InstractorAdminMain-header a{
-    text-decoration: none;
-    padding: 5px 20px;
-    border: 2px solid black;
-    color: black;
-  }
-  .instructorAdminSidebar {
-    grid-area: sidebar;
-    border:solid 1px rgba(128, 128, 128, 0.203) ;
-  }
-  
-  .instructorAdminMain {
-    grid-area: main;
-    padding: 20PX;
-  }
-  .InstractorAdminMain-datagrid{
-    padding: 20px;
-  }
-  
+  display: grid;
+  grid-template-areas: 
+    "sidebar header"
+    "sidebar main";
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.instructorAdminHeader {
+  grid-area: header;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.203);
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.instructorAdminSidebar {
+  grid-area: sidebar;
+  border: 1px solid rgba(128, 128, 128, 0.203);
+}
+
+.instructorAdminMain {
+  grid-area: main;
+  padding: 20px;
+}
+
+.instructorAdminMainHeader {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.newCourseCreateBtn{
+  text-decoration: none;
+  padding: 5px 20px;
+  border: 2px solid black;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.instructorAdminMainDatagrid {
+  padding: 20px;
+}

@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MainContent.css';
 import MuxPlayer from '@mux/mux-player-react';
 import CourseReviews from '../CourseDetail/CourseReviews';
+import RatingForm from './RatingForm'; // Make sure to import the RatingForm component
 
 const MainContent = ({ CurrentLessonData }) => {
+  const [showRatingForm, setShowRatingForm] = useState(false);
+  const [formShown, setFormShown] = useState(false);
+
+  const handleRateButtonClick = () => {
+    if (!formShown) {
+      setShowRatingForm(true);
+      setFormShown(true);
+    }
+  };
+
   return (
     <div className="main-content">
       <div className="video-section-header">
@@ -11,6 +22,7 @@ const MainContent = ({ CurrentLessonData }) => {
           <h1>{CurrentLessonData.lessonTitle}</h1>
         </div>
         <div className="button">
+          <button onClick={handleRateButtonClick}>Rate This Lesson</button>
           <button>Next Lesson</button>
         </div>
       </div>
@@ -38,6 +50,12 @@ const MainContent = ({ CurrentLessonData }) => {
           <CourseReviews />
         </div>
       </div>
+      {showRatingForm && (
+        <div className="rating-form-modal">
+          <RatingForm />
+          <button className="close-button" onClick={() => setShowRatingForm(false)}>Close</button>
+        </div>
+      )}
     </div>
   );
 };
