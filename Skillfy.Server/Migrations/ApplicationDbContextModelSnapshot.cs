@@ -308,6 +308,10 @@ namespace Skillfy.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("course_audience")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CourseID");
 
                     b.HasIndex("CatagoryId");

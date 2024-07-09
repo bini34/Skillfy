@@ -1,26 +1,29 @@
 import React from 'react'
-import InstractorSideBar from '../Component/InstructorAdmin/InstractorSideBar'
-import InstractorAdminHeader from '../Component/InstructorAdmin/InstractorAdminHeader'
+import InstructorSideBar from '../Component/InstructorAdmin/InstractorSideBar'
+import InstructorAdminHeader from '../Component/InstructorAdmin/InstractorAdminHeader'
 import { Link } from 'react-router-dom';
 import './InstructorAdminDashBoardPage.css'
-import TestDataGrid from '../Component/ui/TestDataGrid'
+import InstructorCoursesDatagrid from '../Component/InstructorAdmin/InstractorCoursesDatagrid'
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+
 export default function InstructorAdminDashBoardPage() {
   return (
     <div className="instructorAdminContainer">
-      <header className="instractorAdminHeader">
-        <InstractorAdminHeader/>
+      <header className="instructorAdminHeader">
+        <InstructorAdminHeader/>
       </header>
       <div className='instructorAdminSidebar'>
-        <InstractorSideBar/>
+        <InstructorSideBar/>
       </div>
-      <div className='InstractorAdminMain'>
-        <div className="InstractorAdminMain-header">
-          <Link to="/instructor/courses/create">
-          New Course
+      <div className='instructorAdminMain'>
+        <div className="instructorAdminMainHeader">
+          <Link className='newCourseCreateBtn' to="/instructor/courses/create">
+            <AddOutlinedIcon/> 
+            New Course
           </Link>
         </div>
-        <div className="InstractorAdminMain-datagrid">
-          <TestDataGrid/>
+        <div className="instructorAdminMainDatagrid">
+          <InstructorCoursesDatagrid/>
         </div>
       </div>
     </div>

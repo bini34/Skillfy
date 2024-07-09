@@ -14,9 +14,17 @@ export default function CourseDetail({ handleDetailChange }) {
         <h3>Course Title</h3>
         <input type="text" placeholder="Course Title" id="title" onChange={handleInputChange} />
       </div>
+       <div className="courseCreate-LeftMainContainer-CourseAbout">
+        <h3>Course About</h3>
+        <textarea type="text" placeholder="Course About" id="about" onChange={handleInputChange} />
+      </div>
       <div className="courseCreate-LeftMainContainer-CourseDescription">
         <h3>Course Description</h3>
         <textarea type="text" placeholder="Course Description" id="description" onChange={handleInputChange} />
+      </div>
+      <div className="courseCreate-LeftMainContainer-CourseAudiance">
+        <h3>Course Audiance</h3>
+        <textarea type="text" placeholder="Course Audiance" id="course_audience" onChange={handleInputChange} />
       </div>
       <div className="courseCreate-LeftMainContainer-CourseCategory">
         <h3>Course Category</h3>

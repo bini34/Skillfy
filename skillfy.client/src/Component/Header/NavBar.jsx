@@ -24,7 +24,6 @@ const NavBar = ({ color }) => {
     if (currentUser) {
       setIsAuthenticated(true);
       setUser(currentUser);
-      console.log("user", user?.fname);
     }
   }, []);
 
@@ -43,9 +42,10 @@ const NavBar = ({ color }) => {
     setIsCategoriesMenuOpen(!isCategoriesMenuOpen);
   };
 
-  const handleMenuItemClick = () => {
+  const handleMenuItemClick = (name) => () => {
     setIsMenuOpen(false);
     setIsCategoriesMenuOpen(false);
+    navigate(`/topic/${name}`, { state: { topic: name } });
   };
 
   const handleSearchInputChange = (e) => {
@@ -58,7 +58,7 @@ const NavBar = ({ color }) => {
     }
   };
 
-  const categories = ['Programming', 'Design', 'Marketing', 'Business'];
+  const categories = ['Design', 'Development', 'IT &Software', 'Business', 'Marketing', 'Photography', 'Health & care', 'Technology'];
 
   return (
     <nav className="nav">
@@ -70,8 +70,8 @@ const NavBar = ({ color }) => {
             <div className="categories-menu">
               <ul>
                 {categories.map((category, index) => (
-                  <li key={index} onClick={handleMenuItemClick}>
-                    <Link to={`/categories/${category.toLowerCase()}`} className="nav-link" style={{ color }}>{category}</Link>
+                  <li key={index} onClick={handleMenuItemClick(category.toLowerCase())}>
+                    <Link className="nav-link" style={{ color }}>{category}</Link>
                   </li>
                 ))}
               </ul>
@@ -97,13 +97,6 @@ const NavBar = ({ color }) => {
             <Link to="/mycourse" className="nav-link" style={{ color }}>My Learning</Link>
           </li>
         )}
-        {/* <li className="nav-item">
-          <Link to="/cart" className="nav-link" style={{ color }}>
-            <Badge badgeContent={0} color="error">
-              <ShoppingCartOutlinedIcon />
-            </Badge>
-          </Link>
-        </li> */}
         {!isAuthenticated ? (
           <>
             <li className="nav-item">
@@ -115,17 +108,17 @@ const NavBar = ({ color }) => {
           </>
         ) : (
           <li className="nav-item avatar">
-            <Avatar alt={user?.fname} onClick={toggleMenu} src={user} />
+            <Avatar alt={user?.fname} onClick={toggleMenu} src={user?.avatarUrl} />
             {isMenuOpen && (
               <div className="menu">
                 <ul>
-                  <li onClick={handleMenuItemClick}>
+                  <li onClick={handleMenuItemClick('profile')}>
                     <Person2Icon />
                     <Link to="/profile" className="nav-link" style={{ color }}>Profile</Link>
                   </li>
-                  <li onClick={handleMenuItemClick}>
+                  <li onClick={handleLogout}>
                     <LogoutIcon />
-                    <button onClick={handleLogout} className="nav-link" style={{ color }}>Logout</button>
+                    <button className="nav-link" style={{ color }}>Logout</button>
                   </li>
                 </ul>
               </div>

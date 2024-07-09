@@ -30,8 +30,7 @@ namespace Skillfy.Server.Model
         public string course_audience { get; set; }
 
 
-
-       public  ApplicationUser User { get; set; }
+        public  ApplicationUser User { get; set; }
         public  Catagory Catagory { get; set; }
 
         public virtual ICollection<Enroll> Enrolls { get; set; }

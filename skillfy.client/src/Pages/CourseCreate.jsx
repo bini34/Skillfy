@@ -2,7 +2,6 @@ import React from 'react'
 import InstractorSideBar from '../Component/InstructorAdmin/InstractorSideBar'
 import InstractorAdminHeader from '../Component/InstructorAdmin/InstractorAdminHeader'
 import './InstructorAdminDashBoardPage.css'
-import CourseEditor from '../Component/CourseEditor/CourseEditor';
 import CreateCourse from '../Component/CourseCreate/CreateCourse'
 export default function CourseCreate() {
   return (

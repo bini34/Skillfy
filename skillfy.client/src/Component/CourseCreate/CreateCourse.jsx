@@ -18,6 +18,8 @@ export default function CreateCourse() {
   const [chapterinfo, setChapterinfo] = useState([]);
   const [courseDetails, setCourseDetails] = useState({
     title: '',
+    about: '',
+    course_audience: '',
     description: '',
     category: '',
     price: '',
@@ -45,13 +47,15 @@ export default function CreateCourse() {
   const handleCreate = async (event) => {
     event.preventDefault();
 
-    if (!courseDetails.title || !courseDetails.description || !courseDetails.category || !courseDetails.price || !courseDetails.image || courseDetails.chapters.length === 0) {
+    if (!courseDetails.title || !courseDetails.about || !courseDetails.course_audience || !courseDetails.description || !courseDetails.category || !courseDetails.price || !courseDetails.image || courseDetails.chapters.length === 0) {
       setSnackbar({ open: true, message: 'Please complete all fields before creating the course.', severity: 'error' });
       return;
     }
 
     const formData = new FormData();
     formData.append('courseCreateDto.CourseName', courseDetails.title);
+    formData.append('courseCreateDto.about', courseDetails.about);
+    formData.append('courseCreateDto.course_audience', courseDetails.course_audience);
     formData.append('courseCreateDto.Description', courseDetails.description);
     formData.append('courseCreateDto.catagory', courseDetails.category);
     formData.append('courseCreateDto.Thumbline', courseDetails.image);
@@ -73,8 +77,8 @@ export default function CreateCourse() {
         setSnackbar({ open: true, message: 'Course Created Successfully', severity: 'success' });
         setIsCreated(true);
         const chapters = response.data.data.chapters.$values; 
-        console.log("chaptrers",chapters);
-        console.log("from respo",response.data.data.chapters.$values);
+        console.log("chapters", chapters);
+        console.log("from response", response.data.data.chapters.$values);
         setChapterinfo(chapters);
         const updatedChapters = courseDetails.chapters.map((chapter, index) => ({
           ...chapter,
@@ -91,6 +95,7 @@ export default function CreateCourse() {
     }
   };
 
+
   const handleCloseSnackbar = () => {
     setSnackbar({ open: false, message: '', severity: 'success' });
   };
@@ -98,7 +103,8 @@ export default function CreateCourse() {
   return (
     <div className='courseCreate-Container'>
       <div className="courseCreate-HeaderContainer">
-        {!isCreated && <button onClick={handleCreate}>Create</button>}
+        <h1>Customize your course</h1>
+        {!isCreated && <button className='createBtn' onClick={handleCreate}>Create</button>}
         {isCreated && (
           <>
             <button className='deleteBtn'><DeleteIcon style={{ color: 'white' }} /></button>
@@ -108,21 +114,11 @@ export default function CreateCourse() {
       </div>
       <div className="courseCreate-MainContainer">
         <div className="courseCreate-LeftContainer">
-          <div className="courseCreate-LeftHeaderContainer">
-            <h1>Customize your course</h1>
-          </div>
-          <div className="courseCreate-LeftMainContainer">
             <CourseDetail handleDetailChange={handleDetailChange} />
-          </div>
         </div>
         <div className="courseCreate-RightContainer">
-          <div className="courseCreate-RightHeaderContainer">
-            <h1>Course chapters</h1>
-          </div>
-          <div className="courseCreate-RightMainContainer">
             <CourseChapters handleDetailChange={handleDetailChange} chapterinfo={chapterinfo} />
             <CourseImage handleDetailChange={handleDetailChange} />
-          </div>
         </div>
       </div>
       <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>

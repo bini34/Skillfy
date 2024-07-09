@@ -39,30 +39,44 @@ export default function CourseDetail() {
       console.log('Fetching course details for Course ID:', courseId);
       const response = await axios.get(`https://localhost:7182/api/course/coursedetail${courseId}`);
       setCourseData({
-        id: response.data.id,
+        id: courseId,
+        coursename: response.data.coursename,
         price: response.data.price,
         description: response.data.description,
         chapter: response.data.chapter,
         lessonname: response.data.lessonname,
         rating: response.data.rating,
+        bio: response.data.bio,
+        totalLessons: response.data.totalLessons,
+        about: response.data.about,
+        course_audience: response.data.course_audience
       });
     } catch (error) {
       console.error('Error fetching course data:', error);
     }
   };
 
+  const formatCourseName = (name) => {
+    return name ? name.replace(/\s+/g, '-') : '';
+  };
+
+  if(!courseName) return null; // Return null if course name is not set (i.e. no course ID is passed from the previous page
+  const formattedCourseName = formatCourseName(courseName);
+
   const renderOverviewContent = () => {
+    if (!formattedCourseName) return null;
+
     switch (location.pathname) {
-      case `/course/${courseName}/overview`:
-        return <CourseOverview />;
-      case `/course/${courseName}/curriculum`:
+      case `/course/${formattedCourseName}/overview`:
+        return <CourseOverview  courseData={courseData}/>;
+      case `/course/${formattedCourseName}/curriculum`:
         return <TestCurriclum />;
-      case `/course/${courseName}/instructor`:
-        return <CourseInstructor />;
-      case `/course/${courseName}/reviews`:
-        return <CourseReviews />;
+      case `/course/${formattedCourseName}/instructor`:
+        return <CourseInstructor courseData={courseData} />;
+      case `/course/${formattedCourseName}/reviews`:
+        return <CourseReviews courseData={courseData} />;
       default:
-        return <CourseOverview />; // Default to Overview if no match is found
+        return <CourseOverview courseData={courseData}/>; // Default to Overview if no match is found
     }
   };
 
@@ -73,7 +87,7 @@ export default function CourseDetail() {
         <div className='courseDetail-Container'>
           {courseData ? (
             <>
-              <CourseDetailHeader courseData={courseData}  courseName={courseName}/>
+              <CourseDetailHeader courseData={courseData}  courseName={formattedCourseName}/>
               <div className='courseDetail'>
                 <div className='courseDetail-main_container'>
                   <div className="courseDetail-Video">
@@ -84,32 +98,32 @@ export default function CourseDetail() {
                       <ul>
                         <li>
                           <Link
-                            to={`/course/${courseName}/overview`}
-                            className={location.pathname === `/course/${courseName}/overview` ? 'active' : ''}
+                            to={`/course/${formattedCourseName}/overview`}
+                            className={location.pathname === `/course/${formattedCourseName}/overview` ? 'active' : ''}
                           >
                             Overview
                           </Link>
                         </li>
                         <li>
                           <Link
-                            to={`/course/${courseName}/curriculum`}
-                            className={location.pathname === `/course/${courseName}/curriculum` ? 'active' : ''}
+                            to={`/course/${formattedCourseName}/curriculum`}
+                            className={location.pathname === `/course/${formattedCourseName}/curriculum` ? 'active' : ''}
                           >
                             Curriculum
                           </Link>
                         </li>
                         <li>
                           <Link
-                            to={`/course/${courseName}/instructor`}
-                            className={location.pathname === `/course/${courseName}/instructor` ? 'active' : ''}
+                            to={`/course/${formattedCourseName}/instructor`}
+                            className={location.pathname === `/course/${formattedCourseName}/instructor` ? 'active' : ''}
                           >
                             Instructor
                           </Link>
                         </li>
                         <li>
                           <Link
-                            to={`/course/${courseName}/reviews`}
-                            className={location.pathname === `/course/${courseName}/reviews` ? 'active' : ''}
+                            to={`/course/${formattedCourseName}/reviews`}
+                            className={location.pathname === `/course/${formattedCourseName}/reviews` ? 'active' : ''}
                           >
                             Reviews
                           </Link>

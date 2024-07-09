@@ -1,7 +1,7 @@
 import React from 'react';
 import './CourseInstructor.css';
 
-const CourseInstructor = () => {
+const CourseInstructor = ({courseData}) => {
   return (
       <div className="instructor-content">
         <div className="instructor-header">

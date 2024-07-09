@@ -5,15 +5,17 @@
   display: flex;
   justify-content: center;
   background: linear-gradient(to bottom, #FFEFEF 30%, #FFEFEF 35%, #FFFFFF 35%);
+  margin-bottom: 10rem;
 }
 
 .courseDetail-Container {
-  width: 900px;
+  width: 1000px;
   background-color: inherit;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 30px;
+  
 }
 
 .courseDetail {
@@ -27,6 +29,7 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
+  width: 100rem;
 }
 
 .courseDetail-Video {

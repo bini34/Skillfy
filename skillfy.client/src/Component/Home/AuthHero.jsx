@@ -16,9 +16,6 @@ export default function AuthHero() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-
-
-
   useEffect(() => {
     console.log("user", user.id);
 
@@ -30,7 +27,11 @@ export default function AuthHero() {
           setLoading(false);
         })
         .catch((err) => {
-          setError('Failed to fetch courses');
+          if (err.response && err.response.status === 400) {
+            setError('You are not enrolled in any courses yet.');
+          } else {
+            setError('Failed to fetch courses');
+          }
           setLoading(false);
         });
     } else {
@@ -47,7 +48,6 @@ export default function AuthHero() {
     lessonContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
   };
 
-
   return (
     <div className="Authhero-section">
       <div className="Authhero-container">
@@ -57,54 +57,57 @@ export default function AuthHero() {
           <Link to="/mycourse">My Learning</Link>
         </div>
         <div className="Authhero-main">
-          <div className="lesson-container" ref={lessonContainerRef}>
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
             <p>{error}</p>
           ) : courses.length > 0 ? (
-            courses.map((course, index) => (
-              <LessonCard
-                key={index}
-                courseID={course.courseid}
-                imageUrl={course.thumbline}
-                Title={course.coursename}
-                instructorImage={course.teacherpicture}
-                instructorName={course.teachername}
-              />
-            ))
+            <div className="lesson-container" ref={lessonContainerRef}>
+              {courses.map((course, index) => (
+                <LessonCard
+                  key={index}
+                  courseID={course.courseid}
+                  imageUrl={course.thumbline}
+                  Title={course.coursename}
+                  instructorImage={course.teacherpicture}
+                  instructorName={course.teachername}
+                />
+              ))}
+              <div className="navigation">
+                <button className="nav-button" onClick={scrollLeft}>
+                  <ArrowBackIcon
+                    sx={{
+                      '&:hover': {
+                        color: 'red',
+                      },
+                      '&:active': {
+                        color: 'red',
+                      },
+                    }}
+                  />
+                </button>
+                <button className="nav-button" onClick={scrollRight}>
+                  <ArrowForwardIcon
+                    sx={{
+                      '&:hover': {
+                        color: 'red',
+                      },
+                      '&:active': {
+                        color: 'red',
+                      },
+                    }}
+                  />
+                </button>
+              </div>
+            </div>
           ) : (
-            <p>No courses available</p>
+            <div className="no-courses">
+              <p>You are not enrolled in any courses yet.</p>
+              <Link to="/courses" className="buy-courses-link">
+                Check out our available courses and start learning today!
+              </Link>
+            </div>
           )}
-          
-
-          </div>
-          <div className="navigation">
-          <button className="nav-button" onClick={scrollLeft}>
-              <ArrowBackIcon
-                sx={{
-                  '&:hover': {
-                    color: 'red',
-                  },
-                  '&:active': {
-                    color: 'red',
-                  },
-                }}
-              />
-            </button>
-            <button className="nav-button" onClick={scrollRight}>
-              <ArrowForwardIcon
-                sx={{
-                  '&:hover': {
-                    color: 'red',
-                  },
-                  '&:active': {
-                    color: 'red',
-                  },
-                }}
-              />
-            </button>
-          </div>
         </div>
       </div>
     </div>

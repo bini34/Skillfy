@@ -7,20 +7,20 @@ import './CourseDetailHeader.css';
 
 const CourseDetailHeader = ({courseData, courseName}) => {
   console.log('Course name:', courseName);
-  console.log('Course Data:', courseData);
+  console.log('Course Data from detail header:', courseData);
   return (
     <div className="course-header-container">
-      
-      <h1>{courseName}</h1>
+
+      <h1>{courseData.coursename}</h1>
       <div className='course-header-main'>
         <div className='course-header-about'>
-          <h3>Learn graphic design today with Photoshop, Illustrator, Adobe XD, InDesign & more in this Adobe CC Masterclass!</h3>
+          <h3>{courseData.about}</h3>
         </div>
         <div className="course-stats">
           <div className="course-rating">
             <StarBorderOutlinedIcon fontSize="small" sx={{color:"#F3B23A"}}/>
-            <span className="rating">4.5</span>
-            <span className="total-ratings">(1,348 ratings)</span>
+            <span className="rating">{courseData.rating}</span>
+            <span className="total-ratings">(5 ratings)</span>
           </div>
           <div className="course-enrollment">
             <RemoveRedEyeIcon fontSize="small" sx={{color:"#DD5416"}}/>
@@ -32,7 +32,7 @@ const CourseDetailHeader = ({courseData, courseName}) => {
           </div>
           <div className="course-lessons">
             <PlayCircleOutlinedIcon fontSize="small" sx={{color:"#409466"}}/>
-            <span>38 Lessons</span>
+            <span>{courseData.totalLessons} Lessons</span>
           </div>
         </div>
       </div>
