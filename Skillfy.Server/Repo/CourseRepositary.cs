@@ -218,7 +218,8 @@ namespace Skillfy.Server.Repo
                     rating = _context.ratings.Where(r => r.CourseId == id).Average(r => (int?)r.rating) ?? 0,
                     Bio = _context.teachers.Where(t => t.UserId == c.UserId).Select(t => t.bio).FirstOrDefault(),
                     teacherprofile =  _context.users.Where(u=> u.Id == c.UserId).Select(u=> u.ProfileUrl).FirstOrDefault(),
-                    comment = _context.ratings.Where(r => r.CourseId == id).Select(r => r.comment).ToArray()
+                  //  comment = _context.ratings.Where(r => r.CourseId == id).Select(r => r.comment).ToArray(),
+                    review = _context.ratings.Where(r => r.CourseId == id).ToArray()
 
                     //  TotalLessons = c.Chapters.Sum(ch => ch.Lessons.Count)
 

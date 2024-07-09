@@ -1,4 +1,6 @@
-﻿namespace Skillfy.Server.Dto
+﻿using Skillfy.Server.Model;
+
+namespace Skillfy.Server.Dto
 {
     public class CourseDetailsDto
     {
@@ -20,6 +22,6 @@
 
         public string teacherprofile {  get; set; }
 
-        public string[] comment {  get; set; }
+        public Review[] review {  get; set; }
     }
 }
