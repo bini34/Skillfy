@@ -81,6 +81,9 @@ namespace Skillfy.Server.Repo
             var teachers = await _context.Users
                                           .Where(u => userIds.Contains(u.Id))
                                           .ToListAsync();
+            var reviews = await _context.ratings
+                               .Where(r => r.userID == userId && courseIds.Contains(r.CourseId))
+                               .ToListAsync();
 
             var result = (from course in courses
                           join teacherInfo in teacherInfos on course.UserId equals teacherInfo.UserId
@@ -91,7 +94,8 @@ namespace Skillfy.Server.Repo
                               coursename = course.Title,
                               teachername = teacher.Fname,
                               teacherpicture = teacher.ProfileUrl,
-                              thumbline = course.ThumbnailImage, 
+                              thumbline = course.ThumbnailImage,
+                              rated = reviews.Any(r => r.CourseId == course.CourseID)
                           }).ToList();
 
 

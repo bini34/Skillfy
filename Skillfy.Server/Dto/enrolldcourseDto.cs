@@ -12,5 +12,7 @@ namespace Skillfy.Server.Dto
         public string teacherpicture {  get; set; } 
 
         public string thumbline { get; set; }
+
+        public bool rated {  get; set; }
     }
 }
