@@ -8,7 +8,10 @@
         public string teachername { get; set; }
         public decimal price { get; set; }
         public int EnrollmentCount {  get; set; }
-        
+
+        public double rating {  get; set; }
+
+
         public int lessoncount { get; set; }
 
         //public int rating {  get; set; }
