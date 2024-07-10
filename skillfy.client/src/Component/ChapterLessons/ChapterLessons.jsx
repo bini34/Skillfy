@@ -7,9 +7,9 @@ import './ChapterLessons.css';
 
 function ChapterLessons() {
   const location = useLocation();
-  const courseDetailsfromResponse = location.state.courseDetailsfromResponse;
-console.log("coursedata from ",location.state);
-console.log("coursedata from ",courseDetailsfromResponse);
+  const { chapterId, courseDetailsfromResponse }= location.state || {};
+
+
 
 function sendCoursedetail(){
   Navigate('/instructor/courses/create', {state: {courseDetailsfromResponse: courseDetailsfromResponse}});

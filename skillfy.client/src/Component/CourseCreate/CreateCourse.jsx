@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import CourseDetail from './CourseDetail';
 import './CreateCourse.css';
@@ -38,9 +39,10 @@ export default function CreateCourse() {
     image: null,
     chapters: []
   });
-
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [isCreated, setIsCreated] = useState(false);
+  const location = useLocation();
+  const courseDetailsfromlesson = location.state.courseDetailsfromResponse;
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -149,11 +151,11 @@ export default function CreateCourse() {
       </div>
       <div className="courseCreate-MainContainer">
         <div className="courseCreate-LeftContainer">
-          <CourseDetail handleDetailChange={handleDetailChange} />
+          <CourseDetail courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} />
         </div>
         <div className="courseCreate-RightContainer">
-          <CourseChapters handleDetailChange={handleDetailChange} chapterinfo={chapterinfo}   courseDetailsfromResponse={courseDetailsfromResponse}/>
-          <CourseImage handleDetailChange={handleDetailChange} />
+          <CourseChapters courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} chapterinfo={chapterinfo}   courseDetailsfromResponse={courseDetailsfromResponse}/>
+          <CourseImage courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} />
         </div>
       </div>
       <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
