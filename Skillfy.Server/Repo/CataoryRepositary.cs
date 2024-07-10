@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Skillfy.Server.Data;
+using Skillfy.Server.Dto;
 using Skillfy.Server.Model;
 using System.Globalization;
 
@@ -37,10 +38,26 @@ namespace Skillfy.Server.Repo
             return catagory;
         }
 
-        public async Task<List<Course>> GetCoursesByCategoryAsync(string categoryName)
+        public async Task<List<CourseCardDto>> GetCoursesByCategoryAsync(string categoryName)
         {
             return await _context.courses
-                                 .Where(course => course.Catagory.CatagoryName == categoryName)
+                                 .Where(c => c.Catagory.CatagoryName == categoryName).Select(c => new CourseCardDto
+                                 {
+
+                                     Id = c.CourseID,
+                                     coursename = c.Title,
+                                     price = c.Price,
+                                     coursethumbline = c.ThumbnailImage,
+                                     //   enrollmentcount = c.EnrollmentCount,
+                                     rating = _context.ratings.Where(r => r.CourseId == c.CourseID).Average(r => (int?)r.rating) ?? 0,
+                                     teachername = _context.users.Where(u => u.Id == c.UserId).Select(u => u.Fname).FirstOrDefault(),
+                                     EnrollmentCount = _context.enrolls.Count(e => e.CourseID == c.CourseID),
+                                     lessoncount = _context.chapters
+                                      .Where(ch => ch.CourseId == c.CourseID)
+                                      .SelectMany(ch => _context.lessons.Where(l => l.ChapterId == ch.ChapterId))
+                                     .Count()
+
+                                 })
                                  .ToListAsync();
         }
 
