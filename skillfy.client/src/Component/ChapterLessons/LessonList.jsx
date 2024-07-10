@@ -5,6 +5,8 @@ import './LessonList.css';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import MuxPlayer from "@mux/mux-player-react";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export default function LessonList() {
   const [lessons, setLessons] = useState([]);
@@ -17,22 +19,23 @@ export default function LessonList() {
   const navigate = useNavigate();
   const location = useLocation();
   const [chapterId, setChapterId] = useState('');
-  console.log("chapter id from location",location.state.chapterId);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success'); // success, error, warning, info
 
   useEffect(() => {
     if (location.state && location.state.chapterId) {
-      console.log("chapter id from location",location.state.chapterId);
+      console.log('Chapter ID fom lesson:', location.state);
       const id = parseInt(location.state.chapterId, 10);
-      console.log("chapter id",typeof id);
-
       if (!isNaN(id)) {
         setChapterId(id);
-        console.log("chapter id",typeof id);
       } else {
         console.log("Invalid chapter ID");
       }
     }
-    getUploadUrl();
+    if(!chapterId){
+      getUploadUrl();
+    } 
   }, [location.state]);
 
   const getUploadUrl = async () => {
@@ -44,12 +47,13 @@ export default function LessonList() {
       }
     } catch (error) {
       console.error('Error fetching upload URL', error);
+      showSnackbar('Error fetching upload URL', 'error');
     }
   };
 
- 
   const handleSuccess = (event) => {
     setUploadVideo(true);
+    showSnackbar('Video uploaded successfully', 'success');
   };
 
   const sendVideoIdToBackend = async () => {
@@ -64,8 +68,10 @@ export default function LessonList() {
         title: newLessonTitle,
         playbackId: response.data.playbackId
       });
+      showSnackbar('Lesson created successfully', 'success');
     } catch (error) {
       console.error('Error sending video ID to backend:', error.response ? error.response.data : error.message);
+      showSnackbar('Error sending video ID to backend', 'error');
     }
   };
 
@@ -88,6 +94,16 @@ export default function LessonList() {
   const addLesson = (lesson) => {
     setLessons([...lessons, lesson]);
     setIsAdding(false);
+  };
+
+  const showSnackbar = (message, severity) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -141,7 +157,10 @@ export default function LessonList() {
                 <MuxUploader
                   endpoint={uploadUrl}
                   onSuccess={handleSuccess}
-                  onError={(error) => console.error('Upload error:', error)}
+                  onError={(error) => {
+                    console.error('Upload error:', error);
+                    showSnackbar('Upload error', 'error');
+                  }}
                 />
               )}
             </div>
@@ -149,6 +168,16 @@ export default function LessonList() {
           </form>
         </div>
       )}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

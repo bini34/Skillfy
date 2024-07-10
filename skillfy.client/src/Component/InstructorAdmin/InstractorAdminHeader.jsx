@@ -39,7 +39,7 @@ export default function InstructorAdminHeader() {
   };
 
   const handleProfile = () => {
-    navigate(`/instructor/profile/`, { state: { userid: user.id } } ); // Adjust the path to your profile page
+    navigate(`/instructor/profile/`, { state: { userid: user.id } });
     handleClose();
   };
 

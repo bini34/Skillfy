@@ -12,7 +12,7 @@
   background-color: #FD9697;
   display: flex;
   flex-direction: column;
-
+  align-items: flex-start;
   width: 725px;
 
   /* align-items: center;
@@ -21,6 +21,9 @@
   padding: 20px;
   height: 100%;
   padding-left: 100px; */
+}
+.logo a{
+  text-decoration: none;
 }
 
 .banner-content {
@@ -32,7 +35,6 @@
   padding: 20px;
   width:100%;
   height: 100%;
-  padding-left: 100px;
   text-align: center;
 }
 

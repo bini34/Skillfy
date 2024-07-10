@@ -6,7 +6,7 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import PlayCircleOutlinedIcon from '@mui/icons-material/PlayCircleOutlined';
 
-const CourseCard = ({ id, coursename, teachername, price, rating, students, lessons, coursethumbline, enrollmentcount }) => {
+const CourseCard = ({ id, coursename, teachername, price, rating, lessoncount, coursethumbline, enrollmentCount }) => {
   const navigate = useNavigate();
   const baseUrl = 'https://localhost:7182';
   const imageUrl = `${baseUrl}${coursethumbline}`;
@@ -39,15 +39,15 @@ const CourseCard = ({ id, coursename, teachername, price, rating, students, less
           <div className="course-card-stats">
             <span>
               <StarBorderOutlinedIcon fontSize="small" sx={{ color: "#F3B23A" }} />
-              {rating} ({students})
+              {rating}
             </span>
             <span>
               <RemoveRedEyeIcon fontSize="small" sx={{ color: "#DD5416" }} />
-              {enrollmentcount}
+              {enrollmentCount}
             </span>
             <span>
               <PlayCircleOutlinedIcon fontSize="small" sx={{ color: "#409466" }} />
-              {lessons} lessons
+              {lessoncount} lessons
             </span>
           </div>
           <hr />

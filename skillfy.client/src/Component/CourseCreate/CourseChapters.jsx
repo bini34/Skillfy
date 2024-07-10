@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './CourseChapters.css';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function CourseChapters({ handleDetailChange, chapterinfo }) {
-  const [chapters, setChapters] = useState([]);
+export default function CourseChapters({ handleDetailChange, chapterinfo, courseDetailsfromResponse, courseDetailsfromlesson }) {
+  const [chapters, setChapters] = useState(courseDetailsfromlesson.chapters || []);
   const [isAdding, setIsAdding] = useState(false);
   const [newChapterTitle, setNewChapterTitle] = useState('');
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function CourseChapters({ handleDetailChange, chapterinfo }) {
 
   const handleEditChapter = (chapterId) => {
     console.log('chapterId', chapterId);
-    navigate(`add-lessons/`, { state: { chapterId, courseDetails: chapters } });
+    navigate(`add-lessons/`, { state: { chapterId, courseDetailsfromResponse } });
   };
 
   return (
@@ -57,11 +57,9 @@ export default function CourseChapters({ handleDetailChange, chapterinfo }) {
             chapters.map((chapter, index) => (
               <div className="CourseChapter" key={index}>
                 <p>{chapter.title}</p>
-                {chapterinfo[index]?.chapterId && (
-                  <button onClick={() => handleEditChapter(chapterinfo[index].chapterId)}>
-                    <EditIcon fontSize="small" />
-                  </button>
-                )}
+                <button onClick={() => handleEditChapter(chapter.chapterId)}>
+                  <EditIcon fontSize="small" />
+                </button>
               </div>
             ))
           )}

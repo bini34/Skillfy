@@ -5,6 +5,7 @@ import axios from 'axios';
 import './categoriesPage.css'
 import Header from '../Component/Header/Header'
 import Footer from '../Component/Footer/Footer'
+import CourseCard from '../Component/ui/CourseCard'
 
 
 export default function CategoriesPage() {

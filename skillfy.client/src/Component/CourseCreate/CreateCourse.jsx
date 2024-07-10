@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import CourseDetail from './CourseDetail';
 import './CreateCourse.css';
@@ -8,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import authService from '../../Services/authService';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { CiMountain1 } from 'react-icons/ci';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -26,9 +28,21 @@ export default function CreateCourse() {
     image: null,
     chapters: []
   });
-
+  const [courseDetailsfromResponse, setcourseDetailsfromResponse] = useState({
+    id: null,
+    title: '',
+    about: '',
+    course_audience: '',
+    description: '',
+    category: null,
+    price: '',
+    image: null,
+    chapters: []
+  });
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [isCreated, setIsCreated] = useState(false);
+  const location = useLocation();
+  const courseDetailsfromlesson = location.state.courseDetailsfromResponse;
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -36,6 +50,10 @@ export default function CreateCourse() {
       setUserid(currentUser.id);
     }
   }, []);
+
+  useEffect(() => {
+    console.log('courseDetailsfromResponse updated:', courseDetailsfromResponse);
+  }, [courseDetailsfromResponse]);
 
   const handleDetailChange = (key, value) => {
     setCourseDetails((prevState) => ({
@@ -74,12 +92,30 @@ export default function CreateCourse() {
       });
 
       if (response.status === 200) {
+        const responseData = response.data.data;
+        const chapters = responseData.chapters.$values;
+
         setSnackbar({ open: true, message: 'Course Created Successfully', severity: 'success' });
         setIsCreated(true);
-        const chapters = response.data.data.chapters.$values; 
-        console.log("chapters", chapters);
-        console.log("from response", response.data.data.chapters.$values);
+
+        setcourseDetailsfromResponse({
+          id: responseData.courseID,
+          title: responseData.title,
+          about: responseData.about,
+          course_audience: responseData.course_audience,
+          description: responseData.description,
+          category: responseData.catagoryId,
+          price: responseData.price,
+          image: responseData.thumbnailImage,
+          chapters: chapters
+        });
+        console.log("courseDetailsfromResponse", courseDetailsfromResponse)
+        console.log('--------------------------')
+        console.log('course', responseData);
+
+
         setChapterinfo(chapters);
+
         const updatedChapters = courseDetails.chapters.map((chapter, index) => ({
           ...chapter,
           id: chapters[index].chapterId, // Adjust this based on actual API response structure
@@ -95,7 +131,6 @@ export default function CreateCourse() {
     }
   };
 
-
   const handleCloseSnackbar = () => {
     setSnackbar({ open: false, message: '', severity: 'success' });
   };
@@ -104,21 +139,23 @@ export default function CreateCourse() {
     <div className='courseCreate-Container'>
       <div className="courseCreate-HeaderContainer">
         <h1>Customize your course</h1>
-        {!isCreated && <button className='createBtn' onClick={handleCreate}>Create</button>}
-        {isCreated && (
-          <>
-            <button className='deleteBtn'><DeleteIcon style={{ color: 'white' }} /></button>
-            <button className='publishBtn'>Publish</button>
-          </>
-        )}
+        <div className="courseCreate-HeaderContainerbtn">
+          {!isCreated && <button className='createBtn' onClick={handleCreate}>Create</button>}
+          {isCreated && (
+            <>
+              <button className='deleteBtn'><DeleteIcon style={{ color: 'white' }} /></button>
+              {/* <button className='publishBtn'>Publish</button> */}
+            </>
+          )}
+        </div>
       </div>
       <div className="courseCreate-MainContainer">
         <div className="courseCreate-LeftContainer">
-            <CourseDetail handleDetailChange={handleDetailChange} />
+          <CourseDetail courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} />
         </div>
         <div className="courseCreate-RightContainer">
-            <CourseChapters handleDetailChange={handleDetailChange} chapterinfo={chapterinfo} />
-            <CourseImage handleDetailChange={handleDetailChange} />
+          <CourseChapters courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} chapterinfo={chapterinfo}   courseDetailsfromResponse={courseDetailsfromResponse}/>
+          <CourseImage courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} />
         </div>
       </div>
       <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>

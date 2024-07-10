@@ -124,6 +124,9 @@ const Signup = () => {
   return (
     <div className="signup-container">
       <div className="side-banner">
+        <div className="logo">
+          <Link to="/" className="logo">Skillfy</Link>
+        </div>
         <div className="banner-content">
           <img src={img} alt="" />
           <h1>Turn your ambition into a success story</h1>
