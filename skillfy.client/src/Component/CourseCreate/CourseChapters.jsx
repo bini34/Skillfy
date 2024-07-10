@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './CourseChapters.css';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function CourseChapters({ handleDetailChange, chapterinfo }) {
+export default function CourseChapters({ handleDetailChange, chapterinfo , courseDetailsfromResponse}) {
   const [chapters, setChapters] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newChapterTitle, setNewChapterTitle] = useState('');
@@ -36,7 +36,7 @@ export default function CourseChapters({ handleDetailChange, chapterinfo }) {
 
   const handleEditChapter = (chapterId) => {
     console.log('chapterId', chapterId);
-    navigate(`add-lessons/`, { state: { chapterId, courseDetails: chapters } });
+    navigate(`add-lessons/`, { state: {chapterId, courseDetailsfromResponse: courseDetailsfromResponse } });
   };
 
   return (

@@ -72,10 +72,6 @@ function App() {
       element: <PrivateRoute element={<InstructorAdminDashBoardPage />} allowedRoles={['Instructor']} />
     },
     {
-      Path: '/instructor/profile/',
-      element: <InstractorProfileUpdatePage />
-    },
-    {
       path: '/instructor/courses/create/add-lessons/',
       element: <PrivateRoute element={<ChapterLessonsPage />} allowedRoles={['Instructor']} />
     },
@@ -86,6 +82,10 @@ function App() {
     {
       path: '/mycourse',
       element: <PrivateRoute element={<MyCourse />} allowedRoles={['student']} />
+    },
+    {
+      path:'/instructor/profile/',
+      element: <InstractorProfileUpdatePage/>
     },
     {
       path: '/course/search',
