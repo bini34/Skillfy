@@ -4,8 +4,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Skillfy.Server.Data;
 using Skillfy.Server.Model;
 using Skillfy.Server.Repo;
 
@@ -14,19 +16,24 @@ public class ChapaPaymentService : Ipayment
     private readonly HttpClient _httpClient;
     private readonly ILogger<ChapaPaymentService> _logger;
     private readonly string _secretKey;
-
-    public ChapaPaymentService(HttpClient httpClient, IConfiguration configuration, ILogger<ChapaPaymentService> logger)
+    private readonly ApplicationDbContext _context;
+    public ChapaPaymentService(HttpClient httpClient, IConfiguration configuration, ILogger<ChapaPaymentService> logger, ApplicationDbContext context)
     {
         _httpClient = httpClient;
         _logger = logger;
         _secretKey = configuration["Chapa:SecretKey"];
+        _context = context;
     }
 
     public async Task<object> InitializePaymentAsync(int price,int courseId, string userId)
     {
 
         var txRef = $"{courseId}-{userId}-{Guid.NewGuid()}";
-        var returnUrl = $"https://localhost:7182/api/payment/paymentreturn/{courseId}/{userId}";
+        var bankno = await _context.teachers.Where(t => t.UserId == userId).Select(t => t.BankId).FirstOrDefaultAsync();
+      
+        var bankaccount = await _context.banks.Where(b => b.BankId == bankno).Select(b => b.BankAccount).FirstOrDefaultAsync();
+
+        var returnUrl = $"https://localhost:7182/api/payment/paymentreturn/{courseId}/{userId}/{bankaccount}/{price}";
         var paymentData = new
         {
 

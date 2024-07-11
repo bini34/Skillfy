@@ -18,15 +18,17 @@ namespace Skillfy.Server.Controllers
         private readonly EnrollmentService  _enrollmentService;
         private readonly ApplicationDbContext _context;
         private readonly ILogger<PaymentController> _logger;
+        private readonly TeacherPaymentService _teacherservice;
 
 
-        public PaymentController(Ipayment payment, ICourseRepositary courserepositary, EnrollmentService enrollmentService ,ApplicationDbContext context, ILogger<PaymentController> logger)
+        public PaymentController(Ipayment payment, ICourseRepositary courserepositary, EnrollmentService enrollmentService ,ApplicationDbContext context, ILogger<PaymentController> logger, TeacherPaymentService teacherservice)
         {
             _paymentservice = payment;
             _courserepositary = courserepositary;
             _enrollmentService = enrollmentService;
             _context = context;
             _logger = logger;
+            _teacherservice = teacherservice;
         }
 
         [HttpPost("Initialize")]
@@ -42,31 +44,17 @@ namespace Skillfy.Server.Controllers
         }
 
 
-        //[HttpPost("callback")]
-        //public async Task<IActionResult> paymentcallback([FromBody] ChapaCallBackModel payment)
-        //{
-        //    if (payment == null)
-        //    {
-        //        return BadRequest(new ResponsViewModel(false, "dto is null", null));
-        //    }
-
-        //    var result = await _enrollmentService.EnrollUserAsync(payment);
-
-        //    if(result == -2)
-        //    {
-        //        return BadRequest(new ResponsViewModel(false, "not filled", null));
-        //    }
-
-        //    return Ok(new ResponsViewModel(true, "succfully created", result));
-        //}
+        
     
-       [HttpGet("paymentreturn/{courseId}/{userId}")]
-        public async Task<IActionResult> PaymentReturn(int courseId,  string userId)
+       [HttpGet("paymentreturn/{courseId}/{userId}/{bankaccount}/{price}")]
+        public async Task<IActionResult> PaymentReturn(int courseId,  string userId, string bankaccount, int price)
         {
             _logger.LogInformation("Payment return received: courseId={0}, userId={1}", courseId, userId);
 
             var result = await _enrollmentService.EnrollUserAsync(courseId, userId);
-               
+            var updatedprice = Convert.ToInt32(price * 0.1);
+           
+            var respons = await _teacherservice.payteacher(bankaccount, updatedprice);
 
             if(result < 0)
             {

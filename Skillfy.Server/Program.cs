@@ -77,6 +77,7 @@ builder.Services.AddScoped<Ipayment, ChapaPaymentService>();
 builder.Services.AddScoped<LessonService>();
 builder.Services.AddScoped<MuxService>();
 builder.Services.AddScoped<EnrollmentService>();
+builder.Services.AddScoped<TeacherPaymentService>();    
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
