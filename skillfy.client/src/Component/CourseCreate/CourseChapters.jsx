@@ -4,10 +4,16 @@ import './CourseChapters.css';
 import EditIcon from '@mui/icons-material/Edit';
 
 export default function CourseChapters({ handleDetailChange, chapterinfo, courseDetailsfromResponse, courseDetailsfromlesson }) {
-  const [chapters, setChapters] = useState(courseDetailsfromlesson.chapters || []);
+  const [chapters, setChapters] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newChapterTitle, setNewChapterTitle] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (courseDetailsfromlesson && Array.isArray(courseDetailsfromlesson.chapters)) {
+      setChapters(courseDetailsfromlesson.chapters);
+    }
+  }, [courseDetailsfromlesson]);
 
   useEffect(() => {
     handleDetailChange('chapters', chapters);
@@ -20,7 +26,7 @@ export default function CourseChapters({ handleDetailChange, chapterinfo, course
   const handleSaveChapter = () => {
     if (newChapterTitle.trim()) {
       const newChapter = {
-        id: chapters.length + 1, // Ensure a unique ID for each chapter
+        id: chapters.length + 1,
         title: newChapterTitle,
       };
       setChapters([...chapters, newChapter]);
@@ -56,8 +62,8 @@ export default function CourseChapters({ handleDetailChange, chapterinfo, course
           ) : (
             chapters.map((chapter, index) => (
               <div className="CourseChapter" key={index}>
-                <p>{chapter.title}</p>
-                <button onClick={() => handleEditChapter(chapter.chapterId)}>
+                <p>{chapter.title ||chapter.chaptername }</p>
+                <button onClick={() => handleEditChapter(chapter.chapterId || chapter.id)}>
                   <EditIcon fontSize="small" />
                 </button>
               </div>

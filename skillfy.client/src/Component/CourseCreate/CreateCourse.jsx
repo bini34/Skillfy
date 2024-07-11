@@ -9,7 +9,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import authService from '../../Services/authService';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { CiMountain1 } from 'react-icons/ci';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -28,7 +27,7 @@ export default function CreateCourse() {
     image: null,
     chapters: []
   });
-  const [courseDetailsfromResponse, setcourseDetailsfromResponse] = useState({
+  const [courseDetailsfromResponse, setCourseDetailsfromResponse] = useState({
     id: null,
     title: '',
     about: '',
@@ -42,7 +41,7 @@ export default function CreateCourse() {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [isCreated, setIsCreated] = useState(false);
   const location = useLocation();
-  const courseDetailsfromlesson = location.state.courseDetailsfromResponse;
+  const courseDetailsfromlesson = location.state?.courseDetailsfromResponse;
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -50,6 +49,23 @@ export default function CreateCourse() {
       setUserid(currentUser.id);
     }
   }, []);
+
+  useEffect(() => {
+    if (courseDetailsfromlesson) {
+      setIsCreated(true);
+      setCourseDetails((prevDetails) => ({
+        ...prevDetails,
+        title: courseDetailsfromlesson.title || '',
+        about: courseDetailsfromlesson.about || '',
+        course_audience: courseDetailsfromlesson.course_audience || '',
+        description: courseDetailsfromlesson.description || '',
+        category: courseDetailsfromlesson.category || '',
+        price: courseDetailsfromlesson.price || '',
+        image: courseDetailsfromlesson.image || null,
+        chapters: courseDetailsfromlesson.chapters || [],
+      }));
+    }
+  }, [courseDetailsfromlesson]);
 
   useEffect(() => {
     console.log('courseDetailsfromResponse updated:', courseDetailsfromResponse);
@@ -98,7 +114,7 @@ export default function CreateCourse() {
         setSnackbar({ open: true, message: 'Course Created Successfully', severity: 'success' });
         setIsCreated(true);
 
-        setcourseDetailsfromResponse({
+        setCourseDetailsfromResponse({
           id: responseData.courseID,
           title: responseData.title,
           about: responseData.about,
@@ -109,10 +125,6 @@ export default function CreateCourse() {
           image: responseData.thumbnailImage,
           chapters: chapters
         });
-        console.log("courseDetailsfromResponse", courseDetailsfromResponse)
-        console.log('--------------------------')
-        console.log('course', responseData);
-
 
         setChapterinfo(chapters);
 
@@ -154,7 +166,7 @@ export default function CreateCourse() {
           <CourseDetail courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} />
         </div>
         <div className="courseCreate-RightContainer">
-          <CourseChapters courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} chapterinfo={chapterinfo}   courseDetailsfromResponse={courseDetailsfromResponse}/>
+          <CourseChapters courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} chapterinfo={chapterinfo} courseDetailsfromResponse={courseDetailsfromResponse} />
           <CourseImage courseDetailsfromlesson={courseDetailsfromlesson} handleDetailChange={handleDetailChange} />
         </div>
       </div>

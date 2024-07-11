@@ -1,6 +1,39 @@
-.instructorProfileUpdateContainer{
+.instructorProfileUpdateContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-   
+    gap: 20px;
+    width: 100%;
+    /* align-items: center; */
+}
+
+.instructorProfileUpdateContainer form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 500px;
+    padding-right: ;
+}
+.instructorProfileUpdateContainer form div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.instructorProfileUpdateContainer form div label{
+    display: flex;
+    justify-content: flex-start;
+}
+.profilePreview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 10px;
+}
+.submitBtn{
+    font-size: medium;
+    color:white;
+    background-color: rgba(0, 128, 0, 0.625);
+    padding: 20px 20px;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Link, Navigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import LessonList from './LessonList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import './ChapterLessons.css';
@@ -8,11 +8,11 @@ import './ChapterLessons.css';
 function ChapterLessons() {
   const location = useLocation();
   const { chapterId, courseDetailsfromResponse }= location.state || {};
-
+  const navigate = useNavigate();
 
 
 function sendCoursedetail(){
-  Navigate('/instructor/courses/create', {state: {courseDetailsfromResponse: courseDetailsfromResponse}});
+  navigate('/instructor/courses/create', {state: {courseDetailsfromResponse: courseDetailsfromResponse}});
 }
   return (
     <div className='chapter-lessons-container'>

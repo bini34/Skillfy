@@ -16,10 +16,17 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-const CourseImage = ({ handleDetailChange }) => {
+const CourseImage = ({ handleDetailChange, courseDetailsfromlesson }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [image, setImage] = useState(null);
-  const [backgroundImage, setBackgroundimage] =  useState(null)
+  const [backgroundImage, setBackgroundimage] = useState(null);
+
+  useEffect(() => {
+    if (courseDetailsfromlesson && courseDetailsfromlesson.image) {
+      setImage(courseDetailsfromlesson.image);
+      setBackgroundimage(courseDetailsfromlesson.image);
+    }
+  }, [courseDetailsfromlesson]);
 
   useEffect(() => {
     handleDetailChange('image', image);
@@ -37,7 +44,7 @@ const CourseImage = ({ handleDetailChange }) => {
     const file = event.target.files[0];
     if (file) {
       setImage(file);
-      setBackgroundimage(URL.createObjectURL(file))
+      setBackgroundimage(URL.createObjectURL(file));
       setIsUploading(false);
     }
   };
@@ -94,10 +101,8 @@ const CourseImage = ({ handleDetailChange }) => {
         </div>
       ) : (
         <div
-          className={`course-image-box ${
-            image ? 'course-image-background' : ''
-          }`}
-          style={{ backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none' }}
+          className={`course-image-box ${image ? 'course-image-background' : ''}`}
+          style={{ backgroundImage: backgroundImage ? `url('https://localhost:7182${backgroundImage}')` : 'none' }}
         >
           {!image && (
             <div className="course-image-placeholder">
