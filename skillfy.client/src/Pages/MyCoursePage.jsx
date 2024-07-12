@@ -5,6 +5,8 @@ import LessonCard from '../Component/ui/LessonCard';
 import './MyCourse.css';
 import authService from '../Services/authService';
 import apiService from '../Services/apiService';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 export default function MyCourse() {
   const [courses, setCourses] = useState([]);
@@ -13,13 +15,10 @@ export default function MyCourse() {
   const user = authService.getCurrentUser();
 
   useEffect(() => {
-    console.log("user", user.id);
-
     if (user && user.id) {
       apiService.getData(`api/course/enrolledcourse${user.id}`)
         .then((response) => {
           setCourses(response.data.$values);
-          console.log('Courses:', response.data.$values);
           setLoading(false);
         })
         .catch((err) => {
@@ -41,7 +40,7 @@ export default function MyCourse() {
         </div>
         <div className='mycourseBody'>
           {loading ? (
-            <p>Loading...</p>
+            <CircularProgress color="inherit" />
           ) : error ? (
             <p>{error}</p>
           ) : courses.length > 0 ? (

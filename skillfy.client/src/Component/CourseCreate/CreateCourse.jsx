@@ -108,8 +108,12 @@ export default function CreateCourse() {
       });
 
       if (response.status === 200) {
+        console.log("hello")
         const responseData = response.data.data;
         const chapters = responseData.chapters.$values;
+
+        console.log('API Response:', responseData);  // Debugging line
+        console.log('Chapters:', chapters);  // Debugging line
 
         setSnackbar({ open: true, message: 'Course Created Successfully', severity: 'success' });
         setIsCreated(true);
@@ -130,12 +134,17 @@ export default function CreateCourse() {
 
         const updatedChapters = courseDetails.chapters.map((chapter, index) => ({
           ...chapter,
-          id: chapters[index].chapterId, // Adjust this based on actual API response structure
+          id: chapters[index].chapterId,
         }));
+
+        console.log('Updated Chapters:', updatedChapters);  // Debugging line
+
         setCourseDetails((prevState) => ({
           ...prevState,
           chapters: updatedChapters
         }));
+        
+        /*console.log('Course Details: after update', courseDetails);   Debugging line*/
       }
     } catch (error) {
       console.error('There was an error uploading the course!', error);

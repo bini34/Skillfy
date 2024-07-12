@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MainContent.css';
 import MuxPlayer from '@mux/mux-player-react';
 import CourseReviews from '../CourseDetail/CourseReviews';
 import RatingForm from './RatingForm'; // Make sure to import the RatingForm component
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import { Button} from '@mui/material';
 
 const MainContent = ({ CurrentLessonData }) => {
   const [showRatingForm, setShowRatingForm] = useState(false);
@@ -14,7 +16,9 @@ const MainContent = ({ CurrentLessonData }) => {
       setFormShown(true);
     }
   };
-
+  useEffect(() => {
+    console.log("lesson data from main",CurrentLessonData);
+  }, [CurrentLessonData]);
   return (
     <div className="main-content">
       <div className="video-section-header">
@@ -22,7 +26,7 @@ const MainContent = ({ CurrentLessonData }) => {
           <h1>{CurrentLessonData.lessonTitle}</h1>
         </div>
         <div className="button">
-          <button onClick={handleRateButtonClick}>Rate This Lesson</button>
+          <Button startIcon={<StarBorderOutlinedIcon/>} onClick={handleRateButtonClick}>Rate This Lesson</Button>
           <button>Next Lesson</button>
         </div>
       </div>
@@ -51,10 +55,9 @@ const MainContent = ({ CurrentLessonData }) => {
         </div>
       </div>
       {showRatingForm && (
-        <div className="rating-form-modal">
+        <>
           <RatingForm />
-          <button className="close-button" onClick={() => setShowRatingForm(false)}>Close</button>
-        </div>
+        </>
       )}
     </div>
   );

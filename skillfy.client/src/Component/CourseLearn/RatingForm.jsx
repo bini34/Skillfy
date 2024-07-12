@@ -1,15 +1,19 @@
 import React from 'react';
-import { Button, Typography, TextField } from '@mui/material';
-import Rating from '@mui/material/Rating';
+////////////////////120.import Rating from '@mui/material/Rating';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './RatingForm.css';
 
-const RatingForm = () => {
+const RatingForm = (setShowRatingForm) => {
   return (
     <div className="rating-form">
-      <Button startIcon={<ArrowBackIcon />} className="back-button">
-        Back
-      </Button>
+      <div className="rating-form-header">
+        <Button startIcon={<ArrowBackIcon />} className="back-button">
+          Back
+        </Button>
+        <button className="close-button" onClick={() => setShowRatingForm(false)}>Close</button>
+      </div>
+  
+
       <Typography variant="h5" component="h2">
         Why did you leave this rating?
       </Typography>

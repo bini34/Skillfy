@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import PlayLessonIcon from '@mui/icons-material/PlayLesson';
 import axios from 'axios';
 import './Sidebar.css';
 
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 10,
-  borderRadius: 5,
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: theme.palette.mode === 'dark' ? '#1a90ff' : '#308fe8',
-  },
-}));
 
-const Sidebar = ({ setCurrentLessonData }) => {
+const Sidebar = ({ SetCurrentLessonData }) => {
   const [loading, setLoading] = useState(true);
   const [courseData, setCourseData] = useState({});
   const [courseID, setCourseID] = useState(0);
@@ -41,7 +29,7 @@ const Sidebar = ({ setCurrentLessonData }) => {
     const fetchCourses = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://localhost:7182/api/course/detailenrolled${courseID}`);
+        const response = await axios.get(`https://localhost:7182/api/course/detailenrolled56`);
         setCourseData(response.data);
         console.log('Course data:', response.data);
       } catch (error) {
@@ -63,11 +51,15 @@ const Sidebar = ({ setCurrentLessonData }) => {
   };
 
   const handleLessonClick = (url, title) => {
-    setCurrentLessonData({ 
-      lessonUrl: url,
+    const strippedUrl = url.replace("https://stream.mux.com/", "").replace(".m3u8", "");
+
+    SetCurrentLessonData({ 
+      lessonUrl: strippedUrl,
       lessonTitle: title,
     });
   };
+
+
 
   return (
     <div className="sidebar">
@@ -79,10 +71,9 @@ const Sidebar = ({ setCurrentLessonData }) => {
             </div>
             Back
           </Link>
-          <h1>Learn Adobe XD & Prototyping</h1>
+          <h1>{courseData.title}</h1>
         </div>
         <div className="progress">
-          <BorderLinearProgress variant="determinate" value={calculateProgress()} />
           <p>{calculateProgress()}% Complete</p>
         </div>
       </div>

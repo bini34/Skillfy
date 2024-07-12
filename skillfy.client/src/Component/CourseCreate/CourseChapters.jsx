@@ -16,6 +16,19 @@ export default function CourseChapters({ handleDetailChange, chapterinfo, course
   }, [courseDetailsfromlesson]);
 
   useEffect(() => {
+    if (chapterinfo.length > 0) {
+      setChapters((prevChapters) => {
+        return prevChapters.map((chapter, index) => ({
+          ...chapter,
+          id: chapterinfo[index].chapterId,
+        }));
+      });
+    }
+    console.log('chapterinfo x', chapterinfo);
+    console.log('chapters  x', chapters)
+  }, [chapterinfo]);
+
+  useEffect(() => {
     handleDetailChange('chapters', chapters);
   }, [chapters, handleDetailChange]);
 
@@ -62,7 +75,7 @@ export default function CourseChapters({ handleDetailChange, chapterinfo, course
           ) : (
             chapters.map((chapter, index) => (
               <div className="CourseChapter" key={index}>
-                <p>{chapter.title ||chapter.chaptername }</p>
+                <p>{chapter.title || chapter.chaptername }</p>
                 <button onClick={() => handleEditChapter(chapter.chapterId || chapter.id)}>
                   <EditIcon fontSize="small" />
                 </button>

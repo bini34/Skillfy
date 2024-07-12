@@ -8,12 +8,12 @@ export default function InstractorSideBar() {
   return (
     <nav className='InstractorSideBar-nav'>
       
-        <Link to="/courses" className='logo-button'>Skillfy</Link> 
+        <Link to="/instructor/courses/" className='logo-button'>Skillfy</Link> 
      
         <ul>
             <li>
                 <FormatListBulletedOutlinedIcon/>   
-                <Link to="/courses">Courses</Link> 
+                <Link to="/instructor/courses/">Courses</Link> 
             </li>
             <li>
                 <SignalCellularAltOutlinedIcon/>

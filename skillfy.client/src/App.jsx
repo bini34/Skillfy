@@ -55,7 +55,8 @@ function App() {
     },
     {
       path: '/courses',
-      element: <PrivateRoute element={<Courses />} allowedRoles={['student']} />
+      element: <Courses />
+      // element: <PrivateRoute element={<Courses />} allowedRoles={['student']} />
 
     },
     {

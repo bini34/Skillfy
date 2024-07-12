@@ -11,7 +11,7 @@ function CourseLearn() {
 
   return (
     <div className="courselearnContainer">
-      <Sidebar setCurrentLessonData={setCurrentLessonData} />
+      <Sidebar SetCurrentLessonData={setCurrentLessonData} />
       <MainContent CurrentLessonData={currentLessonData} />
     </div>
   );

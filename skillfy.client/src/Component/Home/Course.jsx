@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './Courses.css';
 import CourseCard from '../ui/CourseCard';
 import axios from 'axios';
+import { Link, Navigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 export default function Courses() {
   const [courseData, setCourseData] = useState([]);
@@ -24,16 +27,18 @@ export default function Courses() {
     fetchCourses();
   }, []);
 
+  
+
   return (
     <div className='courses-section'>
       <div className='courses-container'>
         <div className='courses-header'>
           <h1>Get choice of your courses</h1>
-          <button className="view-all-btn">View all</button>
+          <Link to={'/courses'} className="view-all-btn">View all</Link>
         </div>
         <div className="courses-grid">
           {loading ? (
-            <p>Loading courses...</p>
+            <CircularProgress color="inherit" />
           ) : courseData.length > 0 ? (
             courseData.map((course, index) => (
               <CourseCard key={index} {...course} />
