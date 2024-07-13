@@ -38,7 +38,7 @@ export default function AuthHero() {
       setError('User ID is not available');
       setLoading(false);
     }
-  }, [user]);
+  }, [user], [courses]);
 
   const scrollLeft = () => {
     lessonContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
@@ -71,6 +71,7 @@ export default function AuthHero() {
                   Title={course.coursename}
                   instructorImage={course.teacherpicture}
                   instructorName={course.teachername}
+                  rated={course.rated}
                 />
               ))}
               <div className="navigation">

@@ -3,11 +3,16 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MuxUploader from '@mux/mux-uploader-react';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function LessonForm({ addLesson }) {
   const [uploadUrl, setUploadUrl] = useState('');
   const [videoId, setVideoId] = useState('');
   const [lessonTitle, setLessonTitle] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('error');
 
   useEffect(() => {
     getUploadUrl();
@@ -18,18 +23,15 @@ function LessonForm({ addLesson }) {
       const response = await axios.post('https://localhost:7182/api/mux/upload-url');
       setUploadUrl(response.data.uploadUrl);
       setVideoId(response.data.videoId);
-     /*setUploadUrl(response.data.data.url); */
     } catch (error) {
       console.error('Error fetching upload URL', error);
     }
   };
 
   const handleSuccess = (event) => {
-    console.log()
     const videoId = event.detail.asset_id;
     setVideoId(videoId);
     sendVideoIdToBackend(videoId);
-    console.log(videoId)
   };
 
   const sendVideoIdToBackend = async (videoId) => {
@@ -43,11 +45,28 @@ function LessonForm({ addLesson }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (lessonTitle && videoId) {
-      addLesson({ title: lessonTitle, videoId });
-      setLessonTitle('');
-      setVideoId('');
+    if (!lessonTitle) {
+      setSnackbarMessage('Please enter a lesson title');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      return;
     }
+    if (!videoId) {
+      setSnackbarMessage('Please upload a video');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      return;
+    }
+    addLesson({ title: lessonTitle, videoId });
+    setLessonTitle('');
+    setVideoId('');
+    setSnackbarMessage('Lesson added successfully');
+    setSnackbarSeverity('success');
+    setSnackbarOpen(true);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -73,6 +92,15 @@ function LessonForm({ addLesson }) {
         )}
       </div>
       <Button type="submit" variant="contained">Add Lesson</Button>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </form>
   );
 }

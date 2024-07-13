@@ -7,6 +7,7 @@ export default function CourseChapters({ handleDetailChange, chapterinfo, course
   const [chapters, setChapters] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newChapterTitle, setNewChapterTitle] = useState('');
+  const [courseCreated, setCourseCreated] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,12 +26,19 @@ export default function CourseChapters({ handleDetailChange, chapterinfo, course
       });
     }
     console.log('chapterinfo x', chapterinfo);
-    console.log('chapters  x', chapters)
+    console.log('chapters  x', chapters);
   }, [chapterinfo]);
 
   useEffect(() => {
     handleDetailChange('chapters', chapters);
   }, [chapters, handleDetailChange]);
+
+  useEffect(() => {
+    console.log('courseDetailsfromResponse', courseDetailsfromResponse);
+    if (courseDetailsfromResponse.id && courseDetailsfromResponse.id > 0) {
+      setCourseCreated(true);
+    }
+  }, [courseDetailsfromResponse]);
 
   const handleAddChapter = () => {
     setIsAdding(true);
@@ -75,10 +83,12 @@ export default function CourseChapters({ handleDetailChange, chapterinfo, course
           ) : (
             chapters.map((chapter, index) => (
               <div className="CourseChapter" key={index}>
-                <p>{chapter.title || chapter.chaptername }</p>
-                <button onClick={() => handleEditChapter(chapter.chapterId || chapter.id)}>
-                  <EditIcon fontSize="small" />
-                </button>
+                <p>{chapter.title || chapter.chaptername}</p>
+                {courseCreated && (chapter.chapterId || chapter.id) && (
+                  <button onClick={() => handleEditChapter(chapter.chapterId || chapter.id)}>
+                    <EditIcon fontSize="small" />
+                  </button>
+                )}
               </div>
             ))
           )}
