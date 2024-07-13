@@ -56,6 +56,11 @@ namespace Skillfy.Server.Controllers
            
             var respons = await _teacherservice.payteacher(bankaccount, updatedprice);
 
+            if(respons == false)
+            {
+                return BadRequest(new ResponsViewModel(false, "teacher did not get paid", null));
+            }
+
             if(result < 0)
             {
                 return BadRequest(new ResponsViewModel(false, "not registerd", null));

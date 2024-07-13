@@ -1,19 +1,13 @@
 import React from 'react';
-////////////////////120.import Rating from '@mui/material/Rating';
+import { useLocation } from 'react-router-dom';
+import Rating from '@mui/material/Rating';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './RatingForm.css';
+
 
 const RatingForm = (setShowRatingForm) => {
   return (
     <div className="rating-form">
-      <div className="rating-form-header">
-        <Button startIcon={<ArrowBackIcon />} className="back-button">
-          Back
-        </Button>
-        <button className="close-button" onClick={() => setShowRatingForm(false)}>Close</button>
-      </div>
-  
-
       <Typography variant="h5" component="h2">
         Why did you leave this rating?
       </Typography>

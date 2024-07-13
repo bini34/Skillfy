@@ -28,12 +28,45 @@ public class ChapaPaymentService : Ipayment
     public async Task<object> InitializePaymentAsync(int price,int courseId, string userId)
     {
 
+        var teacherid = await _context.courses
+      .Where(c => c.CourseID == courseId)
+      .Select(c => c.UserId)
+      .FirstOrDefaultAsync();
+
+        if (teacherid == null)
+        {
+            // Handle the case where teacherid is null
+            throw new Exception("Teacher ID not found.");
+        }
+
         var txRef = $"{courseId}-{userId}-{Guid.NewGuid()}";
-        var bankno = await _context.teachers.Where(t => t.UserId == userId).Select(t => t.BankId).FirstOrDefaultAsync();
-      
-        var bankaccount = await _context.banks.Where(b => b.BankId == bankno).Select(b => b.BankAccount).FirstOrDefaultAsync();
+
+        var bankId = await _context.teachers
+            .Where(t => t.UserId == teacherid)
+            .Select(t => t.BankId)
+            .FirstOrDefaultAsync();
+
+        if (bankId == null)
+        {
+            // Handle the case where bankno is null
+            throw new Exception("Bank ID not found.");
+        }
+
+        var bankaccount = await _context.banks
+            .Where(b => b.BankId == bankId)
+            .Select(b => b.BankAccount)
+            .FirstOrDefaultAsync();
+
+        if (bankaccount == null)
+        {
+            // Handle the case where bankaccount is null
+            throw new Exception("Bank account not found.");
+        }
 
         var returnUrl = $"https://localhost:7182/api/payment/paymentreturn/{courseId}/{userId}/{bankaccount}/{price}";
+
+
+     
         var paymentData = new
         {
 

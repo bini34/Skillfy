@@ -29,7 +29,7 @@ const Sidebar = ({ SetCurrentLessonData }) => {
     const fetchCourses = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://localhost:7182/api/course/detailenrolled56`);
+        const response = await axios.get(`https://localhost:7182/api/course/detailenrolled58`);
         setCourseData(response.data);
         console.log('Course data:', response.data);
       } catch (error) {

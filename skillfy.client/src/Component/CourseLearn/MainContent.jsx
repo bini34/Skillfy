@@ -56,6 +56,12 @@ const MainContent = ({ CurrentLessonData }) => {
       </div>
       {showRatingForm && (
         <>
+        <div className="rating-form-header">
+        <Button startIcon={<ArrowBackIcon />} className="back-button">
+          Back
+        </Button>
+        <button className="close-button" onClick={() => setShowRatingForm(false)}>Close</button>
+      </div>
           <RatingForm />
         </>
       )}
