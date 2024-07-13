@@ -3,7 +3,7 @@ import './Signin.css';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import SigninSocialMedia from './SigninSocialMedia';
+import SigninSocialMedia from './SigninSocialMedia.jsx';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
