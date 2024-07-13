@@ -4,6 +4,7 @@
     align-items: center;
     height: auto; /* Optional: ensures the container takes up the full height of the viewport */
     background: linear-gradient(to bottom, #EEEEF6 30%, #EEEEF6 35%, #FFFFFF 35%);
+    margin-bottom: 250px;
 }
 
 .categoriesMainContainer{

@@ -16,6 +16,7 @@
   text-align: center;
   flex-direction: column; 
   justify-content: space-between;
+  min-height: 200px;
   height: 100%;
 }
 .Authhero-Header{
@@ -34,6 +35,15 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  justify-content: center;
+}
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
 }
 .lesson-container{
     display: grid;
@@ -51,7 +61,6 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin: auto;
 }
 
 .nav-button {

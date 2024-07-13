@@ -4,15 +4,16 @@
     border-radius: 8px;
     overflow: hidden;
     width: 400px;
-    height: 150px;
+    height: 120px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: white;
     cursor: pointer;
+    padding: 15px;
   }
   
   .enrolled-lesson-card-image{
     width: 150px;
-    height: 150px;
+    height: 120px;
     object-fit: cover;
   }
   
@@ -31,24 +32,21 @@
     /* font-size: 0.8em; */
     color: #888;
     width: 100%;
-    padding-top: 20px;
+    padding-left: 20px;
 
   }
   
   .enrolled-lesson-card-title {
   display: flex;
-  padding-left: 10px;
     /* font-size: 1em; */
     font-weight: bold;
     /* margin: 10px 0; */
-    padding-bottom: 20px;
   }
   
   .enrolled-lesson-card-instructor {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding-left: 10px;
   }
   
   .enrolled-lesson-card-instructor img {

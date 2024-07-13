@@ -6,6 +6,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import authService from '../../Services/authService';
 import apiService from '../../Services/apiService';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import './AuthHero.css';
 
@@ -58,10 +59,14 @@ export default function AuthHero() {
         </div>
         <div className="Authhero-main">
           {loading ? (
-            <p>Loading...</p>
+              <div className="loading">
+                          <CircularProgress/>
+
+              </div>
           ) : error ? (
             <p>{error}</p>
           ) : courses.length > 0 ? (
+            <>
             <div className="lesson-container" ref={lessonContainerRef}>
               {courses.map((course, index) => (
                 <LessonCard
@@ -74,7 +79,9 @@ export default function AuthHero() {
                   rated={course.rated}
                 />
               ))}
-              <div className="navigation">
+            
+            </div>
+            <div className="navigation">
                 <button className="nav-button" onClick={scrollLeft}>
                   <ArrowBackIcon
                     sx={{
@@ -100,7 +107,7 @@ export default function AuthHero() {
                   />
                 </button>
               </div>
-            </div>
+            </>
           ) : (
             <div className="no-courses">
               <p>You are not enrolled in any courses yet.</p>

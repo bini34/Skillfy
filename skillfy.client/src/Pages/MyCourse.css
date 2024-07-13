@@ -5,6 +5,7 @@
     min-height: 500px;
     height: auto; /* Optional: ensures the container takes up the full height of the viewport */
     background: linear-gradient(to bottom, #EEEEF6 30%, #EEEEF6 35%, #FFFFFF 35%);
+    margin-bottom: 250px;
 }
 .mycourseHeader {
     padding: 70px 0;
@@ -19,6 +20,7 @@
     flex-wrap: wrap;
     width: 1000px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 50px;
 
 }
