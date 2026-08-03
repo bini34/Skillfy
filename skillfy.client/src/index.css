@@ -2,69 +2,169 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =============================================================
+   DESIGN TOKENS — CSS Custom Properties
+   Mirrors tailwind.config.js so legacy CSS files can share the
+   same brand values via var(--color-*) instead of hard-coding.
+============================================================= */
 @layer base {
   :root {
+    /* Primary (violet) */
+    --color-primary-50:  #f5f3ff;
+    --color-primary-100: #ede9fe;
+    --color-primary-200: #ddd6fe;
+    --color-primary-300: #c4b5fd;
+    --color-primary-500: #8b5cf6;
+    --color-primary-600: #7c3aed;
+    --color-primary-700: #6d28d9;
+    --color-primary-900: #4c1d95;
+
+    /* Secondary (emerald) */
+    --color-secondary-500: #10b981;
+    --color-secondary-600: #059669;
+
+    /* Semantic surface tokens */
+    --color-surface:       #ffffff;
+    --color-surface-muted: #f9fafb;   /* gray-50  */
+    --color-border:        #e5e7eb;   /* gray-200 */
+    --color-border-muted:  #f3f4f6;   /* gray-100 */
+
+    /* Text tokens */
+    --color-text-primary:   #111827;  /* gray-900 */
+    --color-text-secondary: #6b7280;  /* gray-500 */
+    --color-text-muted:     #9ca3af;  /* gray-400 */
+
+    /* Status tokens */
+    --color-success: #16a34a;
+    --color-warning: #d97706;
+    --color-error:   #dc2626;
+    --color-info:    #2563eb;
+
+    /* Layout tokens */
+    --height-header:  4rem;     /* h-16  = 64px  */
+    --width-sidebar:  15rem;    /* 240px — instructor sidebar */
+
+    /* Base typography */
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     line-height: 1.5;
     font-weight: 400;
-    color: #2F2D3A;
-    background-color: #ffffff;
+    color: var(--color-text-primary);
+    background-color: var(--color-surface);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Box model */
   *, *::before, *::after {
     box-sizing: border-box;
   }
 
-  *:focus-visible {
-    outline: 2px solid #7c3aed;
-    outline-offset: 2px;
+  html {
+    scroll-behavior: smooth;
   }
 
+  body {
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  /* Accessible keyboard focus — visible only on keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid var(--color-primary-600);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Remove focus ring for pointer interactions */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Heading defaults */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     line-height: 1.25;
+    color: var(--color-text-primary);
+  }
+
+  /* Accessible text selection color */
+  ::selection {
+    background-color: var(--color-primary-200);
+    color: var(--color-primary-900);
+  }
+
+  /* Media defaults */
+  img, video {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Reduced-motion: respect the user's OS preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
+/* =============================================================
+   COMPONENT LAYER
+   Custom utility classes consumed throughout the application.
+   Keep this list purposeful — prefer Tailwind utilities in JSX.
+============================================================= */
 @layer components {
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold
+           transition-all duration-150 select-none
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus-visible:ring-2 focus-visible:ring-offset-2;
   }
 
   .btn-primary {
-    @apply btn bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 focus-visible:ring-primary-500;
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800
+           focus-visible:ring-primary-500;
   }
 
   .btn-secondary {
-    @apply btn bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700 focus-visible:ring-secondary-400;
+    @apply btn bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700
+           focus-visible:ring-secondary-400;
   }
 
   .btn-outline {
-    @apply btn border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 active:bg-gray-100 focus-visible:ring-primary-500;
+    @apply btn border border-gray-300 bg-white text-gray-700
+           hover:bg-gray-50 active:bg-gray-100
+           focus-visible:ring-primary-500;
   }
 
   .btn-ghost {
-    @apply btn bg-transparent text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus-visible:ring-primary-500;
+    @apply btn bg-transparent text-gray-700
+           hover:bg-gray-100 active:bg-gray-200
+           focus-visible:ring-primary-500;
   }
 
   .btn-danger {
-    @apply btn bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-red-500;
+    @apply btn bg-error-600 text-white hover:bg-error-700 active:bg-error-700
+           focus-visible:ring-error-500;
   }
 
-  .btn-sm {
-    @apply px-3 py-1.5 text-xs;
-  }
+  .btn-sm  { @apply px-3 py-1.5 text-xs; }
+  .btn-lg  { @apply px-6 py-3 text-base; }
 
-  .btn-lg {
-    @apply px-6 py-3 text-base;
-  }
+  /* ── Form elements ───────────────────────────────────────── */
 
   .input {
-    @apply w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-colors focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:bg-gray-50 disabled:cursor-not-allowed;
+    @apply w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900
+           placeholder-gray-400 shadow-sm transition-colors
+           focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500
+           disabled:bg-gray-50 disabled:cursor-not-allowed;
   }
 
   .input-error {
@@ -79,6 +179,8 @@
     @apply mt-1 text-xs text-red-600;
   }
 
+  /* ── Cards ───────────────────────────────────────────────── */
+
   .card {
     @apply rounded-xl bg-white shadow-card border border-gray-100 overflow-hidden;
   }
@@ -87,37 +189,114 @@
     @apply hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200;
   }
 
+  /* ── Badges ──────────────────────────────────────────────── */
+
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
   }
 
-  .badge-primary {
-    @apply badge bg-primary-100 text-primary-700;
-  }
+  .badge-primary  { @apply badge bg-primary-100 text-primary-700; }
+  .badge-success  { @apply badge bg-success-100 text-success-700; }
+  .badge-warning  { @apply badge bg-warning-100 text-warning-700; }
+  .badge-danger   { @apply badge bg-error-100   text-error-700;   }
+  .badge-info     { @apply badge bg-info-100    text-info-700;    }
 
-  .badge-success {
-    @apply badge bg-green-100 text-green-700;
-  }
-
-  .badge-warning {
-    @apply badge bg-yellow-100 text-yellow-700;
-  }
-
-  .badge-danger {
-    @apply badge bg-red-100 text-red-700;
-  }
+  /* ── Skeleton loading ────────────────────────────────────── */
 
   .skeleton {
     @apply animate-pulse rounded bg-gray-200;
   }
 
+  /* ── Layout foundations ──────────────────────────────────── */
+
+  /* Centered content wrapper used on every page */
   .page-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
+  /* Standard vertical section rhythm */
+  .page-section {
+    @apply py-10 sm:py-14;
+  }
+
+  /* ── Dashboard shell (Instructor / Admin pages) ──────────── */
+
+  .dashboard-layout {
+    display: grid;
+    grid-template-areas:
+      "sidebar header"
+      "sidebar main";
+    grid-template-columns: var(--width-sidebar) 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100dvh;
+  }
+
+  @media (max-width: 767px) {
+    .dashboard-layout {
+      grid-template-areas:
+        "header"
+        "main";
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+    }
+
+    .dashboard-sidebar {
+      display: none;
+    }
+  }
+
+  .dashboard-sidebar {
+    grid-area: sidebar;
+    @apply border-r border-gray-200 bg-white;
+  }
+
+  .dashboard-header {
+    grid-area: header;
+    @apply border-b border-gray-200 bg-white px-6 py-3 flex items-center justify-end;
+  }
+
+  .dashboard-main {
+    grid-area: main;
+    @apply p-6 bg-gray-50;
+  }
+
+  /* ── Form width containers ───────────────────────────────── */
+
+  .form-container {
+    @apply max-w-md mx-auto w-full;
+  }
+
+  .form-container-lg {
+    @apply max-w-2xl mx-auto w-full;
+  }
+
+  /* ── Modal overlay backdrop ──────────────────────────────── */
+
+  .overlay {
+    @apply fixed inset-0 bg-black/50 z-60 flex items-center justify-center p-4;
+  }
+
+  /* ── Dropdown panel (nav / selects) ─────────────────────── */
+
+  .nav-dropdown {
+    @apply absolute top-full mt-2 rounded-xl bg-white border border-gray-100 shadow-modal py-1 animate-fade-in;
+  }
+
+  /* ── Typography helpers ──────────────────────────────────── */
+
   .section-heading {
     @apply text-2xl sm:text-3xl font-bold text-gray-900;
   }
+
+  .card-title {
+    @apply text-base font-semibold text-gray-900 leading-snug;
+  }
+
+  .text-muted {
+    @apply text-sm text-gray-500;
+  }
+
+  /* ── Divider ─────────────────────────────────────────────── */
 
   .divider {
     @apply border-t border-gray-200 my-6;

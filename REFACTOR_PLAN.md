@@ -394,6 +394,17 @@ src/
 
 ### Phase 4 — Frontend Completion & Tailwind Migration
 
+#### 4.0 — Design System Foundation ✅ COMPLETE (2026-08-03)
+
+Completed in this session:
+- `tailwind.config.js`: Added `success`, `warning`, `error`, `info` semantic color scales; named z-index layers (60/70/80); `spacing.header`/`spacing.sidebar` tokens; `slide-down` animation; `shadow-nav`.
+- `src/index.css`: Added CSS custom properties (`--color-*`, layout tokens); `scroll-behavior: smooth`; `body { min-height: 100dvh; overflow-x: hidden }`; `*:focus-visible` ring; `*:focus:not(:focus-visible)` cleanup; `::selection` colors; `@media (prefers-reduced-motion)` block; `img/video` defaults; new component classes: `.page-section`, `.dashboard-layout`, `.dashboard-sidebar`, `.dashboard-header`, `.dashboard-main`, `.form-container`, `.form-container-lg`, `.overlay`, `.nav-dropdown`, `.card-title`, `.text-muted`, `.badge-info`; updated `.badge-*` and `.btn-danger` to use semantic color tokens.
+- `src/App.css`: Removed conflicting `button { background-color: inherit; color: black; border: none; }` rule.
+- `index.html`: Updated title to "Skillfy"; added `<meta name="description">`.
+- `ARCHITECTURE.md`: Added "Frontend Design System" section documenting tokens, conventions, migration status.
+
+#### 4.1–4.9 — Page & Component Migration (pending)
+
 | # | Task | File(s) |
 |---|---|---|
 | 4.1 | Migrate `Signin.jsx` and `Signup.jsx` to Tailwind; remove MUI TextField/Button | `Signin.jsx`, `Signup.jsx` |
