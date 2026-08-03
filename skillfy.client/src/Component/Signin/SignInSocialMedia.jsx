@@ -3,7 +3,7 @@ import GoogleLogo from '../../assets/logo/google-logo.svg';
 import MicrosoftLogo from '../../assets/logo/microsoft-logo.svg';
 import AppleLogo from '../../assets/logo/apple-logo.svg';
 
-import './SigninSocialMedia.css';
+import './SignInSocialMedia.css';
 
 
 function SigninSocialMedia(){
