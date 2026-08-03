@@ -93,6 +93,80 @@ form a {
   text-decoration: none;
 }
 
+.divider-or {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  gap: 12px;
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+.divider-or::before,
+.divider-or::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Native toggle switch replacing MUI Switch */
+.role-toggle {
+  width: 500px;
+  margin-bottom: 4px;
+}
+
+.role-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.toggle-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  transition: background-color 150ms;
+  flex-shrink: 0;
+}
+
+.toggle-track--on {
+  background-color: #7c3aed;
+}
+
+.toggle-thumb {
+  position: absolute;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background-color: white;
+  border-radius: 9999px;
+  transition: transform 150ms;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.toggle-track--on .toggle-thumb {
+  transform: translateX(20px);
+}
+
+.toggle-label-text {
+  color: #374151;
+}
+
+.role-description {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .signup-container {

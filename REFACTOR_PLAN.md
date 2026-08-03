@@ -403,25 +403,77 @@ Completed in this session:
 - `index.html`: Updated title to "Skillfy"; added `<meta name="description">`.
 - `ARCHITECTURE.md`: Added "Frontend Design System" section documenting tokens, conventions, migration status.
 
-#### 4.1–4.9 — Page & Component Migration (pending)
+#### 4.1 — Shared UI Component System ✅ COMPLETE (2026-08-03)
+
+Completed in this session:
+
+**New components created (`src/Component/ui/`):**
+- `Button.jsx` — variant/size/loading/fullWidth/aria-busy; `type="button"` default
+- `Input.jsx` — label/description/error/required; `useId()` for accessible IDs; full `aria-describedby`
+- `PasswordInput.jsx` — show/hide toggle; accessible toggle label; `autoComplete` prop
+- `Textarea.jsx` — label/error/description/resize control
+- `Select.jsx` — native select with label/error/description; CSS chevron; `options` array or children
+- `Checkbox.jsx` — accessible label/description/error; disabled state
+- `FormField.jsx` — render-prop wrapper for custom form controls
+- `Alert.jsx` — success/warning/error/info variants; dismissible; `role="alert"`
+- `Modal.jsx` — `createPortal`; focus trap (Tab/Shift-Tab); Escape close; backdrop close; body scroll lock; focus restore on close
+- `ConfirmDialog.jsx` — uses Modal; destructive/standard variants; loading state
+- `Badge.jsx` — wraps semantic `.badge-*` CSS classes
+- `Tabs.jsx` — `role=tab/tablist/tabpanel`; arrow-key/Home/End navigation; `aria-selected`
+- `Pagination.jsx` — prev/next; ellipsis logic; `siblingCount`; `aria-current="page"`
+- `Breadcrumb.jsx` — semantic `<nav>`; `aria-current="page"` on last item
+- `Skeleton.jsx` — text/avatar/image/card variants
+- `index.js` — barrel export for all ui components
+
+**Updated existing components:**
+- `ToastContainer.jsx` — z-index promoted from `z-50` to `z-80` (above modals)
+- `EmptyState.jsx` — added `secondaryAction` prop
+
+**Utilities:**
+- `src/lib/cn.js` — `cn()` helper wrapping `clsx`
+- `src/lib/toast.js` — imperative `toast.success/error/warning/info` using Zustand `getState()`
+
+**Store updates:**
+- `src/store/uiStore.js` — added `DEDUPE_WINDOW_MS=800` deduplication in `addToast()`; added `mobileNavOpen` toggle
+
+**Form migrations:**
+- `Signin.jsx` — replaced MUI TextField/Button/Snackbar/CircularProgress with Input/PasswordInput/Button + `toast` helper; removed `snackbar` state; kept Signin.css layout
+- `Signup.jsx` — same; replaced MUI FormControlLabel/Switch with native accessible toggle; kept Signup.css layout
+
+**Removed dead dependencies:**
+- `@mantine/core`, `@mantine/hooks` (zero imports confirmed)
+- `draft-js` (only used in `RichTextInput.jsx` which is imported nowhere)
+- 33 packages total removed from `node_modules`
+
+**Testing foundation:**
+- `vitest.config.js` — jsdom environment; globals enabled; `src/test/setup.js` as setupFile
+- `src/test/setup.js` — imports `@testing-library/jest-dom`
+- `Button.test.jsx` — 8 tests
+- `Input.test.jsx` — 7 tests
+- `PasswordInput.test.jsx` — 6 tests
+- `Modal.test.jsx` — 7 tests
+- **All 28 tests pass**
+
+**Added to `package.json` scripts:** `"test"`, `"test:run"`, `"test:ui"`
+
+#### 4.2–4.9 — Remaining Page & Component Migration (pending)
 
 | # | Task | File(s) |
 |---|---|---|
-| 4.1 | Migrate `Signin.jsx` and `Signup.jsx` to Tailwind; remove MUI TextField/Button | `Signin.jsx`, `Signup.jsx` |
 | 4.2 | Migrate `CourseDetailOverview.jsx` to Tailwind; add responsive layout | `CourseDetailOverview.jsx`, `.css` |
 | 4.3 | Migrate `InstructorAdminDashBoardPage` to Tailwind with mobile sidebar | `InstructorAdminDashBoardPage.jsx` |
 | 4.4 | Migrate `CartPage` to Tailwind and connect to real cart data | `CartPage.jsx` |
 | 4.5 | Replace `react-quill` with a React-18-compatible editor | Lesson creation form |
-| 4.6 | Remove `@mantine/*` and `draft-js` (dead dependencies) | `package.json` |
-| 4.7 | Add `react-hook-form` + Zod validation to all forms | `Signin.jsx`, `Signup.jsx`, `CourseCreate.jsx` |
-| 4.8 | Implement Admin dashboard with user management | `AdminDashboardPage.jsx` |
-| 4.9 | Consolidate `CourseLessons/` and `ChapterLessons/` component folders | Component folders |
+| 4.6 | Add `react-hook-form` + Zod validation to all forms | `Signin.jsx`, `Signup.jsx`, `CourseCreate.jsx` |
+| 4.7 | Implement Admin dashboard with user management | `AdminDashboardPage.jsx` |
+| 4.8 | Consolidate `CourseLessons/` and `ChapterLessons/` component folders | Component folders |
+| 4.9 | Remove remaining MUI usage from all pages; then delete `@mui/material`, `@emotion/*` | All remaining pages |
 
 ### Phase 5 — Testing Infrastructure
 
 | # | Task |
 |---|---|
-| 5.1 | Add Vitest + `@testing-library/react` to the frontend project |
+| 5.1 | ✅ Add Vitest + `@testing-library/react` to the frontend project (done in 4.1) |
 | 5.2 | Write unit tests for `authStore`, `cartStore`, `toArray()`, `extractApiError()` |
 | 5.3 | Write integration tests for critical user flows: login, enroll, view course |
 | 5.4 | Add an xUnit test project to the backend solution |
@@ -448,8 +500,8 @@ Completed in this session:
 
 | File / Folder | Action |
 |---|---|
-| `@mantine/core`, `@mantine/hooks` | Remove from `package.json` — zero usage confirmed |
-| `draft-js` | Remove — unmaintained, not used |
+| `@mantine/core`, `@mantine/hooks` | ✅ Removed (2026-08-03) — zero usage confirmed |
+| `draft-js` | ✅ Removed (2026-08-03) — only used in dead `RichTextInput.jsx` |
 | `Component/CourseLessons/` or `Component/ChapterLessons/` | Consolidate to one folder after auditing which is the active code path |
 | `Skillfy.Server/Models/` | Merge into `Skillfy.Server/Model/` |
 | `authService.js` | Migrate all callers to `lib/api.js` + `authStore`, then delete |

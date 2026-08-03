@@ -284,7 +284,7 @@ Rules that live in the global stylesheet rather than components:
 | Courses, SearchPage, CategoriesPage | ✅ Tailwind only |
 | CourseCard, LessonCard, SkeletonCard | ✅ Tailwind only |
 | Button, Input, Spinner, EmptyState, ErrorState, ToastContainer | ✅ Tailwind only |
-| Signin, Signup | ⏳ Still uses MUI + legacy CSS |
+| Signin, Signup | ✅ Migrated — uses shared Input/PasswordInput/Button + toast helper |
 | CourseDetailOverview | ⏳ Mixed CSS/Tailwind |
 | InstructorAdminDashBoardPage | ⏳ Legacy CSS (uses new `.dashboard-layout` classes) |
 | CartPage | ⏳ Legacy CSS + hardcoded dummy data |
@@ -301,3 +301,96 @@ Full component migration is tracked in `REFACTOR_PLAN.md` Phase 4.
 4. Do not add new global classes to `index.css` for component-specific styles — those belong in the component file via `className`.
 5. MUI components (`@mui/material`) should be replaced with plain HTML + Tailwind as each page is migrated. Do not add new MUI imports.
 6. After all MUI usage is removed, `@mui/material`, `@emotion/react`, `@emotion/styled`, and `@fontsource/roboto` can be deleted from `package.json`.
+
+---
+
+## Shared UI Components
+
+All reusable UI primitives live in `src/Component/ui/`. Import from the barrel file:
+
+```js
+import { Button, Input, Modal } from '../ui/index.js';
+```
+
+### Form Controls
+
+| Component | File | Key props |
+|---|---|---|
+| `Button` | `Button.jsx` | `variant` (primary/secondary/outline/ghost/danger), `size` (sm/md/lg), `loading`, `fullWidth` |
+| `Input` | `Input.jsx` | `label`, `description`, `error`, `required` |
+| `PasswordInput` | `PasswordInput.jsx` | All Input props + built-in show/hide toggle, `autoComplete` |
+| `Textarea` | `Textarea.jsx` | All Input props + `rows`, `resize` (none/vertical/horizontal/both) |
+| `Select` | `Select.jsx` | All Input props + `options` array, `placeholder`, or `children` |
+| `Checkbox` | `Checkbox.jsx` | `label`, `description`, `error`, `disabled` |
+| `FormField` | `FormField.jsx` | Wrapper for custom inputs; render-prop child receives `id`, `aria-describedby`, `aria-invalid` |
+
+All form controls use `useId()` (React 18) for unique IDs, forward refs, and full `aria-describedby` chains connecting labels, descriptions, and errors.
+
+### Feedback
+
+| Component | File | Key props |
+|---|---|---|
+| `Alert` | `Alert.jsx` | `variant` (success/warning/error/info), `title`, `dismissible`, `onDismiss` |
+| `Badge` | `Badge.jsx` | `variant` (default/success/warning/danger/info) |
+| `Skeleton` | `Skeleton.jsx` | `variant` (text/avatar/image/card), `lines`, `width`, `height` |
+| `Spinner` | `Spinner.jsx` | `size` (sm/md/lg) |
+| `EmptyState` | `EmptyState.jsx` | `icon`, `title`, `description`, `action`, `secondaryAction` |
+| `ErrorState` | `ErrorState.jsx` | `title`, `description`, `action` |
+
+### Overlay
+
+| Component | File | Key props |
+|---|---|---|
+| `Modal` | `Modal.jsx` | `open`, `onClose`, `title`, `size` (sm/md/lg/xl/2xl), `closeOnBackdrop` |
+| `ConfirmDialog` | `ConfirmDialog.jsx` | `open`, `onClose`, `onConfirm`, `title`, `description`, `confirmLabel`, `cancelLabel`, `destructive`, `loading` |
+
+`Modal` uses `createPortal` (renders to `document.body`), traps focus with Tab/Shift-Tab, closes on Escape, and restores focus to the trigger element on close. Body scroll is locked while open.
+
+### Navigation
+
+| Component | File | Key props |
+|---|---|---|
+| `Tabs` | `Tabs.jsx` | `tabs` (`[{label, content, disabled}]`), `defaultIndex`, `onChange` |
+| `Pagination` | `Pagination.jsx` | `page`, `totalPages`, `onPageChange`, `siblingCount` |
+| `Breadcrumb` | `Breadcrumb.jsx` | `items` (`[{label, href?, onClick?}]`) |
+
+`Tabs` uses `role=tab/tablist/tabpanel` with full arrow-key, Home, End keyboard navigation and `aria-selected`.
+
+### Toast System
+
+Toasts are managed by `useUiStore` (Zustand). Do NOT use MUI Snackbar.
+
+```js
+// In components (hook):
+import useUiStore from '../../store/uiStore.js';
+const addToast = useUiStore((s) => s.addToast);
+addToast('Saved!', 'success');
+
+// Outside components (event handlers, services):
+import { toast } from '../../lib/toast.js';
+toast.success('Course saved');
+toast.error('Something went wrong');
+```
+
+`ToastContainer` in `App.jsx` renders the active toasts at `z-80` (above modals).
+Deduplication: duplicate message+type within 800 ms is suppressed.
+
+### Class-Name Utility
+
+```js
+import { cn } from '../../lib/cn.js';
+// Merges and deduplicates Tailwind classes:
+cn('btn', isLarge && 'btn-lg', className)
+```
+
+### Testing
+
+Tests use **Vitest** + **React Testing Library** + **jsdom**. Config: `vitest.config.js`. Setup: `src/test/setup.js` (imports `@testing-library/jest-dom`).
+
+Run tests:
+```bash
+npm run test       # watch mode
+npm run test:run   # single run (CI)
+```
+
+Test files live alongside the component they test: `Button.test.jsx` next to `Button.jsx`.

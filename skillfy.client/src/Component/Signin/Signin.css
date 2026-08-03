@@ -115,6 +115,29 @@ form a {
   text-decoration: none;
 }
 
+.divider-or {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  gap: 12px;
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+.divider-or::before,
+.divider-or::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #e5e7eb;
+}
+
+.forgot-password-link {
+  text-align: end;
+  color: #ff6b6b;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
 /* Responsive Styles */
 @media (max-width: 900px) {
   .login-container {

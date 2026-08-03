@@ -1,59 +1,41 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
+import { useState } from 'react';
 import SignupSocialMedia from './SignupSocialMedia';
 import img from '../../assets/image/signinImg.png';
 import authService from '../../Services/authService';
 import useAuthStore from '../../store/authStore';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import CircularProgress from '@mui/material/CircularProgress';
 import { Link, useNavigate } from 'react-router-dom';
+import Input from '../ui/Input.jsx';
+import PasswordInput from '../ui/PasswordInput.jsx';
+import Button from '../ui/Button.jsx';
+import { toast } from '../../lib/toast.js';
 import './Signup.css';
 
 const Signup = () => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [fullName, setFullName]               = useState('');
+  const [email, setEmail]                     = useState('');
+  const [password, setPassword]               = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: '' });
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
-  const [nameError, setNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [role, setRole] = useState('student');
+  const [loading, setLoading]                 = useState(false);
+  const [passwordError, setPasswordError]     = useState('');
+  const [nameError, setNameError]             = useState('');
+  const [emailError, setEmailError]           = useState('');
+  const [role, setRole]                       = useState('student');
   const navigate = useNavigate();
-  const setAuth = useAuthStore((s) => s.setAuth);
+  const setAuth  = useAuthStore((s) => s.setAuth);
 
-  const validatePassword = (password) => {
-    const minLength = /.{8,}/;
-    const hasUpperCase = /[A-Z]/;
-    const hasLowerCase = /[a-z]/;
-    const hasNumber = /[0-9]/;
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
-
+  const validatePassword = (pwd) => {
     return (
-      minLength.test(password) &&
-      hasUpperCase.test(password) &&
-      hasLowerCase.test(password) &&
-      hasNumber.test(password) &&
-      hasSpecialChar.test(password)
+      /.{8,}/.test(pwd) &&
+      /[A-Z]/.test(pwd) &&
+      /[a-z]/.test(pwd) &&
+      /[0-9]/.test(pwd) &&
+      /[!@#$%^&*(),.?":{}|<>]/.test(pwd)
     );
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  const validateEmail = (mail) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
 
-  const toggleRole = () => {
-    setRole(role === 'student' ? 'instructor' : 'student');
-  };
+  const toggleRole = () => setRole((r) => (r === 'student' ? 'instructor' : 'student'));
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -91,26 +73,14 @@ const Signup = () => {
       if (user) {
         setAuth(user, user.token || null);
       }
-      setSnackbar({ open: true, message: 'Registration successful!', severity: 'success' });
+      toast.success('Registration successful!');
       setTimeout(() => navigate('/'), 500);
     } catch (error) {
       const msg = typeof error === 'string' ? error : error?.message || 'Registration failed. Please try again.';
-      setSnackbar({ open: true, message: msg, severity: 'error' });
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
-  };
-
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleClickShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -127,102 +97,98 @@ const Signup = () => {
       </div>
       <div className="signup-form">
         <div className='signin'>
-          <p>Don’t have an account? </p>
+          <p>Already have an account? </p>
           <Link to="/auth/account/signin" className='signin-link'>Sign In</Link>
         </div>
         <div>
           <h1>Create your free account</h1>
           <p>See how the world's best user experiences are created</p>
         </div>
-        <form onSubmit={handleRegister}>
-          <TextField 
-            id="full-name" 
-            label="Full Name" 
-            variant="outlined" 
-            value={fullName} 
-            onChange={(e) => {
-              setFullName(e.target.value);
-              setNameError('');
-            }} 
-            sx={{ marginBottom: '0', marginTop: '0', padding:'0' }}
-            error={!!nameError}
-            helperText={nameError || 'Enter your first name and last name'}
-            fullWidth
-            margin="normal"
-          />
-          <TextField 
-            id="email" 
-            label="Email address" 
-            variant="outlined" 
-            type="email" 
-            value={email} 
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setEmailError('');
-            }} 
-            sx={{ marginBottom: '0', marginTop: '0' }}
-            error={!!emailError}
-            helperText={emailError || 'Enter a valid email address'}
-            fullWidth
-            margin="normal"
-          />
-          <TextField 
-            id="password" 
-            label="Password" 
-            variant="outlined" 
-            type={showPassword ? 'text' : 'password'} 
-            value={password} 
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setPasswordError('');
-            }} 
-            sx={{ marginBottom: '0', marginTop: '0' }}
+        <form onSubmit={handleRegister} noValidate>
+          <div className="mb-3">
+            <Input
+              id="full-name"
+              label="Full Name"
+              value={fullName}
+              required
+              description="Enter your first name and last name"
+              error={nameError}
+              onChange={(e) => { setFullName(e.target.value); setNameError(''); }}
+            />
+          </div>
+          <div className="mb-3">
+            <Input
+              id="email"
+              label="Email address"
+              type="email"
+              autoComplete="email"
+              required
+              description="Enter a valid email address"
+              error={emailError}
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
+            />
+          </div>
+          <div className="mb-3">
+            <PasswordInput
+              id="password"
+              label="Password"
+              autoComplete="new-password"
+              required
+              description="At least 8 characters, include uppercase, lowercase, number, and special character"
+              error={passwordError}
+              value={password}
+              onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
+            />
+          </div>
+          <div className="mb-3">
+            <PasswordInput
+              id="confirm-password"
+              label="Confirm Password"
+              autoComplete="new-password"
+              required
+              description="Re-enter your password"
+              error={passwordError && confirmPassword ? passwordError : undefined}
+              value={confirmPassword}
+              onChange={(e) => { setConfirmPassword(e.target.value); setPasswordError(''); }}
+            />
+          </div>
 
-            error={!!passwordError}
-            helperText={passwordError || 'At least 8 characters, include uppercase, lowercase, number, and special character'}
-            fullWidth
-            margin="normal"
-          />
-          <TextField 
-            id="confirm-password" 
-            label="Confirm Password" 
-            variant="outlined" 
-            type={showConfirmPassword ? 'text' : 'password'} 
-            value={confirmPassword} 
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-              setPasswordError('');
-            }} 
-            sx={{ marginBottom: '0', marginTop: '0' }}
+          <div className="role-toggle">
+            <label className="role-toggle-label" htmlFor="role-switch">
+              <input
+                id="role-switch"
+                type="checkbox"
+                checked={role === 'instructor'}
+                onChange={toggleRole}
+                className="sr-only"
+                role="switch"
+                aria-checked={role === 'instructor'}
+              />
+              <span className={`toggle-track ${role === 'instructor' ? 'toggle-track--on' : ''}`} aria-hidden="true">
+                <span className="toggle-thumb" />
+              </span>
+              <span className="toggle-label-text">
+                {role === 'instructor' ? 'Become an instructor' : 'Become a student'}
+              </span>
+            </label>
+            <p className="role-description">
+              {role === 'instructor'
+                ? 'As an instructor, you can create and manage courses.'
+                : 'As a student, you can enroll in courses.'}
+            </p>
+          </div>
 
-            error={!!passwordError}
-            helperText={passwordError || 'Re-enter your password'}
-            fullWidth
-            margin="normal"
-          />
-          <FormControlLabel 
-            control={<Switch checked={role === 'instructor'} onChange={toggleRole} />} // Check if the role is 'instructor' to set the switch state
-            label={role === 'instructor' ? 'Become an instructor' : 'Become a student'} // Dynamically change label
-          />
-          <p>{role === 'instructor' ? 'As an instructor, you can create and manage courses.' : 'As a student, you can enroll in courses.'}</p>
-          <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading} style={{ marginTop: '16px' }}>
-            {loading ? <CircularProgress size={24} /> : 'Create your account'}
+          <Button type="submit" variant="primary" fullWidth loading={loading} className="mt-4">
+            Create your account
           </Button>
         </form>
-        <Divider style={{ margin: '16px 0' }}>OR</Divider>
+
+        <div className="divider-or">
+          <span>OR</span>
+        </div>
         <SignupSocialMedia />
       </div>
-
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };
