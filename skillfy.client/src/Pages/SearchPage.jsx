@@ -1,74 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import Header from '../Component/Header/Header'
-import Footer from '../Component/Footer/Footer'
+import { useEffect, useState } from 'react';
+import Header from '../Component/Header/Header';
+import Footer from '../Component/Footer/Footer';
 import axios from 'axios';
 import CourseCard from '../Component/ui/CourseCard';
+import SkeletonCard from '../Component/ui/SkeletonCard';
+import EmptyState from '../Component/ui/EmptyState';
+import ErrorState from '../Component/ui/ErrorState';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
+import { toArray } from '../lib/utils';
 
-import './Search.css'
+const API_BASE = import.meta.env.VITE_API_URL || 'https://localhost:7182';
 
 export default function SearchPage() {
   const [courseData, setCourseData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const location = useLocation();
   const [searchParams] = useSearchParams();
 
-  const courseName = searchParams.get('q') || location.state?.coursename || '';
+  const query = searchParams.get('q') || location.state?.coursename || '';
 
-  useEffect(() => {
-    if (!courseName) {
+  const fetchCourses = async () => {
+    if (!query) return;
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axios.get(`${API_BASE}/api/course/search${query}`);
+      setCourseData(toArray(response.data));
+    } catch {
+      setError('Search failed. Please try again.');
+      setCourseData([]);
+    } finally {
       setLoading(false);
-      return;
     }
-    const fetchCourses = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`https://localhost:7182/api/course/search${courseName}`);
-        const data = response.data?.$values || response.data || [];
-        setCourseData(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error('Error fetching course data:', error);
-        setCourseData([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+  };
 
-    fetchCourses();
-  }, [courseName]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { fetchCourses(); }, [query]);
 
   return (
     <>
-      <Header color="black"/>
-      <div className='searchMainContainer'>
-        <div className='searchContainer'>
-          <div className="searchHeader">
-            <h1>Search Results for "{courseName}"</h1>
-            <p>Explore our collection of courses related to "{courseName}".</p>
-          </div>
-          <div className="searchBody">
-            {loading ? (
-              <div className="loading">
-                <CircularProgress />
-              </div>
-            ) : courseData.length > 0 ? (
-              courseData.map((course, index) => (
-                <CourseCard key={index} {...course} />
-              ))
+      <Header color="black" />
+      <main className="min-h-screen bg-gray-50">
+        <div className="bg-white border-b border-gray-200 py-8">
+          <div className="page-container">
+            {query ? (
+              <>
+                <h1 className="section-heading">Results for &ldquo;{query}&rdquo;</h1>
+                <p className="mt-1 text-gray-500">
+                  {loading ? 'Searching…' : `${courseData.length} course${courseData.length !== 1 ? 's' : ''} found`}
+                </p>
+              </>
             ) : (
-              <div>
-                <p>Sorry, we couldn't find any results for "{courseName}".</p>
-                <p>Try adjusting your search. Here are some ideas:</p>
-                <ul>
-                  <li>Make sure all words are spelled correctly</li>
-                </ul>
-              </div>
+              <h1 className="section-heading">Search Courses</h1>
             )}
           </div>
         </div>
-      </div>
-      <Footer/>
+
+        <div className="page-container py-10">
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)}
+            </div>
+          ) : error ? (
+            <ErrorState title="Search failed" message={error} onRetry={fetchCourses} />
+          ) : !query ? (
+            <EmptyState title="Enter a search term" description="Type a course name in the search bar above to find courses." />
+          ) : courseData.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {courseData.map((course) => (
+                <CourseCard key={course.id || course.courseID} {...course} />
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              title={`No results for "${query}"`}
+              description="Make sure all words are spelled correctly, or try different keywords."
+            />
+          )}
+        </div>
+      </main>
+      <Footer />
     </>
-  )
+  );
 }
