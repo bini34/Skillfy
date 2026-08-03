@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import './Signin.css';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import SigninSocialMedia from './SigninSocialMedia';
-
-//import SigninSocialMedia from './SigninSocialMedia';
+import SigninSocialMedia from './SignInSocialMedia';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import img from '../../assets/image/signinImg.png';
 import authService from '../../Services/authService';
+import useAuthStore from '../../store/authStore';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Signin() {
@@ -20,33 +19,36 @@ function Signin() {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const setAuth = useAuthStore((s) => s.setAuth);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        authService.login(email, password).then(
-            (response) => {
-                const user = authService.getCurrentUser();
-                console.log(user);
-
-                const role = user.role.$values[0];
-                setSnackbar({ open: true, message: 'Login successful!', severity: 'success' });
-                setLoading(false);
-
-                if (role === 'admin') {
-                    navigate(`/admin/dashboard/`);
-                } else if (role === 'Instructor') {
-                    navigate(`/instructor/courses/`);
-                } else if (role === 'student') {
-                    navigate(`/`);
-                }
-            },
-            (error) => {
-                setSnackbar({ open: true, message: 'Error occurred during login.', severity: 'error' });
-                setLoading(false);
+        try {
+            const response = await authService.login(email, password);
+            const user = response?.data;
+            if (user) {
+                setAuth(user, user.token || null);
             }
-        );
+            const role = user?.role?.$values?.[0] || user?.role?.[0] || user?.role;
+            setSnackbar({ open: true, message: 'Login successful!', severity: 'success' });
+
+            setTimeout(() => {
+                if (role === 'Admin' || role === 'admin') {
+                    navigate('/admin/dashboard');
+                } else if (role === 'Instructor') {
+                    navigate('/instructor/courses/');
+                } else {
+                    navigate('/');
+                }
+            }, 500);
+        } catch (error) {
+            const msg = typeof error === 'string' ? error : error?.message || 'Login failed. Please check your credentials.';
+            setSnackbar({ open: true, message: msg, severity: 'error' });
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleCloseSnackbar = () => {

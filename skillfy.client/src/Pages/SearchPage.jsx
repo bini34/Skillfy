@@ -3,7 +3,7 @@ import Header from '../Component/Header/Header'
 import Footer from '../Component/Footer/Footer'
 import axios from 'axios';
 import CourseCard from '../Component/ui/CourseCard';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import './Search.css'
@@ -11,30 +11,31 @@ import './Search.css'
 export default function SearchPage() {
   const [courseData, setCourseData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [courseName, setCourseName] = useState('');
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const courseName = searchParams.get('q') || location.state?.coursename || '';
 
   useEffect(() => {
-      console.log('Type of Course ID from location state:', location.state);
-      setCourseName(location.state.coursename);
-  }, [location.state]);
-
-  useEffect(() => {
+    if (!courseName) {
+      setLoading(false);
+      return;
+    }
     const fetchCourses = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`https://localhost:7182/api/course/search${courseName}`);
-        console.log('Response:', response.data.$values);
-        setCourseData(response.data.$values);
+        const data = response.data?.$values || response.data || [];
+        setCourseData(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Error fetching course data:', error);
+        setCourseData([]);
       } finally {
         setLoading(false);
       }
     };
 
-    if (courseName) {
-      fetchCourses();
-    }
+    fetchCourses();
   }, [courseName]);
 
   return (

@@ -11,12 +11,11 @@ using Skillfy.Server.service;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddScoped<LessonService>();
-
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
     });
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                      .AddEnvironmentVariables();
@@ -53,12 +52,18 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>() ?? new[] { "https://localhost:5173", "http://localhost:5173" };
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+    options.AddPolicy("AllowFrontend",
+        policy => policy
+            .WithOrigins(allowedOrigins)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 });
 
 
@@ -72,12 +77,12 @@ builder.Services.AddScoped<IchapterRepositery, ChapterRepository>();
 builder.Services.AddScoped<ICourseRepositary, CourseRepositary>();
 builder.Services.AddScoped<IcatogryRepositary, CatagoryRepositary>();
 builder.Services.AddScoped<ICourseService, CourseSerivce>();
+builder.Services.AddScoped<LessonService>();
 builder.Services.AddScoped<Ilessonrepo, LessonService>();
 builder.Services.AddScoped<Ipayment, ChapaPaymentService>();
-builder.Services.AddScoped<LessonService>();
 builder.Services.AddScoped<MuxService>();
 builder.Services.AddScoped<EnrollmentService>();
-builder.Services.AddScoped<TeacherPaymentService>();    
+builder.Services.AddScoped<TeacherPaymentService>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
@@ -130,7 +135,7 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAllOrigins");
+app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -7,24 +7,23 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import authService from '../../Services/authService';
 import apiService from '../../Services/apiService';
 import CircularProgress from '@mui/material/CircularProgress';
+import { toArray } from '../../lib/utils';
+import useAuthStore from '../../store/authStore';
 
 import './AuthHero.css';
 
 export default function AuthHero() {
   const lessonContainerRef = useRef(null);
-  const user = authService.getCurrentUser();
+  const user = useAuthStore((s) => s.user);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    console.log("user", user.id);
-
-    if (user && user.id) {
-      apiService.getData(`api/course/enrolledcourse${user.id}`)
+    if (user && user.Id) {
+      apiService.getData(`api/course/enrolledcourse${user.Id}`)
         .then((response) => {
-          setCourses(response.data.$values);
-          console.log('Courses:', response.data.$values);
+          setCourses(toArray(response.data));
           setLoading(false);
         })
         .catch((err) => {
@@ -39,7 +38,7 @@ export default function AuthHero() {
       setError('User ID is not available');
       setLoading(false);
     }
-  }, [user], [courses]);
+  }, [user?.Id]);
 
   const scrollLeft = () => {
     lessonContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });

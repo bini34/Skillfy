@@ -3,25 +3,26 @@ import Header from '../Component/Header/Header';
 import Footer from '../Component/Footer/Footer';
 import LessonCard from '../Component/ui/LessonCard';
 import './MyCourse.css';
-import authService from '../Services/authService';
 import apiService from '../Services/apiService';
 import CircularProgress from '@mui/material/CircularProgress';
+import useAuthStore from '../store/authStore';
+import { toArray } from '../lib/utils';
 
 
 export default function MyCourse() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const user = authService.getCurrentUser();
+  const user = useAuthStore((s) => s.user);
 
   useEffect(() => {
-    if (user && user.id) {
-      apiService.getData(`api/course/enrolledcourse${user.id}`)
+    if (user && user.Id) {
+      apiService.getData(`api/course/enrolledcourse${user.Id}`)
         .then((response) => {
-          setCourses(response.data.$values);
+          setCourses(toArray(response.data));
           setLoading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setError('Failed to fetch courses');
           setLoading(false);
         });
@@ -29,7 +30,7 @@ export default function MyCourse() {
       setError('User ID is not available');
       setLoading(false);
     }
-  }, [user]);
+  }, [user?.Id]);
 
   return (
     <>

@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import authService from '../../Services/authService';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { toArray } from '../../lib/utils';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -110,7 +111,7 @@ export default function CreateCourse() {
       if (response.status === 200) {
         console.log("hello")
         const responseData = response.data.data;
-        const chapters = responseData.chapters.$values;
+        const chapters = toArray(responseData.chapters);
 
         console.log('API Response:', responseData);  // Debugging line
         console.log('Chapters:', chapters);  // Debugging line

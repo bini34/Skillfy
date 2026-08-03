@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import './categoriesPage.css'
@@ -11,31 +11,32 @@ import CourseCard from '../Component/ui/CourseCard'
 export default function CategoriesPage() {
     const [courseData, setCourseData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [categoryname, setCategoryName] = useState('');
     const location = useLocation();
+    const { category } = useParams();
+
+    const categoryname = category || location.state?.topic || '';
 
     useEffect(() => {
-        console.log('Type of categoryname ID from location state:', location.state);
-        setCategoryName(location.state.topic);
-    }, [location.state]);
-
-    useEffect(() => {
+        if (!categoryname) {
+            setLoading(false);
+            return;
+        }
         const fetchCourses = async () => {
+          setLoading(true);
           try {
             const response = await axios.get(`https://localhost:7182/api/course/coursebycatagory${categoryname}`);
-            console.log('Response:', response.data.$values);
-            setCourseData(response.data.$values);
+            const data = response.data?.$values || response.data || [];
+            setCourseData(Array.isArray(data) ? data : []);
           } catch (error) {
             console.error('Error fetching course data:', error);
+            setCourseData([]);
           } finally {
             setLoading(false);
           }
         };
-    
-        if (categoryname) {
-          fetchCourses();
-        }
-      }, [categoryname]);
+
+        fetchCourses();
+    }, [categoryname]);
     return (
         <>
             <Header color="black"/>

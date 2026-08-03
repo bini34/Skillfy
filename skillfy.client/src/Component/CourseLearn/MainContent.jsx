@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './MainContent.css';
 import MuxPlayer from '@mux/mux-player-react';
 import CourseReviews from '../CourseDetail/CourseReviews';
-import RatingForm from './RatingForm'; // Make sure to import the RatingForm component
+import RatingForm from './RatingForm';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
-import { Button} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Button } from '@mui/material';
 
 const MainContent = ({ CurrentLessonData }) => {
   const [showRatingForm, setShowRatingForm] = useState(false);

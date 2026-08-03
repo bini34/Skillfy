@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import { styled } from '@mui/material/styles';
 import PlayLessonIcon from '@mui/icons-material/PlayLesson';
 import axios from 'axios';
 import './Sidebar.css';
+import { toArray } from '../../lib/utils';
 
 
 const Sidebar = ({ SetCurrentLessonData }) => {
@@ -29,7 +29,7 @@ const Sidebar = ({ SetCurrentLessonData }) => {
     const fetchCourses = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`https://localhost:7182/api/course/detailenrolled58`);
+        const response = await axios.get(`https://localhost:7182/api/course/detailenrolled${courseID}`);
         setCourseData(response.data);
         console.log('Course data:', response.data);
       } catch (error) {
@@ -84,19 +84,19 @@ const Sidebar = ({ SetCurrentLessonData }) => {
         <p className="error">{error}</p>
       ) : (
         <div className="learnLessonList">
-          {courseData?.chapters?.$values?.length > 0 ? (
-            courseData.chapters.$values.map((chapter, index) => (
+          {toArray(courseData?.chapters).length > 0 ? (
+            toArray(courseData.chapters).map((chapter, index) => (
               <nav key={index}>
                 <h3>{chapter.chaptername}</h3>
                 <ul>
-                  {chapter.lessons?.$values?.length > 0 ? (
-                    chapter.lessons.$values.map((lesson, lessonIndex) => (
+                  {toArray(chapter.lessons).length > 0 ? (
+                    toArray(chapter.lessons).map((lesson, lessonIndex) => (
                       <li key={lessonIndex} onClick={() => handleLessonClick(lesson.url, lesson.title)}>
                         <PlayLessonIcon /> {lesson.title} <span>{lesson.duration}</span>
                       </li>
                     ))
                   ) : (
-                    <>No lessons available</>
+                    <li>No lessons available</li>
                   )}
                 </ul>
               </nav>

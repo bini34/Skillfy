@@ -89,21 +89,23 @@ namespace Skillfy.Server.Controllers
             {
                 return BadRequest(new ResponsViewModel(false, "Registration failed", result.Errors));
             }
-            if (!string.IsNullOrEmpty(userDto.role))
-            {
-                if (!await _rolemanager.RoleExistsAsync(userDto.role))
-                {
-                    await _rolemanager.CreateAsync(new IdentityRole(userDto.role));
-                }
-               
+            // Only the "student" role may be self-assigned during registration.
+            // Privileged roles (Admin, Instructor) must be assigned by an admin.
+            const string defaultRole = "student";
+            string assignedRole = defaultRole;
 
-                var roleResult = await _userManager.AddToRoleAsync(user, userDto.role);
-                if (!roleResult.Succeeded)
-                {
-                    return BadRequest(new ResponsViewModel(false, "Failed to add role", roleResult.Errors));
-                }
+            if (!await _rolemanager.RoleExistsAsync(assignedRole))
+            {
+                await _rolemanager.CreateAsync(new IdentityRole(assignedRole));
             }
-            return Ok(new ResponsViewModel(true, "Registrated successfully", new {user.Id, user.Fname,user.Lname, user.Email}));
+
+            var roleResult = await _userManager.AddToRoleAsync(user, assignedRole);
+            if (!roleResult.Succeeded)
+            {
+                return BadRequest(new ResponsViewModel(false, "Failed to assign role", roleResult.Errors));
+            }
+
+            return Ok(new ResponsViewModel(true, "Registered successfully", new { user.Id, user.Fname, user.Lname, user.Email }));
 
 
 

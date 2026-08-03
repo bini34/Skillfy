@@ -5,15 +5,12 @@ import Button from '@mui/material/Button';
 import SignupSocialMedia from './SignupSocialMedia';
 import img from '../../assets/image/signinImg.png';
 import authService from '../../Services/authService';
+import useAuthStore from '../../store/authStore';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css';
 
@@ -29,8 +26,9 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState('');
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [role, setRole] = useState('student'); // State for role (instructor/student)
+  const [role, setRole] = useState('student');
   const navigate = useNavigate();
+  const setAuth = useAuthStore((s) => s.setAuth);
 
   const validatePassword = (password) => {
     const minLength = /.{8,}/;
@@ -57,7 +55,7 @@ const Signup = () => {
     setRole(role === 'student' ? 'instructor' : 'student');
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -87,26 +85,20 @@ const Signup = () => {
       return;
     }
 
-    authService.register(firstName, lastName, email, role, password).then(
-      (response) => {
-        setSnackbar({ open: true, message: 'Registration successful!', severity: 'success' });
-        setLoading(false);
-
-        const user = authService.getCurrentUser();
-        const role = user.role.$values[0];
-        if (role === 'admin') {
-          navigate(`/admin/dashboard/`);
-        } else if (role === 'Instructor') {
-          navigate(`/instructor/courses/`);
-        } else if (role === 'student') {
-          navigate(`/`);
-        }
-      },
-      (error) => {
-        setSnackbar({ open: true, message: 'Error occurred during registration.', severity: 'error' });
-        setLoading(false);
+    try {
+      const response = await authService.register(firstName, lastName, email, role, password);
+      const user = response?.data;
+      if (user) {
+        setAuth(user, user.token || null);
       }
-    );
+      setSnackbar({ open: true, message: 'Registration successful!', severity: 'success' });
+      setTimeout(() => navigate('/'), 500);
+    } catch (error) {
+      const msg = typeof error === 'string' ? error : error?.message || 'Registration failed. Please try again.';
+      setSnackbar({ open: true, message: msg, severity: 'error' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCloseSnackbar = () => {

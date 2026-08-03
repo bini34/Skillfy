@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './Courses.css';
 import CourseCard from '../ui/CourseCard';
 import axios from 'axios';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
+import { toArray } from '../../lib/utils';
 
 
 export default function Courses() {
@@ -14,8 +15,8 @@ export default function Courses() {
     const fetchCourses = async () => {
       try {
         const response = await axios.get('https://localhost:7182/api/course/coursecard');
-        console.log('Response:', response.data.$values);
-        const sortedCourses = response.data.$values.sort((a, b) => b.enrollmentcount - a.enrollmentcount);
+        const courses = toArray(response.data);
+        const sortedCourses = courses.sort((a, b) => (b.enrollmentcount || 0) - (a.enrollmentcount || 0));
         setCourseData(sortedCourses.slice(0, 6));
       } catch (error) {
         console.error('Error fetching course data:', error);

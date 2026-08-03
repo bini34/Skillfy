@@ -4,6 +4,7 @@ import Header from '../Component/Header/Header';
 import Footer from '../Component/Footer/Footer';
 import axios from 'axios';
 import CourseCard from '../Component/ui/CourseCard';
+import { toArray } from '../lib/utils';
 
 export default function Courses() {
   const [courseData, setCourseData] = useState([]);
@@ -13,8 +14,7 @@ export default function Courses() {
     const fetchCourses = async () => {
       try {
         const response = await axios.get('https://localhost:7182/api/course/coursecard');
-        console.log('Response:', response.data.$values);
-        setCourseData(response.data.$values);
+        setCourseData(toArray(response.data));
       } catch (error) {
         console.error('Error fetching course data:', error);
       } finally {

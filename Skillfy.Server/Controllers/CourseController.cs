@@ -151,8 +151,11 @@ namespace Skillfy.Server.Controllers
             return Ok(new ResponsViewModel(true, "Course deleted successfully", null));
         }
         [HttpPost("rating")]
-        public async Task<IActionResult> rating(courseratingdto courseratingdto)
+        public async Task<IActionResult> rating([FromBody] courseratingdto courseratingdto)
         {
+            if (courseratingdto == null)
+                return BadRequest(new ResponsViewModel(false, "Rating data is required", null));
+
             var review = new Review
             {
                 CourseId = courseratingdto.courseid,
@@ -160,15 +163,10 @@ namespace Skillfy.Server.Controllers
                 comment = courseratingdto.comment
             };
 
-            var respons =await applicationDbContext.ratings.AddAsync(review);
-            
-            if(respons == null)
-            {
-                return BadRequest(new ResponsViewModel(false, "not succesfull", null));
-            }
-            return Ok(new ResponsViewModel(true, "succesfull", null));
+            await applicationDbContext.ratings.AddAsync(review);
+            await applicationDbContext.SaveChangesAsync();
 
-
+            return Ok(new ResponsViewModel(true, "Rating saved successfully", null));
         }
         [HttpGet("search{coursename}")]
         public async Task<IActionResult> search(string  coursename)

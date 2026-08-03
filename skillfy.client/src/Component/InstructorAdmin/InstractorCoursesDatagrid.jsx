@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import DataGrid from '../ui/DataGrid';
-import authService from '../../Services/authService';
+import useAuthStore from '../../store/authStore';
+import { toArray } from '../../lib/utils';
 
 export default function InstructorCoursesDatagrid() {
     const [courses, setCourses] = useState([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const currentUser = authService.getCurrentUser();
-        if (currentUser) {
-          setIsAuthenticated(true);
-          setUser(currentUser);
-        }
-    }, []);
+    const user = useAuthStore((s) => s.user);
 
     useEffect(() => {
         async function fetchCourses() {
-            if (user) {
+            if (user?.Id) {
                 try {
-                    const response = await fetch(`https://localhost:7182/api/teacher/getteachercourse${user.id}`);
+                    const response = await fetch(`https://localhost:7182/api/teacher/getteachercourse${user.Id}`);
                     const result = await response.json();
-                    console.log('Courses:', result);
-                    const formattedData = result.$values.map((course, index) => ({
+                    const arr = toArray(result);
+                    const formattedData = arr.map((course, index) => ({
                         number: index + 1,
                         name: course
                     }));
@@ -33,7 +25,7 @@ export default function InstructorCoursesDatagrid() {
             }
         }
         fetchCourses();
-    }, [user]);
+    }, [user?.Id]);
 
     const columns = React.useMemo(
         () => [
